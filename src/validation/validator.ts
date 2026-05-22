@@ -75,6 +75,28 @@ export function validateSlide(slide: Slide, slideIndex: number, bg: string): Lay
     }
   }
 
+  // Check KPI slides for content overflow risk
+  if (slide.kind === 'kpi') {
+    const vals = slide.blocks.filter(b => b.type === 'text' && (b as any).style?.size === 'xlarge')
+    if (vals.length > 4) {
+      issues.push({
+        type: 'overflow',
+        severity: 'warning',
+        message: `KPI slide has ${vals.length} stat cards — cards may overflow or wrap on narrow slides`,
+      })
+    }
+    vals.forEach((b, bi) => {
+      if ((b as any).content.length > 7) {
+        issues.push({
+          type: 'text_truncation',
+          severity: 'warning',
+          message: `KPI value "${(b as any).content}" is too long for card width — consider abbreviating`,
+          blockIndex: bi,
+        })
+      }
+    })
+  }
+
   if (slide.background && slide.blocks.some(b => b.type === 'text')) {
     issues.push({
       type: 'color_contrast',

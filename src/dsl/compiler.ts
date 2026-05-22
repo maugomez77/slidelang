@@ -87,10 +87,10 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
 .sec .ss{font-size:0.95em;color:var(--tx2);margin-top:0.5em;font-weight:400}
 
 /* KPI stat cards */
-.sr{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.85em;margin:0.5em 0}
-.kp{background:var(--kpi);border:1px solid var(--bd);border-radius:var(--r2);padding:1.4em 1em;text-align:center;transition:transform 0.2s ease,box-shadow 0.2s ease}
+.sr{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.85em;margin:0.5em 0}
+.kp{background:var(--kpi);border:1px solid var(--bd);border-radius:var(--r2);padding:1.4em 0.8em;text-align:center;transition:transform 0.2s ease,box-shadow 0.2s ease;overflow:hidden;word-break:break-word}
 .kp:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.08)}
-.kv{font-family:'${t.fontH}',Georgia,serif;font-size:2.8em;font-weight:800;color:var(--accent);line-height:1.05;letter-spacing:-0.03em;margin-bottom:0.15em}
+.kv{font-family:'${t.fontH}',Georgia,serif;font-size:2.2em;font-weight:800;color:var(--accent);line-height:1.05;letter-spacing:-0.03em;margin-bottom:0.15em}
 .kl{font-size:0.62em;color:var(--tx2);font-weight:600;text-transform:uppercase;letter-spacing:0.1em}
 
 /* Comparison panels */
