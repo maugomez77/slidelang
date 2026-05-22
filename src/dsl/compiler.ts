@@ -56,9 +56,9 @@ html,body{background:var(--bg);color:var(--tx);font-family:'${t.fontB}',-apple-s
 .slide-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
 
 /* Typography */
-h1{font-family:'${t.fontH}',Georgia,serif;font-size:3.6em;font-weight:800;letter-spacing:-0.04em;line-height:1.08;margin:0 0 0.1em 0;color:var(--hd)}
-h2{font-family:'${t.fontH}',Georgia,serif;font-size:2.1em;font-weight:700;letter-spacing:-0.025em;line-height:1.18;margin:0 0 0.45em 0;color:var(--hd)}
-h3{font-family:'${t.fontH}',Georgia,serif;font-size:1.35em;font-weight:600;margin:0 0 0.35em 0;color:var(--hd)}
+h1{font-family:'${t.fontH}',Georgia,serif!important;font-size:3.6em!important;font-weight:800!important;letter-spacing:-0.04em!important;line-height:1.08!important;margin:0 0 0.1em 0!important;color:var(--hd)!important}
+h2{font-family:'${t.fontH}',Georgia,serif!important;font-size:2.1em!important;font-weight:700!important;letter-spacing:-0.025em!important;line-height:1.18!important;margin:0 0 0.45em 0!important;color:var(--hd)!important}
+h3{font-family:'${t.fontH}',Georgia,serif!important;font-size:1.35em!important;font-weight:600!important;margin:0 0 0.35em 0!important;color:var(--hd)!important}
 p{margin:0.2em 0;line-height:1.65}
 
 /* Lists — clean with accent markers */
