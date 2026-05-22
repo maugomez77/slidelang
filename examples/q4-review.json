@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "Q4 2025 Business Review",
+    "author": "Mauricio Gomez",
+    "date": "January 2026",
+    "theme": "plum",
+    "description": "Quarterly business review — executive summary"
+  },
+  "slides": [
+    {
+      "kind": "title",
+      "title": "Q4 2025 Business Review",
+      "subtitle": "Executive Summary · January 2026",
+      "blocks": [
+        { "type": "text", "content": "Prepared for the Board of Directors", "style": { "size": "small", "color": "#8b5cf6" } }
+      ]
+    },
+    {
+      "kind": "kpi",
+      "title": "At a Glance",
+      "blocks": [
+        { "type": "text", "content": "$24.6M", "style": { "size": "xlarge", "bold": true, "color": "#7c3aed" } },
+        { "type": "text", "content": "Q4 Revenue", "style": { "size": "small" } },
+        { "type": "text", "content": "72.1%", "style": { "size": "xlarge", "bold": true, "color": "#a855f7" } },
+        { "type": "text", "content": "Gross Margin", "style": { "size": "small" } },
+        { "type": "text", "content": "8,950", "style": { "size": "xlarge", "bold": true, "color": "#16a34a" } },
+        { "type": "text", "content": "Active Customers", "style": { "size": "small" } },
+        { "type": "text", "content": "2.1%", "style": { "size": "xlarge", "bold": true, "color": "#22c55e" } },
+        { "type": "text", "content": "Monthly Churn", "style": { "size": "small" } },
+        { "type": "text", "content": "74", "style": { "size": "xlarge", "bold": true, "color": "#d97706" } },
+        { "type": "text", "content": "NPS Score", "style": { "size": "small" } },
+        { "type": "text", "content": "$182M", "style": { "size": "xlarge", "bold": true, "color": "#7c3aed" } },
+        { "type": "text", "content": "Cash in Bank", "style": { "size": "small" } }
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Revenue Trajectory",
+      "blocks": [{
+        "type": "chart", "chartType": "bar",
+        "title": "Quarterly Revenue ($M)",
+        "labels": ["Q1", "Q2", "Q3", "Q4"],
+        "datasets": [
+          { "label": "2024", "values": [8.2, 10.5, 13.1, 16.8], "color": "#c4b5fd" },
+          { "label": "2025", "values": [18.2, 21.4, 23.1, 24.6], "color": "#7c3aed" }
+        ]
+      }]
+    },
+    {
+      "kind": "content",
+      "title": "Key Highlights",
+      "subtitle": "What went well — and what needs attention.",
+      "blocks": [
+        { "type": "text", "content": "Wins", "style": { "size": "large", "bold": true, "color": "#16a34a" } },
+        { "type": "bullets", "items": [
+          "Closed 3 enterprise deals ($2.1M total ACV) in Q4 alone",
+          "Launched the managed cloud platform on AWS — 120 signups in first week",
+          "Hired VP of Engineering and 4 senior engineers",
+          "NPS improved from 68 to 74 — highest ever"
+        ]},
+        { "type": "text", "content": "Watchlist", "style": { "size": "large", "bold": true, "color": "#dc2626" } },
+        { "type": "bullets", "items": [
+          "Gross margin declined from 74.2% to 72.1% — driven by cloud infra costs",
+          "Enterprise sales cycle is 4.5 months — target was 3 months",
+          "2 key engineers resigned in December (both to FAANG)",
+          "Self-serve churn ticked up to 3.8% (target was < 3%)"
+        ]}
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Customer Breakdown",
+      "blocks": [{
+        "type": "chart", "chartType": "bar",
+        "title": "Active Customers by Tier",
+        "labels": ["Free", "Pro ($49/mo)", "Team ($199/mo)", "Business ($999/mo)", "Enterprise"],
+        "datasets": [
+          { "label": "Customers", "values": [5200, 2800, 620, 240, 90], "color": "#a855f7" }
+        ]
+      }]
+    },
+    {
+      "kind": "comparison",
+      "title": "Q4 vs Plan",
+      "blocks": [
+        { "type": "text", "content": "We Planned", "style": { "size": "large", "bold": true } },
+        { "type": "bullets", "items": [
+          "Revenue: $25.5M",
+          "Gross Margin: 75%",
+          "New Customers: 950",
+          "Headcount: 62"
+        ]},
+        { "type": "text", "content": "We Delivered", "style": { "size": "large", "bold": true } },
+        { "type": "bullets", "items": [
+          "Revenue: $24.6M (−3.5%)",
+          "Gross Margin: 72.1% (−2.9pp)",
+          "New Customers: 1,120 (+18%)",
+          "Headcount: 58 (−6.5%)"
+        ]},
+        { "type": "text", "content": "Revenue missed by 3.5% due to 2 deals slipping into January. Customer acquisition over-performed. We did more with fewer people.", "style": { "size": "small", "italic": true, "color": "#8b5cf6" } }
+      ]
+    },
+    {
+      "kind": "math",
+      "title": "Efficiency Metrics",
+      "blocks": [
+        { "type": "math", "expression": "\\text{Magic Number} = \\frac{\\Delta\\text{ARR}}{\\text{S&M Spend}} = \\frac{\\$2.4M}{\\$3.1M} = 0.77" },
+        { "type": "math", "expression": "\\text{Burn Multiple} = \\frac{\\text{Net Burn}}{\\text{Net New ARR}} = \\frac{\\$4.8M}{\\$2.4M} = 2.0\\times" },
+        { "type": "text", "content": "Magic number above 0.75 is healthy. Burn multiple of 2.0x is efficient for our stage. Both metrics improved quarter-over-quarter.", "style": { "size": "medium", "italic": true } }
+      ]
+    },
+    {
+      "kind": "kpi",
+      "title": "Q1 2026 Targets",
+      "blocks": [
+        { "type": "text", "content": "$28M", "style": { "size": "xlarge", "bold": true, "color": "#7c3aed" } },
+        { "type": "text", "content": "Revenue Target", "style": { "size": "small" } },
+        { "type": "text", "content": "75%", "style": { "size": "xlarge", "bold": true, "color": "#a855f7" } },
+        { "type": "text", "content": "Gross Margin", "style": { "size": "small" } },
+        { "type": "text", "content": "10,500", "style": { "size": "xlarge", "bold": true, "color": "#16a34a" } },
+        { "type": "text", "content": "Total Customers", "style": { "size": "small" } },
+        { "type": "text", "content": "62", "style": { "size": "xlarge", "bold": true, "color": "#d97706" } },
+        { "type": "text", "content": "Team Size", "style": { "size": "small" } }
+      ]
+    },
+    {
+      "kind": "content",
+      "title": "Top 3 Priorities for Q1",
+      "blocks": [
+        { "type": "numbered", "items": [
+          "Ship SOC 2 Type II certification — blocking 4 enterprise deals",
+          "Reduce enterprise sales cycle from 4.5 to 3 months with dedicated SA team",
+          "Improve gross margin to 75% by optimizing cloud infrastructure spend"
+        ]}
+      ]
+    },
+    {
+      "kind": "quote",
+      "subtitle": "— Board member, December board meeting",
+      "blocks": [
+        { "type": "text", "content": "This is the best Q4 we've seen from the team. Revenue is compounding, the product is shipping, and the team is doing more with less. Q1 is the quarter we prove this can scale." }
+      ]
+    },
+    {
+      "kind": "title",
+      "title": "Thank you",
+      "subtitle": "Let's make Q1 great. Questions?",
+      "blocks": [
+        { "type": "text", "content": "businessreview@company.com · Internal dashboard: /reports/q4-2025", "style": { "size": "small", "color": "#a855f7" } }
+      ]
+    }
+  ]
+}

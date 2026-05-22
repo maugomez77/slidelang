@@ -372,3 +372,43 @@ Unlike prompt-to-static-slides tools:
 ```
 
 **Artifacts demonstrated**: prompt-to-spec, chart rendering (Canvas), math rendering (KaTeX), image primitives, spatial layout, validation catch, auto-repair, spec-as-source editability, multi-format export.
+
+---
+
+## Example Decks (pre-compiled HTML)
+
+Three complete example decks are in `examples/`. Each was compiled from a DeckSpec JSON into self-contained HTML:
+
+| Example | Theme | Slides | Primitives | View |
+|---------|-------|--------|------------|------|
+| `pitch-deck.json → .html` | Midnight (dark) | 12 | chart, math, KPI grid, quote, comparison, hero | `open examples/pitch-deck.html` |
+| `conference-talk.json → .html` | Ocean (light) | 14 | chart, math, two-column, benchmark, hero | `open examples/conference-talk.html` |
+| `q4-review.json → .html` | Plum (light) | 11 | 2 charts, math, 2 KPI grids, comparison, quote | `open examples/q4-review.html` |
+
+Each example demonstrates:
+- **6 professional themes** with Google Fonts (Playfair Display, Inter, Lora, Fraunces, Space Grotesk, Crimson Text)
+- **Spatial and flex-based layouts** with card UI, stat grids, comparison panels, timelines
+- **Canvas bar charts** with legends, gridlines, axis labels, multi-dataset support
+- **KaTeX math** with display and inline modes
+- **Slide kinds**: title/hero, section divider, KPI grid, comparison panels, quote, image-full, two-column
+- All primitives render **offline** — no API calls, no external charting library
+
+### How to try them
+
+```bash
+# Open any compiled example in a browser
+open examples/pitch-deck.html
+
+# Or recompile from the JSON spec
+npx tsx --eval "
+  import { compileDeckToHTML } from './src/dsl/compiler.ts';
+  import { readFileSync, writeFileSync } from 'fs';
+  const spec = JSON.parse(readFileSync('examples/pitch-deck.json','utf-8'));
+  writeFileSync('output.html', compileDeckToHTML(spec));
+  console.log('Done: output.html');
+"
+```
+
+### Live demo
+
+The hosted app at https://maugomez77.github.io/slidelang/ loads the Midnight theme by default. Type a prompt → Generate → watch the compiler transform the spec into a Reveal.js presentation in real-time.

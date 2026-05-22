@@ -1,6 +1,6 @@
-export type SlideKind = 'title' | 'section' | 'content' | 'two-column' | 'image-full' | 'quote' | 'comparison' | 'chart' | 'math' | 'blank'
+export type SlideKind = 'title' | 'section' | 'content' | 'two-column' | 'image-full' | 'quote' | 'comparison' | 'chart' | 'math' | 'blank' | 'kpi' | 'timeline'
 
-export type ThemePreset = 'default' | 'dark' | 'minimal' | 'gradient' | 'corporate'
+export type ThemePreset = 'midnight' | 'ocean' | 'sunset' | 'forest' | 'mono' | 'plum'
 
 export type TextStyle = {
   bold?: boolean

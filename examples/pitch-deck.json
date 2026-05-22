@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "title": "NebulaDB",
+    "author": "Mauricio Gomez",
+    "date": "2025",
+    "theme": "midnight",
+    "description": "The database your team actually wants to use. A pitch deck for our Series A."
+  },
+  "slides": [
+    {
+      "kind": "title",
+      "title": "NebulaDB",
+      "subtitle": "The multi-model database for the next generation of applications",
+      "blocks": [
+        { "type": "text", "content": "Series A Pitch Deck — Confidential", "style": { "size": "small", "color": "#94a3b8" } }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "The Problem",
+      "blocks": []
+    },
+    {
+      "kind": "content",
+      "title": "Teams run 3–5 databases just to ship one app",
+      "subtitle": "Postgres for relational. Redis for caching. Elasticsearch for search. MongoDB for documents. S3 for files.",
+      "blocks": [
+        { "type": "bullets", "items": [
+          "Infra complexity: each DB needs provisioning, backups, monitoring, and expertise",
+          "Data sync nightmares: keeping search indexes in sync with the primary store",
+          "Developer friction: 4 different query languages, 4 different mental models",
+          "Cost explosion: paying for 4 managed services that mostly sit idle",
+          "Compliance burden: data scattered across systems, each with different retention policies"
+        ]},
+        { "type": "text", "content": "There are over 350 active database management systems. The average engineering team uses 3.7 of them.", "style": { "size": "small", "italic": true, "color": "#94a3b8" } }
+      ]
+    },
+    {
+      "kind": "content",
+      "title": "NebulaDB: One database. Every model.",
+      "subtitle": "Relational, document, graph, vector, key-value, and full-text search — in a single engine with one query language.",
+      "blocks": [
+        { "type": "bullets", "items": [
+          "Relational: Full SQL with ACID transactions, joins, and constraints",
+          "Document: JSON-native storage with indexing on nested paths",
+          "Vector: HNSW indices for embeddings, built-in, no plugin needed",
+          "Graph: Cypher-compatible graph traversal engine",
+          "Full-text: BM25 + neural hybrid search out of the box",
+          "Key-value: Sub-millisecond reads with Redis-compatible wire protocol"
+        ]}
+      ]
+    },
+    {
+      "kind": "kpi",
+      "title": "Traction",
+      "blocks": [
+        { "type": "text", "content": "12,400", "style": { "size": "xlarge", "bold": true, "color": "#6366f1" } },
+        { "type": "text", "content": "GitHub Stars", "style": { "size": "small" } },
+        { "type": "text", "content": "3,200", "style": { "size": "xlarge", "bold": true, "color": "#a78bfa" } },
+        { "type": "text", "content": "Active Instances", "style": { "size": "small" } },
+        { "type": "text", "content": "98.4%", "style": { "size": "xlarge", "bold": true, "color": "#22c55e" } },
+        { "type": "text", "content": "Uptime SLA", "style": { "size": "small" } },
+        { "type": "text", "content": "340%", "style": { "size": "xlarge", "bold": true, "color": "#f59e0b" } },
+        { "type": "text", "content": "YoY Growth", "style": { "size": "small" } }
+      ]
+    },
+    {
+      "kind": "comparison",
+      "title": "How we win",
+      "blocks": [
+        { "type": "text", "content": "Status Quo", "style": { "size": "xlarge", "bold": true } },
+        { "type": "bullets", "items": [
+          "4 separate databases to manage",
+          "4 different query languages",
+          "Data sync pipelines everywhere",
+          "4x the infra cost",
+          "SRE team required"
+        ]},
+        { "type": "text", "content": "With NebulaDB", "style": { "size": "xlarge", "bold": true } },
+        { "type": "bullets", "items": [
+          "One database. Every model.",
+          "One query language (NSQL)",
+          "No sync — everything in one engine",
+          "1/4 the infra cost",
+          "Managed or self-hosted"
+        ]}
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Revenue Growth",
+      "blocks": [{
+        "type": "chart", "chartType": "bar",
+        "title": "Monthly Recurring Revenue ($K)",
+        "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        "datasets": [
+          { "label": "Self-Serve", "values": [12, 18, 27, 41, 58, 82], "color": "#6366f1" },
+          { "label": "Enterprise", "values": [8, 12, 18, 25, 40, 65], "color": "#a78bfa" }
+        ]
+      }]
+    },
+    {
+      "kind": "math",
+      "title": "Unit Economics",
+      "blocks": [
+        { "type": "math", "expression": "\\text{LTV} = \\frac{\\text{ARPU}}{\\text{Monthly Churn}} = \\frac{\\$1{,}250}{0.027} \\approx \\$46{,}200" },
+        { "type": "math", "expression": "\\text{CAC Payback} = \\frac{\\text{CAC}}{\\text{Gross Margin per Customer}} = \\frac{\\$3{,}800}{\\$1{,}250} = 3.04 \\text{ months}" },
+        { "type": "text", "content": "LTV:CAC ratio of 12.2x in the self-serve tier. Enterprise CAC payback under 4 months.", "style": { "size": "medium", "italic": true } }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "The Ask",
+      "blocks": []
+    },
+    {
+      "kind": "content",
+      "title": "Series A — $8M",
+      "subtitle": "We are raising to scale our cloud platform and build the team.",
+      "blocks": [
+        { "type": "numbered", "items": [
+          "Expand the core engine team (3 senior distributed systems engineers)",
+          "Build managed cloud offering on AWS, GCP, and Azure",
+          "Launch enterprise sales motion with dedicated solutions architects",
+          "Ship the VS Code extension and CLI tooling",
+          "Build the community: conferences, meetups, and documentation"
+        ]},
+        { "type": "text", "content": "✨ Fun fact: Our largest open-source contributor is a 17-year-old in Brazil who's never worked at a database company.", "style": { "size": "medium", "bold": true, "color": "#a78bfa" } }
+      ]
+    },
+    {
+      "kind": "quote",
+      "subtitle": "— A real Slack message from a paying customer",
+      "blocks": [
+        { "type": "text", "content": "We just deleted three database instances and migrated 40 microservices to NebulaDB. Our infra bill dropped by 60% and our on-call alerts dropped to zero. This is the most impactful infrastructure change we've made in 3 years." }
+      ]
+    },
+    {
+      "kind": "title",
+      "title": "Thank you",
+      "subtitle": "Let's build the database that developers deserve.",
+      "blocks": [
+        { "type": "text", "content": "mauricio@nebuladb.dev — github.com/nebuladb", "style": { "size": "medium", "color": "#a78bfa" } }
+      ]
+    }
+  ]
+}

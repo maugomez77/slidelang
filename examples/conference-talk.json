@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "title": "Distributed Systems Conference 2025",
+    "author": "Mauricio Gomez",
+    "date": "November 2025",
+    "theme": "ocean",
+    "description": "Building a Multi-Model Database That Doesn't Suck — A conference talk"
+  },
+  "slides": [
+    {
+      "kind": "title",
+      "title": "Building a Multi-Model Database That Doesn't Suck",
+      "subtitle": "How we unified 5 data models under a single query engine",
+      "blocks": [
+        { "type": "text", "content": "Distributed Systems Conference · November 2025", "style": { "size": "small", "color": "#94a3b8" } }
+      ]
+    },
+    {
+      "kind": "content",
+      "title": "About me",
+      "subtitle": "Why I spent 4 years of my life on this problem",
+      "blocks": [
+        { "type": "bullets", "items": [
+          "Previously: core database engineer at a FAANG company (2018–2021)",
+          "Built a real-time analytics pipeline handling 2M events/sec",
+          "Ran a small SaaS company with 3 databases — hated every minute",
+          "Open-source contributor to PostgreSQL, Redis, and ClickHouse",
+          "Currently building NebulaDB — open-source, multi-model, single-engine"
+        ]},
+        { "type": "text", "content": "I wrote the first line of NebulaDB on a flight from SFO to JFK. It didn't compile for 6 months.", "style": { "size": "small", "italic": true, "color": "#94a3b8" } }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "Part 1: The Problem",
+      "blocks": []
+    },
+    {
+      "kind": "content",
+      "title": "Every company becomes a database company",
+      "subtitle": "Whether you like it or not.",
+      "blocks": [
+        { "type": "bullets", "items": [
+          "Stripe: runs Postgres, MongoDB, Elasticsearch, Redis, and FoundationDB",
+          "Notion: migrated from Postgres to a custom sharded architecture",
+          "Discord: went from MongoDB to Cassandra to ScyllaDB",
+          "Figma: built a custom multiplayer sync engine on top of Postgres",
+          "Uber: runs 20+ different database systems in production"
+        ]},
+        { "type": "text", "content": "The average Series B company touches 4.2 different databases. None of them talk to each other.", "style": { "size": "large", "bold": true, "color": "#0ea5e9" } }
+      ]
+    },
+    {
+      "kind": "two-column",
+      "title": "The multi-model tax",
+      "blocks": [
+        { "type": "text", "content": "Write Path", "style": { "size": "large", "bold": true } },
+        { "type": "bullets", "items": [
+          "Write to primary DB",
+          "Publish change event",
+          "Transform and clean",
+          "Index in search engine",
+          "Invalidate cache"
+        ]},
+        { "type": "text", "content": "Read Path", "style": { "size": "large", "bold": true } },
+        { "type": "bullets", "items": [
+          "Check cache",
+          "Query primary DB",
+          "Search index for full-text",
+          "Merge results in app code",
+          "Handle inconsistencies"
+        ]}
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "Part 2: The Architecture",
+      "blocks": []
+    },
+    {
+      "kind": "content",
+      "title": "Single engine, multiple models",
+      "subtitle": "One storage layer, one query planner, one transaction manager — many access patterns.",
+      "blocks": [
+        { "type": "bullets", "items": [
+          "Storage Engine: LSM-tree with pluggable column families for each model",
+          "Query Planner: Model-aware cost-based optimizer — picks the best index per query pattern",
+          "Transaction Manager: Serializable snapshot isolation across models, same MVCC layer",
+          "Index Layer: B-tree for relational, inverted for text, HNSW for vectors, adjacency list for graph",
+          "Wire Protocols: PostgreSQL wire protocol, Redis RESP, HTTP/GraphQL"
+        ]}
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Performance Benchmarks",
+      "blocks": [{
+        "type": "chart", "chartType": "bar",
+        "title": "Operations per second (higher is better)",
+        "labels": ["Point Read", "Range Scan", "Full-text", "Vector KNN", "Graph Traversal"],
+        "datasets": [
+          { "label": "NebulaDB", "values": [45000, 28000, 15200, 8900, 4200], "color": "#0ea5e9" },
+          { "label": "Postgres", "values": [48000, 22000, 3200, 400, 0], "color": "#94a3b8" }
+        ]
+      }]
+    },
+    {
+      "kind": "math",
+      "title": "Vector Search Math",
+      "blocks": [
+        { "type": "math", "expression": "\\text{similarity}(q, d) = \\frac{q \\cdot d}{|q| \\cdot |d|} = \\cos(\\theta)" },
+        { "type": "math", "expression": "\\text{HNSW recall} \\approx 1 - e^{-k \\cdot \\log(M)}" },
+        { "type": "text", "content": "We use HNSW with M=16, efConstruction=200. 99.2% recall at 10x faster than brute force.", "style": { "size": "medium", "italic": true } }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "Part 3: Lessons Learned",
+      "blocks": []
+    },
+    {
+      "kind": "content",
+      "title": "What broke (and how we fixed it)",
+      "blocks": [
+        { "type": "numbered", "items": [
+          "LSM compaction storms at 2TB per node → tiered compaction + rate limiting",
+          "HNSW graph corruption on crash → write-ahead log for index mutations",
+          "Cross-model deadlocks → global wait-for graph with timeouts",
+          "Postgres wire protocol edge cases → fuzzed with 10K+ random protocol messages",
+          "Memory pressure under mixed workloads → adaptive cache sizing per model"
+        ]}
+      ]
+    },
+    {
+      "kind": "quote",
+      "subtitle": "— The single most important lesson",
+      "blocks": [
+        { "type": "text", "content": "Do not build a multi-model database. Pick one model. Make it fast. Then add the next one. If you try to build everything at once, you will build nothing at all." }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "Thank You",
+      "blocks": []
+    },
+    {
+      "kind": "title",
+      "title": "Questions?",
+      "subtitle": "github.com/nebuladb · nebuladb.dev · @maugomez",
+      "blocks": [
+        { "type": "text", "content": "We are hiring! — hello@nebuladb.dev", "style": { "size": "medium", "bold": true, "color": "#0ea5e9" } }
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import { DeckSpec } from '../dsl/schema'
 
 export function DeckSpecPanel({ spec, onSpecChange }: { spec: DeckSpec; onSpecChange: (s: DeckSpec) => void }) {
-  const themes = ['default', 'dark', 'minimal', 'gradient', 'corporate']
+  const themes = ['midnight', 'ocean', 'sunset', 'forest', 'mono', 'plum']
 
   return (
     <div style={{ padding: '0.75em', fontSize: '0.8em' }}>

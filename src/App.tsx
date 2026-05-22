@@ -9,7 +9,7 @@ import { validateDeck, repairDeck } from './validation/validator'
 import { downloadDeck, downloadJSON, printDeck } from './publishing/publisher'
 
 const DEFAULT_SPEC: DeckSpec = {
-  meta: { title: 'My Presentation', theme: 'default', date: new Date().toISOString().slice(0, 10) },
+  meta: { title: 'My Presentation', theme: 'midnight', date: new Date().toISOString().slice(0, 10) },
   slides: [
     {
       kind: 'title',
@@ -84,6 +84,18 @@ function App() {
           <button onClick={() => setShowEditor(!showEditor)} style={headerBtnStyle}>
             {showEditor ? '✕ Editor' : '📝 Editor'}
           </button>
+          <button onClick={() => document.getElementById('slidelang-import')?.click()} style={headerBtnStyle}>📂 Load JSON</button>
+          <input id="slidelang-import" type="file" accept=".json" style={{ display: 'none' }} onChange={async (e) => {
+            const file = e.target.files?.[0]
+            if (!file) return
+            try {
+              const text = await file.text()
+              const parsed = JSON.parse(text) as DeckSpec
+              handleSpecChange(parsed)
+              setActiveSlide(0)
+            } catch { alert('Invalid Slidelang JSON file') }
+            e.target.value = ''
+          }} />
           <button onClick={() => downloadJSON(spec)} style={headerBtnStyle}>💾 Save JSON</button>
           <button onClick={() => downloadDeck(spec)} style={headerBtnStyle}>📤 Export HTML</button>
           <button onClick={() => printDeck(spec)} style={headerBtnStyle}>🖨️ Print</button>

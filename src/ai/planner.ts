@@ -16,7 +16,7 @@ Given a user's topic prompt, generate a complete deck specification as JSON.
 
 The deck spec schema is:
 {
-  meta: { title, author?, date?, theme: "default"|"dark"|"minimal"|"gradient"|"corporate", description? },
+  meta: { title, author?, date?, theme: "midnight"|"ocean"|"sunset"|"forest"|"mono"|"plum", description? },
   slides: [
     {
       kind: "title"|"section"|"content"|"two-column"|"image-full"|"quote"|"comparison"|"chart"|"math"|"blank",
@@ -92,8 +92,8 @@ export async function planDeck(prompt: string): Promise<DeckSpec> {
 }
 
 function validateSpec(spec: DeckSpec): void {
-  if (!spec.meta) spec.meta = { title: 'Untitled Deck', theme: 'default' }
-  if (!spec.meta.theme) spec.meta.theme = 'default'
+  if (!spec.meta) spec.meta = { title: 'Untitled Deck', theme: 'midnight' }
+  if (!spec.meta.theme) spec.meta.theme = 'midnight'
   if (!Array.isArray(spec.slides)) {
     spec.slides = []
   }
@@ -106,7 +106,7 @@ function validateSpec(spec: DeckSpec): void {
 function generateFallbackDeck(prompt: string): DeckSpec {
   const title = prompt.length > 60 ? prompt.slice(0, 60) + '...' : prompt
   return {
-    meta: { title, theme: 'default', date: new Date().toISOString().slice(0, 10) },
+    meta: { title, theme: 'midnight', date: new Date().toISOString().slice(0, 10) },
     slides: [
       {
         kind: 'title',

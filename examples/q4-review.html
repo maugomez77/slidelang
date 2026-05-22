@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q4 2025 Business Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&family=DM+Serif+Display&family=Lora:wght@600;700&family=Crimson+Text:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=Space+Grotesk:wght@500;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>
+    :root { --bg:#faf5ff;--surface:#ffffff;--accent:#7c3aed;--accent2:#a855f7;--text:#4a1d96;--textMuted:#8b5cf6;--heading:#2e1065;--border:#e9d5ff;--success:#16a34a;--danger:#dc2626;--warning:#d97706;--chartGrid:#f3e8ff }
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); }
+    .reveal { font-family: 'Inter', -apple-system, sans-serif; }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: 'Fraunces', Georgia, serif; color: var(--heading); }
+    .reveal .slides section { background: var(--bg); }
+    
+.reveal { font-size: 28px; }
+.reveal .slides { text-align: left; }
+.reveal .slides section {
+  padding: 50px 70px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+}
+.reveal h1 { font-size: 2.8em; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin: 0 0 0.15em 0; }
+.reveal h2 { font-size: 1.8em; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 0.4em 0; position: relative; }
+.reveal h3 { font-size: 1.3em; font-weight: 700; margin: 0 0 0.3em 0; }
+.reveal h4 { font-size: 1.1em; font-weight: 600; margin: 0 0 0.2em 0; }
+.reveal p { margin: 0.3em 0; line-height: 1.55; }
+.reveal ul, .reveal ol { margin: 0.4em 0; padding-left: 1.6em; }
+.reveal li { margin: 0.35em 0; line-height: 1.5; }
+.reveal li::marker { color: var(--accent); font-weight: 700; }
+.reveal a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+.reveal img { border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+
+/* Accent bar under headings */
+.slide-heading-accent {
+  display: inline-block;
+  border-bottom: 4px solid var(--accent);
+  padding-bottom: 0.15em;
+  margin-bottom: 0.3em;
+}
+
+/* Section divider */
+.slide-section-divider {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
+}
+.slide-section-divider h1 { font-size: 3em; }
+.slide-section-divider .section-number {
+  display: inline-block;
+  font-size: 0.4em;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.8em;
+}
+
+/* Title slide */
+.slide-hero {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
+}
+.slide-hero h1 { font-size: 3.2em; margin-bottom: 0.15em; }
+.slide-hero .hero-subtitle { font-size: 1.3em; color: var(--textMuted); font-weight: 400; margin-bottom: 1em; }
+.slide-hero .hero-line {
+  width: 60px; height: 4px; background: var(--accent); border-radius: 2px; margin: 0 auto 1em auto;
+}
+.slide-hero .hero-meta {
+  font-size: 0.8em; color: var(--textMuted); letter-spacing: 0.05em; text-transform: uppercase;
+}
+
+/* Card used for stats, KPI, comparison */
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1em 1.2em;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+.kpi-card .kpi-value {
+  font-size: 2em; font-weight: 800; color: var(--accent); line-height: 1.1;
+}
+.kpi-card .kpi-label {
+  font-size: 0.75em; color: var(--textMuted); margin-top: 0.3em; text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* Stat grid */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.8em; margin: 0.5em 0; }
+
+/* Comparison two-panel */
+.comparison-panels {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1em; margin: 0.5em 0;
+}
+.comparison-panels .panel {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1em 1.2em;
+}
+.comparison-panels .panel h3 { text-align: center; margin-bottom: 0.6em; padding-bottom: 0.4em; border-bottom: 2px solid var(--accent); }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 2em; margin: 0.5em 0; }
+.timeline::before {
+  content: ''; position: absolute; left: 0.5em; top: 0; bottom: 0; width: 2px; background: var(--accent); opacity: 0.3;
+}
+.timeline-item { position: relative; margin-bottom: 0.8em; padding-left: 1em; }
+.timeline-item::before {
+  content: ''; position: absolute; left: -2.1em; top: 0.4em; width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+}
+.timeline-item .timeline-date { font-size: 0.7em; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.timeline-item .timeline-title { font-weight: 700; margin: 0.1em 0; }
+.timeline-item .timeline-desc { font-size: 0.8em; color: var(--textMuted); }
+
+/* Chart container */
+.chart-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.8em; margin: 0.3em 0; }
+.chart-title { font-size: 0.85em; font-weight: 600; color: var(--textMuted); margin-bottom: 0.4em; }
+
+/* Math container */
+.math-block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.6em 1em; margin: 0.4em 0;
+  text-align: center; overflow-x: auto;
+}
+.math-block-inline { padding: 0.15em 0.4em; background: var(--surface); border-radius: 4px; }
+
+/* Two-column grid */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2em; margin: 0.4em 0; }
+.two-col > div { min-width: 0; }
+
+/* Quote slide */
+.slide-quote {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
+}
+.slide-quote blockquote {
+  font-size: 1.6em; font-style: italic; line-height: 1.4; max-width: 80%; border: none; padding: 0;
+  box-shadow: none; background: none;
+}
+.slide-quote blockquote::before { content: '"'; font-size: 2em; color: var(--accent); display: block; margin-bottom: 0.2em; }
+.slide-quote .quote-author { font-size: 0.85em; color: var(--textMuted); margin-top: 0.8em; }
+
+/* Blank / freeform slide */
+.slide-blank { padding: 30px 50px !important; }
+.slide-blank > div { position: relative; min-height: 400px; }
+
+/* Thank you slide */
+.slide-thanks {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center;
+}
+.slide-thanks h1 { font-size: 3em; }
+.slide-thanks .thanks-line { width: 80px; height: 4px; background: var(--accent); border-radius: 2px; margin: 0.6em auto; }
+
+/* Footer decoration */
+.slide-footer {
+  position: absolute; bottom: 20px; left: 70px; right: 70px;
+  display: flex; justify-content: space-between;
+  font-size: 0.5em; color: var(--textMuted); opacity: 0.6;
+}
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="">
+        <h1>Q4 2025 Business Review</h1>
+<div class="hero-line"></div>
+<p class="hero-subtitle">Executive Summary · January 2026</p>
+<p class="hero-meta">Mauricio Gomez · January 2026</p>
+<div style="margin-top:0.8em;"><p style="font-size:0.75em;color:#8b5cf6;line-height:1.55;margin:0.3em 0;">Prepared for the Board of Directors</p></div>
+        
+        <div class="slide-footer"><span>Q4 2025 Business Review</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <h2><span class="slide-heading-accent">At a Glance</span></h2>
+<div class="stat-grid">
+<div class="kpi-card"><div class="kpi-value">$24.6M</div></div>
+<div class="kpi-card"><div class="kpi-value">72.1%</div></div>
+<div class="kpi-card"><div class="kpi-value">8,950</div></div>
+<div class="kpi-card"><div class="kpi-value">2.1%</div></div>
+<div class="kpi-card"><div class="kpi-value">74</div></div>
+<div class="kpi-card"><div class="kpi-value">$182M</div></div>
+</div><div class="stat-grid" style="margin-top:-0.4em;">
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Q4 Revenue</div></div>
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Gross Margin</div></div>
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Active Customers</div></div>
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Monthly Churn</div></div>
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">NPS Score</div></div>
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Cash in Bank</div></div>
+</div>
+        
+        <div class="slide-footer"><span>At a Glance</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <h2><span class="slide-heading-accent">Revenue Trajectory</span></h2>
+
+        <div class="chart-wrapper">
+          <div class="chart-title">Quarterly Revenue ($M)</div>
+          <canvas id="clp5rre" style="width:100%;height:320px;"></canvas>
+        </div>
+        <script>
+        (() => {
+          const c = document.getElementById('clp5rre');
+          if (!c) return;
+          const ctx = c.getContext('2d');
+          if (!ctx) return;
+          const dpr = window.devicePixelRatio || 1;
+          const w = c.parentElement.clientWidth - 16;
+          const h = 320;
+          c.width = w * dpr; c.height = h * dpr;
+          c.style.width = w + 'px'; c.style.height = h + 'px';
+          ctx.scale(dpr, dpr);
+          const data = { labels: ["Q1","Q2","Q3","Q4"], datasets: [{"label":"2024","data":[8.2,10.5,13.1,16.8],"borderColor":"#c4b5fd","backgroundColor":"#c4b5fd"},{"label":"2025","data":[18.2,21.4,23.1,24.6],"borderColor":"#7c3aed","backgroundColor":"#7c3aed"}] };
+          const pad = { t: 30, b: 40, l: 55, r: 25 };
+          const cw = w - pad.l - pad.r;
+          const ch = h - pad.t - pad.b;
+          const maxV = Math.max(...data.datasets.flatMap(d => d.data), 1);
+          const palette = ['#7c3aed', '#a855f7', '#d97706', '#dc2626', '#16a34a'];
+
+          // Grid lines
+          ctx.strokeStyle = '#f3e8ff';
+          ctx.lineWidth = 1;
+          const steps = 5;
+          for (let i = 0; i <= steps; i++) {
+            const y = pad.t + (ch / steps) * i;
+            ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+            ctx.fillStyle = '#8b5cf6';
+            ctx.font = '11px Inter, sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(Math.round(maxV - (maxV / steps) * i), pad.l - 8, y + 4);
+          }
+
+          // Bars
+          const gap = data.labels.length > 1 ? cw / data.labels.length : 60;
+          const barW = Math.min(gap * 0.55, 50);
+          const dsCount = data.datasets.length;
+          const groupW = barW * dsCount;
+          const groupGap = (gap - groupW) / 2;
+
+          data.datasets.forEach((ds, di) => {
+            const color = ds.borderColor || palette[di % palette.length];
+            ds.data.forEach((v, vi) => {
+              const x = pad.l + vi * gap + groupGap + di * barW;
+              const bh = Math.max((v / maxV) * ch, 1);
+              const y = pad.t + ch - bh;
+              ctx.fillStyle = color;
+              ctx.globalAlpha = 1;
+              ctx.beginPath();
+              ctx.roundRect(x, y, barW - 2, bh, [4, 4, 0, 0]);
+              ctx.fill();
+            });
+          });
+
+          // Labels
+          ctx.fillStyle = '#4a1d96';
+          ctx.font = '12px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          data.labels.forEach((l, vi) => {
+            const x = pad.l + vi * gap + gap / 2;
+            ctx.fillText(String(l), x, h - 8);
+          });
+
+          // Legend
+          let lx = pad.l;
+          data.datasets.forEach((ds, di) => {
+            ctx.fillStyle = ds.borderColor || palette[di % palette.length];
+            ctx.fillRect(lx, h - 28, 10, 10);
+            ctx.fillStyle = '#8b5cf6';
+            ctx.font = '10px Inter, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(ds.label, lx + 14, h - 20);
+            lx += ctx.measureText(ds.label).width + 30;
+          });
+        })();
+        </script>
+        
+        <div class="slide-footer"><span>Revenue Trajectory</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <h2><span class="slide-heading-accent">Key Highlights</span></h2>
+<p style="color:var(--textMuted);font-size:0.9em;margin-bottom:0.6em;">What went well — and what needs attention.</p>
+<p style="font-weight:700;font-size:1.15em;color:#16a34a;line-height:1.55;margin:0.3em 0;">Wins</p>
+<ul><li>Closed 3 enterprise deals ($2.1M total ACV) in Q4 alone</li><li>Launched the managed cloud platform on AWS — 120 signups in first week</li><li>Hired VP of Engineering and 4 senior engineers</li><li>NPS improved from 68 to 74 — highest ever</li></ul>
+<p style="font-weight:700;font-size:1.15em;color:#dc2626;line-height:1.55;margin:0.3em 0;">Watchlist</p>
+<ul><li>Gross margin declined from 74.2% to 72.1% — driven by cloud infra costs</li><li>Enterprise sales cycle is 4.5 months — target was 3 months</li><li>2 key engineers resigned in December (both to FAANG)</li><li>Self-serve churn ticked up to 3.8% (target was &lt; 3%)</li></ul>
+        
+        <div class="slide-footer"><span>Key Highlights</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <h2><span class="slide-heading-accent">Customer Breakdown</span></h2>
+
+        <div class="chart-wrapper">
+          <div class="chart-title">Active Customers by Tier</div>
+          <canvas id="cq31jkl" style="width:100%;height:320px;"></canvas>
+        </div>
+        <script>
+        (() => {
+          const c = document.getElementById('cq31jkl');
+          if (!c) return;
+          const ctx = c.getContext('2d');
+          if (!ctx) return;
+          const dpr = window.devicePixelRatio || 1;
+          const w = c.parentElement.clientWidth - 16;
+          const h = 320;
+          c.width = w * dpr; c.height = h * dpr;
+          c.style.width = w + 'px'; c.style.height = h + 'px';
+          ctx.scale(dpr, dpr);
+          const data = { labels: ["Free","Pro ($49/mo)","Team ($199/mo)","Business ($999/mo)","Enterprise"], datasets: [{"label":"Customers","data":[5200,2800,620,240,90],"borderColor":"#a855f7","backgroundColor":"#a855f7"}] };
+          const pad = { t: 30, b: 40, l: 55, r: 25 };
+          const cw = w - pad.l - pad.r;
+          const ch = h - pad.t - pad.b;
+          const maxV = Math.max(...data.datasets.flatMap(d => d.data), 1);
+          const palette = ['#7c3aed', '#a855f7', '#d97706', '#dc2626', '#16a34a'];
+
+          // Grid lines
+          ctx.strokeStyle = '#f3e8ff';
+          ctx.lineWidth = 1;
+          const steps = 5;
+          for (let i = 0; i <= steps; i++) {
+            const y = pad.t + (ch / steps) * i;
+            ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+            ctx.fillStyle = '#8b5cf6';
+            ctx.font = '11px Inter, sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(Math.round(maxV - (maxV / steps) * i), pad.l - 8, y + 4);
+          }
+
+          // Bars
+          const gap = data.labels.length > 1 ? cw / data.labels.length : 60;
+          const barW = Math.min(gap * 0.55, 50);
+          const dsCount = data.datasets.length;
+          const groupW = barW * dsCount;
+          const groupGap = (gap - groupW) / 2;
+
+          data.datasets.forEach((ds, di) => {
+            const color = ds.borderColor || palette[di % palette.length];
+            ds.data.forEach((v, vi) => {
+              const x = pad.l + vi * gap + groupGap + di * barW;
+              const bh = Math.max((v / maxV) * ch, 1);
+              const y = pad.t + ch - bh;
+              ctx.fillStyle = color;
+              ctx.globalAlpha = 1;
+              ctx.beginPath();
+              ctx.roundRect(x, y, barW - 2, bh, [4, 4, 0, 0]);
+              ctx.fill();
+            });
+          });
+
+          // Labels
+          ctx.fillStyle = '#4a1d96';
+          ctx.font = '12px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          data.labels.forEach((l, vi) => {
+            const x = pad.l + vi * gap + gap / 2;
+            ctx.fillText(String(l), x, h - 8);
+          });
+
+          // Legend
+          let lx = pad.l;
+          data.datasets.forEach((ds, di) => {
+            ctx.fillStyle = ds.borderColor || palette[di % palette.length];
+            ctx.fillRect(lx, h - 28, 10, 10);
+            ctx.fillStyle = '#8b5cf6';
+            ctx.font = '10px Inter, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(ds.label, lx + 14, h - 20);
+            lx += ctx.measureText(ds.label).width + 30;
+          });
+        })();
+        </script>
+        
+        <div class="slide-footer"><span>Customer Breakdown</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        
+        <h2><span class="slide-heading-accent">Q4 vs Plan</span></h2>
+        <div class="comparison-panels">
+          <div class="panel"><h3>We Planned</h3><ul><li>Revenue: $25.5M</li><li>Gross Margin: 75%</li><li>New Customers: 950</li><li>Headcount: 62</li></ul>
+<p style="font-weight:700;font-size:1.15em;line-height:1.55;margin:0.3em 0;">We Delivered</p></div>
+          <div class="panel"><h3>Right</h3><ul><li>Revenue: $24.6M (−3.5%)</li><li>Gross Margin: 72.1% (−2.9pp)</li><li>New Customers: 1,120 (+18%)</li><li>Headcount: 58 (−6.5%)</li></ul>
+<p style="font-style:italic;font-size:0.75em;color:#8b5cf6;line-height:1.55;margin:0.3em 0;">Revenue missed by 3.5% due to 2 deals slipping into January. Customer acquisition over-performed. We did more with fewer people.</p></div>
+        </div>
+        
+        <div class="slide-footer"><span>Q4 vs Plan</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <h2><span class="slide-heading-accent">Efficiency Metrics</span></h2>
+<div class="math-block">$$\text{Magic Number} = \frac{\Delta\text{ARR}}{\text{S&amp;M Spend}} = \frac{\$2.4M}{\$3.1M} = 0.77$$</div>
+<div class="math-block">$$\text{Burn Multiple} = \frac{\text{Net Burn}}{\text{Net New ARR}} = \frac{\$4.8M}{\$2.4M} = 2.0\times$$</div>
+<p style="font-style:italic;font-size:0.9em;line-height:1.55;margin:0.3em 0;">Magic number above 0.75 is healthy. Burn multiple of 2.0x is efficient for our stage. Both metrics improved quarter-over-quarter.</p>
+        
+        <div class="slide-footer"><span>Efficiency Metrics</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <h2><span class="slide-heading-accent">Q1 2026 Targets</span></h2>
+<div class="stat-grid">
+<div class="kpi-card"><div class="kpi-value">$28M</div></div>
+<div class="kpi-card"><div class="kpi-value">75%</div></div>
+<div class="kpi-card"><div class="kpi-value">10,500</div></div>
+<div class="kpi-card"><div class="kpi-value">62</div></div>
+</div><div class="stat-grid" style="margin-top:-0.4em;">
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Revenue Target</div></div>
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Gross Margin</div></div>
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Total Customers</div></div>
+<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">Team Size</div></div>
+</div>
+        
+        <div class="slide-footer"><span>Q1 2026 Targets</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <h2><span class="slide-heading-accent">Top 3 Priorities for Q1</span></h2>
+<ol><li>Ship SOC 2 Type II certification — blocking 4 enterprise deals</li><li>Reduce enterprise sales cycle from 4.5 to 3 months with dedicated SA team</li><li>Improve gross margin to 75% by optimizing cloud infrastructure spend</li></ol>
+        
+        <div class="slide-footer"><span>Top 3 Priorities for Q1</span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <div class="slide-quote">
+    <blockquote>This is the best Q4 we've seen from the team. Revenue is compounding, the product is shipping, and the team is doing more with less. Q1 is the quarter we prove this can scale.</blockquote>
+    <p class="quote-author">— — Board member, December board meeting</p>
+  </div>
+        
+        <div class="slide-footer"><span></span><span>Q4 2025 Business Review</span></div>
+      </section>
+      <section class="">
+        <h1>Thank you</h1>
+<div class="hero-line"></div>
+<p class="hero-subtitle">Let's make Q1 great. Questions?</p>
+<p class="hero-meta">Mauricio Gomez · January 2026</p>
+<div style="margin-top:0.8em;"><p style="font-size:0.75em;color:#a855f7;line-height:1.55;margin:0.3em 0;">businessreview@company.com · Internal dashboard: /reports/q4-2025</p></div>
+        
+        <div class="slide-footer"><span>Thank you</span><span>Q4 2025 Business Review</span></div>
+      </section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true, progress: true, center: false, hash: true,
+      transition: 'slide', transitionSpeed: 'default',
+      width: 1280, height: 720, margin: 0.04,
+      plugins: [ RevealMath.KaTeX ]
+    });
+  </script>
+</body>
+</html>
