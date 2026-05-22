@@ -11,7 +11,7 @@ type T = {
 const TH: T[] = [{
   id: 'noir', light: false,
   fontH: 'Playfair Display', fontB: 'Inter',
-  c: { bg: '#08080f', surf: '#111122', acc: '#d4a853', a2: '#f0c969', tx: '#d4d0c8', tx2: '#7a766e', hd: '#faf8f2', bd: '#1e1e33', ok: '#5bb87a', err: '#e0556a', wrn: '#d4a853', grd: '#1a1a30', kpi: 'linear-gradient(135deg, #1a1a3011 0%, #1a1a3044 100%)' },
+  c: { bg: '#08080f', surf: '#111122', acc: '#d4a853', a2: '#f0c969', tx: '#eeebe5', tx2: '#a0998c', hd: '#ffffff', bd: '#252540', ok: '#5bb87a', err: '#e0556a', wrn: '#d4a853', grd: '#1a1a30', kpi: 'linear-gradient(135deg, #1a1a3011 0%, #1a1a3044 100%)' },
 }, {
   id: 'air', light: true,
   fontH: 'DM Serif Display', fontB: 'Inter',
@@ -23,11 +23,11 @@ const TH: T[] = [{
 }, {
   id: 'warm', light: false,
   fontH: 'Lora', fontB: 'Inter',
-  c: { bg: '#1c1410', surf: '#2a1f19', acc: '#e8924f', a2: '#f0b87b', tx: '#ede0d4', tx2: '#9a8878', hd: '#faf3ea', bd: '#3a2e26', ok: '#6fb86f', err: '#e06b6b', wrn: '#e8a74f', grd: '#2e221a', kpi: 'linear-gradient(135deg, #251a1411 0%, #251a1444 100%)' },
+  c: { bg: '#1c1410', surf: '#2a1f19', acc: '#e8924f', a2: '#f0b87b', tx: '#f0e8de', tx2: '#b0a090', hd: '#ffffff', bd: '#3d3028', ok: '#6fb86f', err: '#e06b6b', wrn: '#e8a74f', grd: '#2e221a', kpi: 'linear-gradient(135deg, #251a1411 0%, #251a1444 100%)' },
 }, {
   id: 'crimson', light: false,
   fontH: 'Playfair Display', fontB: 'Inter',
-  c: { bg: '#1a0a0c', surf: '#2d1518', acc: '#dc2626', a2: '#f87171', tx: '#e5d8d9', tx2: '#9e7c7e', hd: '#faf0f0', bd: '#3d1c1f', ok: '#22c55e', err: '#dc2626', wrn: '#f59e0b', grd: '#2d181a', kpi: 'linear-gradient(135deg, #1a0a0c44 0%, #2d151844 100%)' },
+  c: { bg: '#1a0a0c', surf: '#2d1518', acc: '#dc2626', a2: '#f87171', tx: '#f0e5e5', tx2: '#b89595', hd: '#ffffff', bd: '#3d1c1f', ok: '#22c55e', err: '#dc2626', wrn: '#f59e0b', grd: '#2d181a', kpi: 'linear-gradient(135deg, #1a0a0c44 0%, #2d151844 100%)' },
 }, {
   id: 'sage', light: true,
   fontH: 'Lora', fontB: 'Inter',
@@ -35,7 +35,7 @@ const TH: T[] = [{
 }, {
   id: 'navy', light: false,
   fontH: 'DM Serif Display', fontB: 'Inter',
-  c: { bg: '#0a1128', surf: '#151d3d', acc: '#3b82f6', a2: '#60a5fa', tx: '#d1d9e8', tx2: '#6b7da0', hd: '#f0f4fc', bd: '#1e2a4d', ok: '#22c55e', err: '#ef4444', wrn: '#f59e0b', grd: '#182244', kpi: 'linear-gradient(135deg, #151d3d22 0%, #151d3d55 100%)' },
+  c: { bg: '#0a1128', surf: '#151d3d', acc: '#3b82f6', a2: '#60a5fa', tx: '#e8edf6', tx2: '#8a9cc4', hd: '#ffffff', bd: '#1e2a4d', ok: '#22c55e', err: '#ef4444', wrn: '#f59e0b', grd: '#182244', kpi: 'linear-gradient(135deg, #151d3d22 0%, #151d3d55 100%)' },
 }, {
   id: 'neon', light: false,
   fontH: 'Space Grotesk', fontB: 'Inter',

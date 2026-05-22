@@ -4,11 +4,38 @@ const MAX_BLOCKS_PER_SLIDE = 8
 const MAX_LIST_ITEMS = 15
 const MAX_CHART_LABELS = 20
 
-export function validateDeck(spec: DeckSpec): LayoutIssue[] {
-  return spec.slides.flatMap((slide, i) => validateSlide(slide, i))
+// ── WCAG Contrast Ratio (AA = 4.5:1 normal, 3:1 large) ──
+
+const THEME_BG: Record<string, string> = {
+  noir: '#08080f', warm: '#1c1410', crimson: '#1a0a0c', navy: '#0a1128', neon: '#0d0d0d',
+  air: '#fafaf9', bold: '#ffffff', sage: '#f7faf5',
 }
 
-export function validateSlide(slide: Slide, slideIndex: number): LayoutIssue[] {
+function hexToRgb(hex: string): [number, number, number] | null {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  if (!m) return null
+  return [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)]
+}
+
+function relativeLuminance(r: number, g: number, b: number): number {
+  const linearize = (c: number) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4) }
+  return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b)
+}
+
+function contrastRatio(hex1: string, hex2: string): number {
+  const rgb1 = hexToRgb(hex1), rgb2 = hexToRgb(hex2)
+  if (!rgb1 || !rgb2) return 21
+  const l1 = relativeLuminance(...rgb1), l2 = relativeLuminance(...rgb2)
+  const lighter = Math.max(l1, l2), darker = Math.min(l1, l2)
+  return (lighter + 0.05) / (darker + 0.05)
+}
+
+export function validateDeck(spec: DeckSpec): LayoutIssue[] {
+  const bg = THEME_BG[spec.meta.theme] || '#08080f'
+  return spec.slides.flatMap((slide, i) => validateSlide(slide, i, bg))
+}
+
+export function validateSlide(slide: Slide, slideIndex: number, bg: string): LayoutIssue[] {
   const issues: LayoutIssue[] = []
 
   if (slide.blocks.length === 0) {
@@ -28,7 +55,7 @@ export function validateSlide(slide: Slide, slideIndex: number): LayoutIssue[] {
   }
 
   slide.blocks.forEach((block, bi) => {
-    const blockIssues = validateBlock(block, slideIndex, bi)
+    const blockIssues = validateBlock(block, slideIndex, bi, bg)
     issues.push(...blockIssues)
   })
 
@@ -60,7 +87,7 @@ export function validateSlide(slide: Slide, slideIndex: number): LayoutIssue[] {
   return issues
 }
 
-function validateBlock(block: SlideBlock, slideIndex: number, blockIndex: number): LayoutIssue[] {
+function validateBlock(block: SlideBlock, slideIndex: number, blockIndex: number, bg: string): LayoutIssue[] {
   const issues: LayoutIssue[] = []
 
   if (block.position) {
@@ -80,6 +107,20 @@ function validateBlock(block: SlideBlock, slideIndex: number, blockIndex: number
         issues.push({ type: 'empty_content', severity: 'warning', message: 'Text block is empty', blockIndex })
       } else if (block.content.length > 500) {
         issues.push({ type: 'text_truncation', severity: 'warning', message: 'Text block exceeds 500 chars, may overflow slide', blockIndex })
+      }
+      // WCAG contrast check
+      if (block.style?.color && bg) {
+        const cr = contrastRatio(block.style.color, bg)
+        const isLarge = block.style.size === 'xlarge' || block.style.size === 'large'
+        const threshold = isLarge ? 3.0 : 4.5
+        if (cr < threshold) {
+          issues.push({
+            type: 'color_contrast',
+            severity: cr < 2.5 ? 'error' : 'warning',
+            message: `Text color #${block.style.color.replace('#','')} has low contrast (${cr.toFixed(1)}:1) against background — need ${threshold}:1`,
+            blockIndex,
+          })
+        }
       }
       break
 
