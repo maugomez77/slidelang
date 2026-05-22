@@ -32,6 +32,22 @@ export function validateSlide(slide: Slide, slideIndex: number): LayoutIssue[] {
     issues.push(...blockIssues)
   })
 
+  const positioned = slide.blocks.filter(b => b.position)
+  for (let i = 0; i < positioned.length; i++) {
+    for (let j = i + 1; j < positioned.length; j++) {
+      const a = positioned[i].position!
+      const b = positioned[j].position!
+      if (a.x < b.x + (b.width || 20) && a.x + (a.width || 20) > b.x &&
+          a.y < b.y + (b.height || 20) && a.y + (a.height || 20) > b.y) {
+        issues.push({
+          type: 'overlap',
+          severity: 'warning',
+          message: `Block ${i + 1} overlaps with block ${j + 1}`,
+        })
+      }
+    }
+  }
+
   if (slide.background && slide.blocks.some(b => b.type === 'text')) {
     issues.push({
       type: 'color_contrast',
@@ -46,6 +62,17 @@ export function validateSlide(slide: Slide, slideIndex: number): LayoutIssue[] {
 
 function validateBlock(block: SlideBlock, slideIndex: number, blockIndex: number): LayoutIssue[] {
   const issues: LayoutIssue[] = []
+
+  if (block.position) {
+    const p = block.position
+    const maxDim = p.unit === 'px' ? 1200 : 100
+    if (p.x < 0 || p.y < 0) {
+      issues.push({ type: 'out_of_bounds', severity: 'warning', message: 'Block position has negative coordinates', blockIndex })
+    }
+    if (p.width && (p.x + p.width > maxDim)) {
+      issues.push({ type: 'out_of_bounds', severity: 'warning', message: 'Block extends beyond slide edge horizontally', blockIndex })
+    }
+  }
 
   switch (block.type) {
     case 'text':

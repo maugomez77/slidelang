@@ -10,16 +10,27 @@ export type TextStyle = {
   align?: 'left' | 'center' | 'right'
 }
 
+export type Position = {
+  x: number
+  y: number
+  width?: number
+  height?: number
+  unit?: '%' | 'px'
+  zIndex?: number
+}
+
 export type TextBlock = {
   type: 'text'
   content: string
   style?: TextStyle
+  position?: Position
 }
 
 export type ListBlock = {
   type: 'bullets' | 'numbered'
   items: string[]
   style?: TextStyle
+  position?: Position
 }
 
 export type ChartType = 'bar' | 'line' | 'pie' | 'area'
@@ -34,12 +45,14 @@ export type ChartBlock = {
     values: number[]
     color?: string
   }[]
+  position?: Position
 }
 
 export type MathBlock = {
   type: 'math'
   expression: string
   inline?: boolean
+  position?: Position
 }
 
 export type ImageSource = {
@@ -54,12 +67,13 @@ export type ImageBlock = {
   type: 'image'
   source: ImageSource
   fit?: 'contain' | 'cover' | 'fill'
+  position?: Position
 }
 
 export type SlideBlock = TextBlock | ListBlock | ChartBlock | MathBlock | ImageBlock
 
 export type LayoutIssue = {
-  type: 'overflow' | 'overlap' | 'missing_chart_data' | 'missing_image' | 'empty_content' | 'text_truncation' | 'color_contrast'
+  type: 'overflow' | 'overlap' | 'missing_chart_data' | 'missing_image' | 'empty_content' | 'text_truncation' | 'color_contrast' | 'out_of_bounds'
   severity: 'error' | 'warning' | 'info'
   message: string
   blockIndex?: number

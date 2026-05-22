@@ -1,4 +1,4 @@
-import { DeckSpec, Slide, SlideBlock, TextStyle, ChartType, ImageSource } from './schema'
+import { DeckSpec, Slide, SlideBlock, Position } from './schema'
 
 const THEME_CSS: Record<string, string> = {
   default: '--bg: #fff; --fg: #1a1a2e; --accent: #4361ee; --heading: #1a1a2e; --code-bg: #f5f5f5;',
@@ -152,20 +152,28 @@ function compileImageFullSlide(slide: Slide): string {
         </div>`
 }
 
+function withPos(block: SlideBlock, inner: string): string {
+  const ps = posStyle(block.position)
+  if (!ps) return inner
+  return `<div style="${ps}">\n${inner}\n</div>`
+}
+
 function compileBlocks(blocks: SlideBlock[]): string {
   return blocks.map(b => compileBlock(b)).join('\n')
 }
 
 function compileBlock(block: SlideBlock): string {
+  let inner = ''
   switch (block.type) {
-    case 'text': return compileTextBlock(block)
+    case 'text': inner = compileTextBlock(block); break
     case 'bullets':
-    case 'numbered': return compileListBlock(block)
-    case 'chart': return compileChartBlock(block)
-    case 'math': return compileMathBlock(block)
-    case 'image': return compileImageBlock(block)
+    case 'numbered': inner = compileListBlock(block); break
+    case 'chart': inner = compileChartBlock(block); break
+    case 'math': inner = compileMathBlock(block); break
+    case 'image': inner = compileImageBlock(block); break
     default: return ''
   }
+  return withPos(block, inner)
 }
 
 function compileTextBlock(block: Extract<SlideBlock, { type: 'text' }>): string {
@@ -251,6 +259,20 @@ function compileImageBlock(block: Extract<SlideBlock, { type: 'image' }>): strin
           <img src="${escapeHTML(src.url)}" alt="${escapeHTML(src.alt || '')}" style="${src.width ? `width:${src.width};` : ''}${src.height ? `height:${src.height};` : ''}" />
           ${src.caption ? `<figcaption>${escapeHTML(src.caption)}</figcaption>` : ''}
         </figure>`
+}
+
+function posStyle(pos?: Position): string {
+  if (!pos) return ''
+  const isPct = pos.unit !== 'px'
+  const parts: string[] = [
+    `position:absolute;`,
+    `left:${pos.x}${isPct ? '%' : 'px'};`,
+    `top:${pos.y}${isPct ? '%' : 'px'};`,
+  ]
+  if (pos.width) parts.push(`width:${pos.width}${isPct ? '%' : 'px'};`)
+  if (pos.height) parts.push(`height:${pos.height}${isPct ? '%' : 'px'};`)
+  if (pos.zIndex) parts.push(`z-index:${pos.zIndex};`)
+  return parts.join('')
 }
 
 function escapeHTML(s: string): string {

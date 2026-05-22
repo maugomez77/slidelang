@@ -1,41 +1,63 @@
 import React from 'react'
-import { Slide, SlideBlock } from '../dsl/schema'
+import { Slide, SlideBlock, Position } from '../dsl/schema'
 import { ChartRenderer } from './ChartRenderer'
 import { MathRenderer } from './MathRenderer'
 import { ImageRenderer } from './ImageRenderer'
 
-function BlockRenderer({ block }: { block: SlideBlock }) {
-  switch (block.type) {
-    case 'text':
-      return <TextBlockRenderer block={block} />
-    case 'bullets':
-      return (
-        <ul style={{ textAlign: 'left', paddingLeft: '1.5em', margin: '0.3em 0' }}>
-          {block.items.map((item, i) => (
-            <li key={i} style={{ margin: '0.2em 0', fontSize: '0.85em' }}>{item}</li>
-          ))}
-        </ul>
-      )
-    case 'numbered':
-      return (
-        <ol style={{ textAlign: 'left', paddingLeft: '1.5em', margin: '0.3em 0' }}>
-          {block.items.map((item, i) => (
-            <li key={i} style={{ margin: '0.2em 0', fontSize: '0.85em' }}>{item}</li>
-          ))}
-        </ol>
-      )
-    case 'chart':
-      return <ChartRenderer block={block} />
-    case 'math':
-      return <MathRenderer block={block} />
-    case 'image':
-      return <ImageRenderer block={block} />
-    default:
-      return null
+function posToStyle(pos?: Position): React.CSSProperties {
+  if (!pos) return {}
+  const isPct = pos.unit !== 'px'
+  return {
+    position: 'absolute',
+    left: isPct ? `${pos.x}%` : `${pos.x}px`,
+    top: isPct ? `${pos.y}%` : `${pos.y}px`,
+    width: pos.width ? (isPct ? `${pos.width}%` : `${pos.width}px`) : undefined,
+    height: pos.height ? (isPct ? `${pos.height}%` : `${pos.height}px`) : undefined,
+    zIndex: pos.zIndex ?? 1,
   }
 }
 
-function TextBlockRenderer({ block }: { block: TextBlock }) {
+function BlockRenderer({ block }: { block: SlideBlock }) {
+  const posStyle = posToStyle(block.position)
+
+  const inner = (() => {
+    switch (block.type) {
+      case 'text':
+        return <TextBlockRenderer block={block} />
+      case 'bullets':
+        return (
+          <ul style={{ textAlign: 'left', paddingLeft: '1.5em', margin: '0.3em 0' }}>
+            {block.items.map((item, i) => (
+              <li key={i} style={{ margin: '0.2em 0', fontSize: '0.85em' }}>{item}</li>
+            ))}
+          </ul>
+        )
+      case 'numbered':
+        return (
+          <ol style={{ textAlign: 'left', paddingLeft: '1.5em', margin: '0.3em 0' }}>
+            {block.items.map((item, i) => (
+              <li key={i} style={{ margin: '0.2em 0', fontSize: '0.85em' }}>{item}</li>
+            ))}
+          </ol>
+        )
+      case 'chart':
+        return <ChartRenderer block={block} />
+      case 'math':
+        return <MathRenderer block={block} />
+      case 'image':
+        return <ImageRenderer block={block} />
+      default:
+        return null
+    }
+  })()
+
+  if (block.position) {
+    return <div style={posStyle}>{inner}</div>
+  }
+  return inner
+}
+
+function TextBlockRenderer({ block }: { block: Extract<SlideBlock, { type: 'text' }> }) {
   const s = block.style || {}
   const sizeMap: Record<string, string> = { small: '0.75em', medium: '0.9em', large: '1.1em', xlarge: '1.4em' }
 
@@ -54,9 +76,13 @@ function TextBlockRenderer({ block }: { block: TextBlock }) {
   )
 }
 
-type TextBlock = Extract<SlideBlock, { type: 'text' }>
+function getSlideGridStyle(kind: Slide['kind'], blocks: SlideBlock[]): React.CSSProperties {
+  const hasSpatial = blocks.some(b => b.position)
 
-function getSlideGridStyle(kind: Slide['kind']): React.CSSProperties {
+  if (hasSpatial) {
+    return { position: 'relative', minHeight: 300 }
+  }
+
   switch (kind) {
     case 'title':
       return { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }
@@ -72,16 +98,17 @@ function getSlideGridStyle(kind: Slide['kind']): React.CSSProperties {
 }
 
 export function SlideRenderer({ slide }: { slide: Slide }) {
-  const gridStyle = getSlideGridStyle(slide.kind)
+  const gridStyle = getSlideGridStyle(slide.kind, slide.blocks)
   const isComparison = slide.kind === 'comparison'
   const isTwoCol = slide.kind === 'two-column'
+  const isSpatial = slide.blocks.some(b => b.position)
 
   const issues = slide.layoutIssues?.filter(i => i.severity === 'error' || i.severity === 'warning') || []
 
   return (
     <div style={{ padding: '0.5em', position: 'relative', ...gridStyle }}>
       {issues.length > 0 && (
-        <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: 4 }}>
+        <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: 4, zIndex: 100 }}>
           {issues.map((issue, i) => (
             <span key={i} style={{
               padding: '1px 6px',
@@ -110,9 +137,19 @@ export function SlideRenderer({ slide }: { slide: Slide }) {
         <p style={{ opacity: 0.7, fontSize: '0.85em', margin: '0 0 0.5em 0' }}>{slide.subtitle}</p>
       )}
 
-      {isComparison ? renderComparisonBlocks(slide.blocks) : slide.blocks.map((block, i) => (
-        <BlockRenderer key={i} block={block} />
-      ))}
+      {isSpatial ? (
+        <div style={{ position: 'relative', minHeight: 300 }}>
+          {slide.blocks.map((block, i) => (
+            <BlockRenderer key={i} block={block} />
+          ))}
+        </div>
+      ) : isComparison ? (
+        renderComparisonBlocks(slide.blocks)
+      ) : (
+        slide.blocks.map((block, i) => (
+          <BlockRenderer key={i} block={block} />
+        ))
+      )}
     </div>
   )
 }
