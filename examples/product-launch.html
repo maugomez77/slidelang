@@ -1,10 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Distributed Systems Conference 2025</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Atlas AI — Product Launch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&DM+Serif+Display:ital@0;1&Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<style>:root{--bg:#fafaf9;--surf:#ffffff;--accent:#1d4ed8;--a2:#3b82f6;--tx:#334155;--tx2:#94a3b8;--hd:#0f172a;--bd:#e8ecf0;--ok:#10b981;--err:#ef4444;--wrn:#f59e0b;--grd:#f1f5f9;--kpi:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);--r:14px;--r2:22px}
+<style>:root{--bg:#0a1128;--surf:#151d3d;--accent:#3b82f6;--a2:#60a5fa;--tx:#d1d9e8;--tx2:#6b7da0;--hd:#f0f4fc;--bd:#1e2a4d;--ok:#22c55e;--err:#ef4444;--wrn:#f59e0b;--grd:#182244;--kpi:linear-gradient(135deg, #151d3d22 0%, #151d3d55 100%);--r:14px;--r2:22px}
 *,*:before,*:after{box-sizing:border-box}
 html,body{background:var(--bg);color:var(--tx);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .reveal{font-family:'Inter',-apple-system,sans-serif;font-size:30px}
@@ -25,7 +25,7 @@ li{margin:0.38em 0;line-height:1.5;font-size:0.82em}
 li::marker{color:var(--accent);font-weight:700}
 ol{counter-reset:sl;padding-left:0;list-style:none}
 ol li{counter-increment:sl;padding-left:2.3em;position:relative}
-ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:translateY(-50%);width:1.7em;height:1.7em;background:var(--accent);color:#fff;border-radius:50%;font-size:0.62em;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif}
+ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:translateY(-50%);width:1.7em;height:1.7em;background:var(--accent);color:#0a1128;border-radius:50%;font-size:0.62em;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif}
 
 /* Accent heading bar — gradient underline */
 .ha{position:relative;padding-bottom:0.3em;margin-bottom:0.5em;display:inline-block}
@@ -155,152 +155,129 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
       <section class="">
 <div class="slide-body">
 <div class="hero">
-<h1>Building a Multi-Model Database That Doesn't Suck</h1>
+<h1>Atlas AI</h1>
 <div class="hl"></div>
-<p class="hs">How we unified 5 data models under a single query engine</p>
-<p class="hm">Mauricio Gomez · November 2025</p>
-<div style="margin-top:1.2em"><p style="line-height:1.65;margin:0.22em 0;font-size:0.68em;color:#94a3b8">Distributed Systems Conference · November 2025</p></div>
+<p class="hs">The autonomous data platform for modern engineering teams</p>
+<p class="hm">Product Team · June 2026</p>
+<div style="margin-top:1.2em"><p style="line-height:1.65;margin:0.22em 0;font-size:0.68em;color:#6b7da0">Product Launch · June 2026</p></div>
 </div>
 </div>
 
-<div class="sf"><span>Building a Multi-Model Database That Doesn't Suck</span><span>Distributed Systems Conference 2025</span></div>
+<div class="sf"><span>Atlas AI</span><span>Atlas AI — Product Launch</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<h2><span class="ha">About me</span></h2>
-<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">Why I spent 4 years of my life on this problem</p>
-<ul><li>Previously: core database engineer at a FAANG company (2018–2021)</li><li>Built a real-time analytics pipeline handling 2M events/sec</li><li>Ran a small SaaS company with 3 databases — hated every minute</li><li>Open-source contributor to PostgreSQL, Redis, and ClickHouse</li><li>Currently building NebulaDB — open-source, multi-model, single-engine</li></ul>
-<p style="line-height:1.65;margin:0.22em 0;font-style:italic;font-size:0.68em;color:#94a3b8">I wrote the first line of NebulaDB on a flight from SFO to JFK. It didn't compile for 6 months.</p>
+<h2><span class="ha">What We're Covering</span></h2>
+<div class="ag">
+<div class="ag-item"><div class="ag-num">01</div><div><div class="ag-title">The Problem We Solved</div><div class="ag-desc">Why existing tools fail at scale</div></div></div>
+<div class="ag-item"><div class="ag-num">02</div><div><div class="ag-title">How Atlas AI Works</div><div class="ag-desc">The architecture behind autonomous data ops</div></div></div>
+<div class="ag-item"><div class="ag-num">03</div><div><div class="ag-title">Living With Atlas</div><div class="ag-desc">Real customer stories after 6 months</div></div></div>
+<div class="ag-item"><div class="ag-num">04</div><div><div class="ag-title">What's Next</div><div class="ag-desc">The Q3-Q4 roadmap and pricing</div></div></div>
+</div>
 </div>
 
-<div class="sf"><span>About me</span><span>Distributed Systems Conference 2025</span></div>
+<div class="sf"><span>What We're Covering</span><span>Atlas AI — Product Launch</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<div class="sec">
-    <p class="sn">Part 1: The Problem</p>
-    
+<div class="big-num">
+    <div class="bn-val">34%</div>
+    <div class="bn-lbl">Sprint time lost to infra</div>
+    <div class="bn-desc">Engineering teams spend 34% of their sprint capacity on data infrastructure maintenance instead of building features.</div>
   </div>
 </div>
 
-<div class="sf"><span>Part 1: The Problem</span><span>Distributed Systems Conference 2025</span></div>
+<div class="sf"><span>The Problem</span><span>Atlas AI — Product Launch</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<h2><span class="ha">Every company becomes a database company</span></h2>
-<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">Whether you like it or not.</p>
-<ul><li>Stripe: runs Postgres, MongoDB, Elasticsearch, Redis, and FoundationDB</li><li>Notion: migrated from Postgres to a custom sharded architecture</li><li>Discord: went from MongoDB to Cassandra to ScyllaDB</li><li>Figma: built a custom multiplayer sync engine on top of Postgres</li><li>Uber: runs 20+ different database systems in production</li></ul>
-<p style="line-height:1.65;margin:0.22em 0;font-weight:700;font-size:1.08em;color:#0ea5e9">The average Series B company touches 4.2 different databases. None of them talk to each other.</p>
+<h2><span class="ha">Atlas AI by the Numbers</span></h2>
+<div class="sr"><div class="kp"><div class="kv">94%</div><div class="kl">Auto-resolution rate</div></div><div class="kp"><div class="kv">2.3s</div><div class="kl">Avg detection time</div></div><div class="kp"><div class="kv">340+</div><div class="kl">Integrations</div></div><div class="kp"><div class="kv">62%</div><div class="kl">Cost reduction</div></div></div>
 </div>
 
-<div class="sf"><span>Every company becomes a database company</span><span>Distributed Systems Conference 2025</span></div>
+<div class="sf"><span>Atlas AI by the Numbers</span><span>Atlas AI — Product Launch</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<h2><span class="ha">The multi-model tax</span></h2>
-<div class="ct"><div><p style="line-height:1.65;margin:0.22em 0;font-weight:700;font-size:1.08em">Write Path</p>
-<ul><li>Write to primary DB</li><li>Publish change event</li><li>Transform and clean</li><li>Index in search engine</li><li>Invalidate cache</li></ul></div><div><p style="line-height:1.65;margin:0.22em 0;font-weight:700;font-size:1.08em">Read Path</p>
-<ul><li>Check cache</li><li>Query primary DB</li><li>Search index for full-text</li><li>Merge results in app code</li><li>Handle inconsistencies</li></ul></div></div>
+<h2><span class="ha">How Atlas AI Works</span></h2>
+<div class="fc">
+<div class="fc-node">Connect → Your Data Stack</div>
+<div class="fc-node">Learn → AI Trains on Patterns</div>
+<div class="fc-node">Detect → Find Issues Before They Break</div>
+<div class="fc-node">Resolve → Auto-fix or Suggest</div>
+<div class="fc-node">Improve → Model Gets Smarter</div>
+</div>
 </div>
 
-<div class="sf"><span>The multi-model tax</span><span>Distributed Systems Conference 2025</span></div>
+<div class="sf"><span>How Atlas AI Works</span><span>Atlas AI — Product Launch</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<div class="sec">
-    <p class="sn">Part 2: The Architecture</p>
-    
+<h2><span class="ha">Platform Telemetry</span></h2>
+<div class="db">
+<div class="db-chart"><div class="cb">
+    <div class="ctt">Incidents Resolved</div>
+    <canvas id="cket330" style="width:100%;height:300px"></canvas>
   </div>
-</div>
-
-<div class="sf"><span>Part 2: The Architecture</span><span>Distributed Systems Conference 2025</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<h2><span class="ha">Single engine, multiple models</span></h2>
-<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">One storage layer, one query planner, one transaction manager — many access patterns.</p>
-<ul><li>Storage Engine: LSM-tree with pluggable column families for each model</li><li>Query Planner: Model-aware cost-based optimizer — picks the best index per query pattern</li><li>Transaction Manager: Serializable snapshot isolation across models, same MVCC layer</li><li>Index Layer: B-tree for relational, inverted for text, HNSW for vectors, adjacency list for graph</li><li>Wire Protocols: PostgreSQL wire protocol, Redis RESP, HTTP/GraphQL</li></ul>
-</div>
-
-<div class="sf"><span>Single engine, multiple models</span><span>Distributed Systems Conference 2025</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<h2><span class="ha">Performance Benchmarks</span></h2>
-<div class="cb">
-    <div class="ctt">Operations per second (higher is better)</div>
-    <canvas id="c7t0ux3" style="width:100%;height:300px"></canvas>
-  </div>
-  <script>(()=>{const c=document.getElementById('c7t0ux3');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Point Read","Range Scan","Full-text","Vector KNN","Graph Traversal"],datasets:[{"label":"NebulaDB","data":[45000,28000,15200,8900,4200],"color":"#0ea5e9"},{"label":"Postgres","data":[48000,22000,3200,400,0],"color":"#94a3b8"}]};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['#1d4ed8','#3b82f6','#f59e0b','#ef4444','#10b981'];
-  ctx.strokeStyle='#f1f5f9';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='right';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}
+  <script>(()=>{const c=document.getElementById('cket330');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Jan","Feb","Mar","Apr","May","Jun"],datasets:[{"label":"Auto","data":[45,62,89,134,190,280],"color":"#3b82f6"},{"label":"Manual","data":[380,342,310,280,240,210],"color":"#60a5fa"}]};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['#3b82f6','#60a5fa','#f59e0b','#ef4444','#22c55e'];
+  ctx.strokeStyle='#182244';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#6b7da0';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='right';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}
   const gap=data.labels.length>1?cw/data.labels.length:80;const barW=Math.min(gap*0.5,44);const groupW=barW*data.datasets.length;const gg=(gap-groupW)/2;
-  data.datasets.forEach((ds,di)=>{const col=ds.color||pal[di%pal.length];ds.data.forEach((v,vi)=>{const x=pad.l+vi*gap+gg+di*barW;const bh=Math.max((v/maxV)*ch,2);const y=pad.t+ch-bh;const grd=ctx.createLinearGradient(x,pad.t,x,pad.t+ch);grd.addColorStop(0,col);grd.addColorStop(1,col+'22');ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(x,y,barW-3,bh,[5,5,0,0]);ctx.fill();ctx.fillStyle='#334155';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(Math.round(v),x+(barW-3)/2,y-7)})});
-  ctx.fillStyle='#334155';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';data.labels.forEach((l,vi)=>{ctx.fillText(String(l),pad.l+vi*gap+gap/2,h-12)});
-  let lx=pad.l;ctx.textAlign='left';data.datasets.forEach((ds,di)=>{ctx.fillStyle=ds.color||pal[di%pal.length];ctx.beginPath();ctx.arc(lx+5,h-30,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#94a3b8';ctx.font='600 10px Inter,sans-serif';ctx.fillText(ds.label,lx+14,h-24);lx+=ctx.measureText(ds.label).width+34})})()</script>
+  data.datasets.forEach((ds,di)=>{const col=ds.color||pal[di%pal.length];ds.data.forEach((v,vi)=>{const x=pad.l+vi*gap+gg+di*barW;const bh=Math.max((v/maxV)*ch,2);const y=pad.t+ch-bh;const grd=ctx.createLinearGradient(x,pad.t,x,pad.t+ch);grd.addColorStop(0,col);grd.addColorStop(1,col+'22');ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(x,y,barW-3,bh,[5,5,0,0]);ctx.fill();ctx.fillStyle='#d1d9e8';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(Math.round(v),x+(barW-3)/2,y-7)})});
+  ctx.fillStyle='#d1d9e8';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';data.labels.forEach((l,vi)=>{ctx.fillText(String(l),pad.l+vi*gap+gap/2,h-12)});
+  let lx=pad.l;ctx.textAlign='left';data.datasets.forEach((ds,di)=>{ctx.fillStyle=ds.color||pal[di%pal.length];ctx.beginPath();ctx.arc(lx+5,h-30,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#6b7da0';ctx.font='600 10px Inter,sans-serif';ctx.fillText(ds.label,lx+14,h-24);lx+=ctx.measureText(ds.label).width+34})})()</script></div>
+<div class="db-chart"><div class="cb"><div class="ctt">Resolution Type (June)</div><canvas id="cudkhvb" style="width:100%;height:300px"></canvas></div><script>(()=>{const c=document.getElementById('cudkhvb');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Auto-resolved","Human-guided","Escalated"],datasets:[{"label":"Resolution","data":[57,28,15],"color":"#3b82f6"}]};const cx=w/2,cy=h/2-10,r=Math.min(w,h)/2-55,ir=r*0.55;const ds=data.datasets[0];const total=ds.data.reduce(function(a,v){return a+v},0);if(total===0)return;const colors=['#3b82f6','#60a5fa','#f59e0b','#ef4444','#22c55e'];let angle=-Math.PI/2;ds.data.forEach(function(v,i){var slice=v/total*Math.PI*2;var color=ds.color||colors[i%colors.length];ctx.fillStyle=color;ctx.beginPath();ctx.arc(cx,cy,r,angle,angle+slice);ctx.arc(cx,cy,ir,angle+slice,angle,true);ctx.closePath();ctx.fill();var mid=angle+slice/2;var pct=Math.round(v/total*100);if(pct>5){var lx=cx+Math.cos(mid)*(r+ir)/2,ly=cy+Math.sin(mid)*(r+ir)/2;ctx.fillStyle='#0a1128';ctx.font='600 12px Inter,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(pct+'%',lx,ly)}angle+=slice});var lx=20,ly=h-20;ds.data.forEach(function(v,i){var color=ds.color||colors[i%colors.length];var pct=Math.round(v/total*100);ctx.fillStyle=color;ctx.fillRect(lx,ly-8,10,10);ctx.fillStyle='#d1d9e8';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='left';ctx.fillText(data.labels[i]+' '+pct+'%',lx+14,ly);lx+=ctx.measureText(data.labels[i]+' '+pct+'%').width+28})})()</script></div>
+</div>
 </div>
 
-<div class="sf"><span>Performance Benchmarks</span><span>Distributed Systems Conference 2025</span></div>
+<div class="sf"><span>Platform Telemetry</span><span>Atlas AI — Product Launch</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<h2><span class="ha">Vector Search Math</span></h2>
-<div class="mb">$$\text{similarity}(q, d) = \frac{q \cdot d}{|q| \cdot |d|} = \cos(\theta)$$</div>
-<div class="mb">$$\text{HNSW recall} \approx 1 - e^{-k \cdot \log(M)}$$</div>
-<p style="line-height:1.65;margin:0.22em 0;font-style:italic;font-size:0.82em">We use HNSW with M=16, efConstruction=200. 99.2% recall at 10x faster than brute force.</p>
+<h2><span class="ha">Q2 Feature Completion</span></h2>
+<div class="pg">
+<div class="pg-bar"><div class="pg-lbl"><span>Core Auto-detection Engine</span><span class="pg-val">100%</span></div><div class="pg-track"><div class="pg-fill" style="width:100%"></div></div></div>
+<div class="pg-bar"><div class="pg-lbl"><span>300+ Pre-built Connectors</span><span class="pg-val">85%</span></div><div class="pg-track"><div class="pg-fill" style="width:85%"></div></div></div>
+<div class="pg-bar"><div class="pg-lbl"><span>Natural Language Query Interface</span><span class="pg-val">72%</span></div><div class="pg-track"><div class="pg-fill" style="width:72%"></div></div></div>
+<div class="pg-bar"><div class="pg-lbl"><span>SOC 2 Type II Certification</span><span class="pg-val">90%</span></div><div class="pg-track"><div class="pg-fill" style="width:90%"></div></div></div>
+<div class="pg-bar"><div class="pg-lbl"><span>Mobile Incident Response App</span><span class="pg-val">40%</span></div><div class="pg-track"><div class="pg-fill" style="width:40%"></div></div></div>
+</div>
 </div>
 
-<div class="sf"><span>Vector Search Math</span><span>Distributed Systems Conference 2025</span></div>
+<div class="sf"><span>Q2 Feature Completion</span><span>Atlas AI — Product Launch</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<div class="sec">
-    <p class="sn">Part 3: Lessons Learned</p>
-    
+<h2><span class="ha">Launch Roadmap</span></h2><div class="tl"><p style="color:var(--tx2)">No timeline items found. Add bullets with "Date — Description" format.</p></div>
+</div>
+
+<div class="sf"><span>Launch Roadmap</span><span>Atlas AI — Product Launch</span></div>
+      </section>
+      <section class="">
+<div class="slide-body">
+<h2><span class="ha">Design Partners</span></h2>
+<div class="lg">
+<div class="lg-item"><img src="https://picsum.photos/seed/acme/200/80" alt="Acme Corp" loading="lazy"></div>
+<div class="lg-item"><img src="https://picsum.photos/seed/nexa/200/80" alt="Nexa" loading="lazy"></div>
+<div class="lg-item"><img src="https://picsum.photos/seed/pulse/200/80" alt="Pulse" loading="lazy"></div>
+<div class="lg-item"><img src="https://picsum.photos/seed/synapse/200/80" alt="Synapse" loading="lazy"></div>
+<div class="lg-item"><img src="https://picsum.photos/seed/vertex/200/80" alt="Vertex" loading="lazy"></div>
+<div class="lg-item"><img src="https://picsum.photos/seed/helix/200/80" alt="Helix" loading="lazy"></div>
+</div>
+</div>
+
+<div class="sf"><span>Design Partners</span><span>Atlas AI — Product Launch</span></div>
+      </section>
+      <section class="">
+<div class="slide-body">
+<div class="ctct">
+    <h1>Get Early Access</h1>
+    <div class="ctct-line"></div>
+    <p style="font-size:1.1em;color:var(--tx2);margin-bottom:0.8em">We're onboarding the first 500 teams starting next week.</p>
+    <p class="ctct-info">atlas.ai/early-access</p><p class="ctct-info">hello@atlas.ai</p><p class="ctct-info">Join the waitlist — early access includes 3 months free for the first 500 teams.</p>
   </div>
 </div>
 
-<div class="sf"><span>Part 3: Lessons Learned</span><span>Distributed Systems Conference 2025</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<h2><span class="ha">What broke (and how we fixed it)</span></h2>
-<ol><li>LSM compaction storms at 2TB per node → tiered compaction + rate limiting</li><li>HNSW graph corruption on crash → write-ahead log for index mutations</li><li>Cross-model deadlocks → global wait-for graph with timeouts</li><li>Postgres wire protocol edge cases → fuzzed with 10K+ random protocol messages</li><li>Memory pressure under mixed workloads → adaptive cache sizing per model</li></ol>
-</div>
-
-<div class="sf"><span>What broke (and how we fixed it)</span><span>Distributed Systems Conference 2025</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<div class="qt">
-    <blockquote>Do not build a multi-model database. Pick one model. Make it fast. Then add the next one. If you try to build everything at once, you will build nothing at all.</blockquote>
-    <p class="qa">— — The single most important lesson</p>
-  </div>
-</div>
-
-<div class="sf"><span></span><span>Distributed Systems Conference 2025</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<div class="sec">
-    <p class="sn">Thank You</p>
-    
-  </div>
-</div>
-
-<div class="sf"><span>Thank You</span><span>Distributed Systems Conference 2025</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<div class="hero">
-<h1>Questions?</h1>
-<div class="hl"></div>
-<p class="hs">github.com/nebuladb · nebuladb.dev · @maugomez</p>
-<p class="hm">Mauricio Gomez · November 2025</p>
-<div style="margin-top:1.2em"><p style="line-height:1.65;margin:0.22em 0;font-weight:700;font-size:0.82em;color:#0ea5e9">We are hiring! — hello@nebuladb.dev</p></div>
-</div>
-</div>
-
-<div class="sf"><span>Questions?</span><span>Distributed Systems Conference 2025</span></div>
+<div class="sf"><span>Get Early Access</span><span>Atlas AI — Product Launch</span></div>
       </section>
 </div></div>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>

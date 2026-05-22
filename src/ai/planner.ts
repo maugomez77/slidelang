@@ -16,7 +16,7 @@ Given a user's topic prompt, generate a complete deck specification as JSON.
 
 The deck spec schema is:
 {
-  meta: { title, author?, date?, theme: "noir"|"air"|"bold"|"warm", description? },
+  meta: { title, author?, date?, theme: "noir"|"air"|"bold"|"warm"|"crimson"|"sage"|"navy"|"neon", description? },
   slides: [
     {
       kind: "title"|"section"|"content"|"two-column"|"image-full"|"quote"|"comparison"|"chart"|"math"|"blank",

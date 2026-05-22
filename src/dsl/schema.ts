@@ -1,6 +1,6 @@
-export type SlideKind = 'title' | 'section' | 'content' | 'two-column' | 'image-full' | 'quote' | 'comparison' | 'chart' | 'math' | 'blank' | 'kpi' | 'timeline'
+export type SlideKind = 'title' | 'section' | 'content' | 'two-column' | 'image-full' | 'quote' | 'comparison' | 'chart' | 'math' | 'blank' | 'kpi' | 'timeline' | 'big-number' | 'logo-grid' | 'flowchart' | 'agenda' | 'contact' | 'dashboard' | 'team' | 'progress'
 
-export type ThemePreset = 'noir' | 'air' | 'bold' | 'warm'
+export type ThemePreset = 'noir' | 'air' | 'bold' | 'warm' | 'crimson' | 'sage' | 'navy' | 'neon'
 
 export type TextStyle = {
   bold?: boolean
@@ -33,7 +33,7 @@ export type ListBlock = {
   position?: Position
 }
 
-export type ChartType = 'bar' | 'line' | 'pie' | 'area'
+export type ChartType = 'bar' | 'line' | 'pie' | 'donut' | 'area' | 'scatter'
 
 export type ChartBlock = {
   type: 'chart'
@@ -86,6 +86,7 @@ export type Slide = {
   blocks: SlideBlock[]
   background?: string
   notes?: string
+  datetime?: string
   layoutIssues?: LayoutIssue[]
 }
 

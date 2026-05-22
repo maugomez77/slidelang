@@ -1,10 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>NebulaDB</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Q2 2026 — Investor Update</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&DM+Serif+Display:ital@0;1&Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<style>:root{--bg:#08080f;--surf:#111122;--accent:#d4a853;--a2:#f0c969;--tx:#d4d0c8;--tx2:#7a766e;--hd:#faf8f2;--bd:#1e1e33;--ok:#5bb87a;--err:#e0556a;--wrn:#d4a853;--grd:#1a1a30;--kpi:linear-gradient(135deg, #1a1a3011 0%, #1a1a3044 100%);--r:14px;--r2:22px}
+<style>:root{--bg:#1a0a0c;--surf:#2d1518;--accent:#dc2626;--a2:#f87171;--tx:#e5d8d9;--tx2:#9e7c7e;--hd:#faf0f0;--bd:#3d1c1f;--ok:#22c55e;--err:#dc2626;--wrn:#f59e0b;--grd:#2d181a;--kpi:linear-gradient(135deg, #1a0a0c44 0%, #2d151844 100%);--r:14px;--r2:22px}
 *,*:before,*:after{box-sizing:border-box}
 html,body{background:var(--bg);color:var(--tx);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .reveal{font-family:'Inter',-apple-system,sans-serif;font-size:30px}
@@ -25,7 +25,7 @@ li{margin:0.38em 0;line-height:1.5;font-size:0.82em}
 li::marker{color:var(--accent);font-weight:700}
 ol{counter-reset:sl;padding-left:0;list-style:none}
 ol li{counter-increment:sl;padding-left:2.3em;position:relative}
-ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:translateY(-50%);width:1.7em;height:1.7em;background:var(--accent);color:#08080f;border-radius:50%;font-size:0.62em;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif}
+ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:translateY(-50%);width:1.7em;height:1.7em;background:var(--accent);color:#1a0a0c;border-radius:50%;font-size:0.62em;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif}
 
 /* Accent heading bar — gradient underline */
 .ha{position:relative;padding-bottom:0.3em;margin-bottom:0.5em;display:inline-block}
@@ -155,133 +155,100 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
       <section class="">
 <div class="slide-body">
 <div class="hero">
-<h1>NebulaDB</h1>
+<h1>Q2 2026 Investor Update</h1>
 <div class="hl"></div>
-<p class="hs">The multi-model database for the next generation of applications</p>
-<p class="hm">Mauricio Gomez · 2025</p>
-<div style="margin-top:1.2em"><p style="line-height:1.65;margin:0.22em 0;font-size:0.68em;color:#94a3b8">Series A Pitch Deck — Confidential</p></div>
+<p class="hs">Confidential — For Board Members and Investors Only</p>
+<p class="hm">CEO · July 2026</p>
+<div style="margin-top:1.2em"><p style="line-height:1.65;margin:0.22em 0;font-size:0.68em;color:#9e7c7e">July 15, 2026</p></div>
 </div>
 </div>
 
-<div class="sf"><span>NebulaDB</span><span>NebulaDB</span></div>
+<div class="sf"><span>Q2 2026 Investor Update</span><span>Q2 2026 — Investor Update</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<div class="sec">
-    <p class="sn">The Problem</p>
-    
+<div class="big-num">
+    <div class="bn-val">$10.2M</div>
+    <div class="bn-lbl">Annual Recurring Revenue</div>
+    <div class="bn-desc">Crossed the $10M ARR milestone this quarter — 18 months from launch.</div>
   </div>
 </div>
 
-<div class="sf"><span>The Problem</span><span>NebulaDB</span></div>
+<div class="sf"><span>ARR</span><span>Q2 2026 — Investor Update</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<h2><span class="ha">Teams run 3–5 databases just to ship one app</span></h2>
-<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">Postgres for relational. Redis for caching. Elasticsearch for search. MongoDB for documents. S3 for files.</p>
-<ul><li>Infra complexity: each DB needs provisioning, backups, monitoring, and expertise</li><li>Data sync nightmares: keeping search indexes in sync with the primary store</li><li>Developer friction: 4 different query languages, 4 different mental models</li><li>Cost explosion: paying for 4 managed services that mostly sit idle</li><li>Compliance burden: data scattered across systems, each with different retention policies</li></ul>
-<p style="line-height:1.65;margin:0.22em 0;font-style:italic;font-size:0.68em;color:#94a3b8">There are over 350 active database management systems. The average engineering team uses 3.7 of them.</p>
+<h2><span class="ha">Q2 Snapshots</span></h2>
+<div class="sr"><div class="kp"><div class="kv">$10.2M</div><div class="kl">ARR</div></div><div class="kp"><div class="kv">128%</div><div class="kl">Net Retention</div></div><div class="kp"><div class="kv">2.1%</div><div class="kl">Monthly Churn</div></div><div class="kp"><div class="kv">89</div><div class="kl">NPS</div></div><div class="kp"><div class="kv">62</div><div class="kl">Team Size</div></div><div class="kp"><div class="kv">$28M</div><div class="kl">Cash Remaining</div></div></div>
 </div>
 
-<div class="sf"><span>Teams run 3–5 databases just to ship one app</span><span>NebulaDB</span></div>
+<div class="sf"><span>Q2 Snapshots</span><span>Q2 2026 — Investor Update</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<h2><span class="ha">NebulaDB: One database. Every model.</span></h2>
-<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">Relational, document, graph, vector, key-value, and full-text search — in a single engine with one query language.</p>
-<ul><li>Relational: Full SQL with ACID transactions, joins, and constraints</li><li>Document: JSON-native storage with indexing on nested paths</li><li>Vector: HNSW indices for embeddings, built-in, no plugin needed</li><li>Graph: Cypher-compatible graph traversal engine</li><li>Full-text: BM25 + neural hybrid search out of the box</li><li>Key-value: Sub-millisecond reads with Redis-compatible wire protocol</li></ul>
-</div>
-
-<div class="sf"><span>NebulaDB: One database. Every model.</span><span>NebulaDB</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<h2><span class="ha">Traction</span></h2>
-<div class="sr"><div class="kp"><div class="kv">12,400</div><div class="kl">GitHub Stars</div></div><div class="kp"><div class="kv">3,200</div><div class="kl">Active Instances</div></div><div class="kp"><div class="kv">98.4%</div><div class="kl">Uptime SLA</div></div><div class="kp"><div class="kv">340%</div><div class="kl">YoY Growth</div></div></div>
-</div>
-
-<div class="sf"><span>Traction</span><span>NebulaDB</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<h2><span class="ha">How we win</span></h2>
-<div class="cmp">
-  <div class="cp"><h3>Status Quo</h3><ul><li>4 separate databases to manage</li><li>4 different query languages</li><li>Data sync pipelines everywhere</li><li>4x the infra cost</li><li>SRE team required</li></ul></div>
-  <div class="cp"><h3>With NebulaDB</h3><ul><li>One database. Every model.</li><li>One query language (NSQL)</li><li>No sync — everything in one engine</li><li>1/4 the infra cost</li><li>Managed or self-hosted</li></ul></div>
-</div>
-</div>
-
-<div class="sf"><span>How we win</span><span>NebulaDB</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<h2><span class="ha">Revenue Growth</span></h2>
+<h2><span class="ha">Revenue Trajectory</span></h2>
 <div class="cb">
-    <div class="ctt">Monthly Recurring Revenue ($K)</div>
-    <canvas id="cr6ldeg" style="width:100%;height:300px"></canvas>
+    <div class="ctt">Quarterly Revenue ($K)</div>
+    <canvas id="c7jd64n" style="width:100%;height:300px"></canvas>
   </div>
-  <script>(()=>{const c=document.getElementById('cr6ldeg');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Jan","Feb","Mar","Apr","May","Jun"],datasets:[{"label":"Self-Serve","data":[12,18,27,41,58,82],"color":"#6366f1"},{"label":"Enterprise","data":[8,12,18,25,40,65],"color":"#a78bfa"}]};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['#d4a853','#f0c969','#d4a853','#e0556a','#5bb87a'];
-  ctx.strokeStyle='#1a1a30';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#7a766e';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='right';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}
+  <script>(()=>{const c=document.getElementById('c7jd64n');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Q3'24","Q4'24","Q1'25","Q2'25","Q3'25","Q4'25","Q1'26","Q2'26"],datasets:[{"label":"Revenue","data":[180,420,820,1500,2400,3800,5800,8500],"color":"#dc2626"},{"label":"Target","data":[180,400,800,1500,2400,3800,5600,8000],"color":"#9e7c7e"}]};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['#dc2626','#f87171','#f59e0b','#dc2626','#22c55e'];
+  ctx.strokeStyle='#2d181a';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#9e7c7e';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='right';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}
   const gap=data.labels.length>1?cw/data.labels.length:80;const barW=Math.min(gap*0.5,44);const groupW=barW*data.datasets.length;const gg=(gap-groupW)/2;
-  data.datasets.forEach((ds,di)=>{const col=ds.color||pal[di%pal.length];ds.data.forEach((v,vi)=>{const x=pad.l+vi*gap+gg+di*barW;const bh=Math.max((v/maxV)*ch,2);const y=pad.t+ch-bh;const grd=ctx.createLinearGradient(x,pad.t,x,pad.t+ch);grd.addColorStop(0,col);grd.addColorStop(1,col+'22');ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(x,y,barW-3,bh,[5,5,0,0]);ctx.fill();ctx.fillStyle='#d4d0c8';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(Math.round(v),x+(barW-3)/2,y-7)})});
-  ctx.fillStyle='#d4d0c8';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';data.labels.forEach((l,vi)=>{ctx.fillText(String(l),pad.l+vi*gap+gap/2,h-12)});
-  let lx=pad.l;ctx.textAlign='left';data.datasets.forEach((ds,di)=>{ctx.fillStyle=ds.color||pal[di%pal.length];ctx.beginPath();ctx.arc(lx+5,h-30,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#7a766e';ctx.font='600 10px Inter,sans-serif';ctx.fillText(ds.label,lx+14,h-24);lx+=ctx.measureText(ds.label).width+34})})()</script>
+  data.datasets.forEach((ds,di)=>{const col=ds.color||pal[di%pal.length];ds.data.forEach((v,vi)=>{const x=pad.l+vi*gap+gg+di*barW;const bh=Math.max((v/maxV)*ch,2);const y=pad.t+ch-bh;const grd=ctx.createLinearGradient(x,pad.t,x,pad.t+ch);grd.addColorStop(0,col);grd.addColorStop(1,col+'22');ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(x,y,barW-3,bh,[5,5,0,0]);ctx.fill();ctx.fillStyle='#e5d8d9';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(Math.round(v),x+(barW-3)/2,y-7)})});
+  ctx.fillStyle='#e5d8d9';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';data.labels.forEach((l,vi)=>{ctx.fillText(String(l),pad.l+vi*gap+gap/2,h-12)});
+  let lx=pad.l;ctx.textAlign='left';data.datasets.forEach((ds,di)=>{ctx.fillStyle=ds.color||pal[di%pal.length];ctx.beginPath();ctx.arc(lx+5,h-30,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#9e7c7e';ctx.font='600 10px Inter,sans-serif';ctx.fillText(ds.label,lx+14,h-24);lx+=ctx.measureText(ds.label).width+34})})()</script>
 </div>
 
-<div class="sf"><span>Revenue Growth</span><span>NebulaDB</span></div>
+<div class="sf"><span>Revenue Trajectory</span><span>Q2 2026 — Investor Update</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<h2><span class="ha">Unit Economics</span></h2>
-<div class="mb">$$\text{LTV} = \frac{\text{ARPU}}{\text{Monthly Churn}} = \frac{\$1{,}250}{0.027} \approx \$46{,}200$$</div>
-<div class="mb">$$\text{CAC Payback} = \frac{\text{CAC}}{\text{Gross Margin per Customer}} = \frac{\$3{,}800}{\$1{,}250} = 3.04 \text{ months}$$</div>
-<p style="line-height:1.65;margin:0.22em 0;font-style:italic;font-size:0.82em">LTV:CAC ratio of 12.2x in the self-serve tier. Enterprise CAC payback under 4 months.</p>
+<h2><span class="ha">Revenue Breakdown</span></h2>
+<div class="db">
+<div class="db-chart"><div class="cb"><div class="ctt">By Segment</div><canvas id="cuhxhsn" style="width:100%;height:300px"></canvas></div><script>(()=>{const c=document.getElementById('cuhxhsn');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Enterprise","Mid-Market","SMB","Startup"],datasets:[{"label":"Segment","data":[45,30,16,9],"color":"#dc2626"}]};const cx=w/2,cy=h/2-10,r=Math.min(w,h)/2-55,ir=r*0.55;const ds=data.datasets[0];const total=ds.data.reduce(function(a,v){return a+v},0);if(total===0)return;const colors=['#dc2626','#f87171','#f59e0b','#dc2626','#22c55e'];let angle=-Math.PI/2;ds.data.forEach(function(v,i){var slice=v/total*Math.PI*2;var color=ds.color||colors[i%colors.length];ctx.fillStyle=color;ctx.beginPath();ctx.arc(cx,cy,r,angle,angle+slice);ctx.arc(cx,cy,ir,angle+slice,angle,true);ctx.closePath();ctx.fill();var mid=angle+slice/2;var pct=Math.round(v/total*100);if(pct>5){var lx=cx+Math.cos(mid)*(r+ir)/2,ly=cy+Math.sin(mid)*(r+ir)/2;ctx.fillStyle='#1a0a0c';ctx.font='600 12px Inter,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(pct+'%',lx,ly)}angle+=slice});var lx=20,ly=h-20;ds.data.forEach(function(v,i){var color=ds.color||colors[i%colors.length];var pct=Math.round(v/total*100);ctx.fillStyle=color;ctx.fillRect(lx,ly-8,10,10);ctx.fillStyle='#e5d8d9';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='left';ctx.fillText(data.labels[i]+' '+pct+'%',lx+14,ly);lx+=ctx.measureText(data.labels[i]+' '+pct+'%').width+28})})()</script></div>
+<div class="db-chart"><div class="cb"><div class="ctt">By Region</div><canvas id="cnsejt9" style="width:100%;height:300px"></canvas></div><script>(()=>{const c=document.getElementById('cnsejt9');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["North America","Europe","APAC","LATAM"],datasets:[{"label":"Region","data":[52,28,14,6],"color":"#f87171"}]};const cx=w/2,cy=h/2-10,r=Math.min(w,h)/2-55,ir=r*0.55;const ds=data.datasets[0];const total=ds.data.reduce(function(a,v){return a+v},0);if(total===0)return;const colors=['#dc2626','#f87171','#f59e0b','#dc2626','#22c55e'];let angle=-Math.PI/2;ds.data.forEach(function(v,i){var slice=v/total*Math.PI*2;var color=ds.color||colors[i%colors.length];ctx.fillStyle=color;ctx.beginPath();ctx.arc(cx,cy,r,angle,angle+slice);ctx.arc(cx,cy,ir,angle+slice,angle,true);ctx.closePath();ctx.fill();var mid=angle+slice/2;var pct=Math.round(v/total*100);if(pct>5){var lx=cx+Math.cos(mid)*(r+ir)/2,ly=cy+Math.sin(mid)*(r+ir)/2;ctx.fillStyle='#1a0a0c';ctx.font='600 12px Inter,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(pct+'%',lx,ly)}angle+=slice});var lx=20,ly=h-20;ds.data.forEach(function(v,i){var color=ds.color||colors[i%colors.length];var pct=Math.round(v/total*100);ctx.fillStyle=color;ctx.fillRect(lx,ly-8,10,10);ctx.fillStyle='#e5d8d9';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='left';ctx.fillText(data.labels[i]+' '+pct+'%',lx+14,ly);lx+=ctx.measureText(data.labels[i]+' '+pct+'%').width+28})})()</script></div>
+</div>
 </div>
 
-<div class="sf"><span>Unit Economics</span><span>NebulaDB</span></div>
+<div class="sf"><span>Revenue Breakdown</span><span>Q2 2026 — Investor Update</span></div>
       </section>
       <section class="">
 <div class="slide-body">
-<div class="sec">
-    <p class="sn">The Ask</p>
-    
+<h2><span class="ha">Growth Efficiency</span></h2>
+<div class="cb"><div class="ctt">Monthly Net New ARR vs Burn ($K)</div><canvas id="c84706v" style="width:100%;height:300px"></canvas></div><script>(()=>{const c=document.getElementById('c84706v');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun"],datasets:[{"label":"Performance","data":[420,380,510,440,620,580,710,650,820],"color":"#dc2626"}]};const pad={t:20,b:40,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(function(d){return d.data}),1);const colors=['#dc2626','#f87171','#f59e0b','#dc2626','#22c55e'];ctx.strokeStyle='#2d181a';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#9e7c7e';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='right';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}data.datasets.forEach(function(ds,di){var color=ds.color||colors[di%colors.length];ds.data.forEach(function(v,vi){var x=pad.l+(vi/(ds.data.length-1||1))*cw;var y=pad.t+ch-(v/maxV)*ch;ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#1a0a0c';ctx.lineWidth=2;ctx.stroke()})});ctx.fillStyle='#e5d8d9';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';data.labels.forEach(function(l,vi){ctx.fillText(String(l),pad.l+vi*cw/(data.labels.length-1||1),h-12)});let lx=pad.l;ctx.textAlign='left';data.datasets.forEach(function(ds,di){ctx.fillStyle=ds.color||colors[di%colors.length];ctx.beginPath();ctx.arc(lx+5,h-30,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#9e7c7e';ctx.font='600 10px Inter,sans-serif';ctx.fillText(ds.label,lx+14,h-24);lx+=ctx.measureText(ds.label).width+34})})()</script>
+</div>
+
+<div class="sf"><span>Growth Efficiency</span><span>Q2 2026 — Investor Update</span></div>
+      </section>
+      <section class="">
+<div class="slide-body">
+<h2><span class="ha">Q2 vs Q1</span></h2>
+<div class="cmp">
+  <div class="cp"><h3>Q1 2026</h3><ul><li>ARR: $7.2M</li><li>Net retention: 121%</li><li>Gross margin: 74%</li><li>New logos: 42</li><li>CAC payback: 11 months</li></ul></div>
+  <div class="cp"><h3>Q2 2026</h3><ul><li>ARR: $10.2M (+42%)</li><li>Net retention: 128% (+7pp)</li><li>Gross margin: 76% (+2pp)</li><li>New logos: 64 (+52%)</li><li>CAC payback: 8 months (-3m)</li></ul></div>
+</div>
+</div>
+
+<div class="sf"><span>Q2 vs Q1</span><span>Q2 2026 — Investor Update</span></div>
+      </section>
+      <section class="">
+<div class="slide-body">
+<h2><span class="ha">H2 Roadmap</span></h2><div class="tl"><p style="color:var(--tx2)">No timeline items found. Add bullets with "Date — Description" format.</p></div>
+</div>
+
+<div class="sf"><span>H2 Roadmap</span><span>Q2 2026 — Investor Update</span></div>
+      </section>
+      <section class="">
+<div class="slide-body">
+<div class="ctct">
+    <h1>Thank You</h1>
+    <div class="ctct-line"></div>
+    <p style="font-size:1.1em;color:var(--tx2);margin-bottom:0.8em">Let's build the autonomous data platform.</p>
+    <p class="ctct-info">investors@atlas.ai</p><p class="ctct-info">Board deck, financials, and cap table available in the data room: atlas.ai/investors</p><p class="ctct-info">Next board meeting: October 8, 2026 — Q3 review + Series B planning</p>
   </div>
 </div>
 
-<div class="sf"><span>The Ask</span><span>NebulaDB</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<h2><span class="ha">Series A — $8M</span></h2>
-<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">We are raising to scale our cloud platform and build the team.</p>
-<ol><li>Expand the core engine team (3 senior distributed systems engineers)</li><li>Build managed cloud offering on AWS, GCP, and Azure</li><li>Launch enterprise sales motion with dedicated solutions architects</li><li>Ship the VS Code extension and CLI tooling</li><li>Build the community: conferences, meetups, and documentation</li></ol>
-<p style="line-height:1.65;margin:0.22em 0;font-weight:700;font-size:0.82em;color:#a78bfa">✨ Fun fact: Our largest open-source contributor is a 17-year-old in Brazil who's never worked at a database company.</p>
-</div>
-
-<div class="sf"><span>Series A — $8M</span><span>NebulaDB</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<div class="qt">
-    <blockquote>We just deleted three database instances and migrated 40 microservices to NebulaDB. Our infra bill dropped by 60% and our on-call alerts dropped to zero. This is the most impactful infrastructure change we've made in 3 years.</blockquote>
-    <p class="qa">— — A real Slack message from a paying customer</p>
-  </div>
-</div>
-
-<div class="sf"><span></span><span>NebulaDB</span></div>
-      </section>
-      <section class="">
-<div class="slide-body">
-<div class="hero">
-<h1>Thank you</h1>
-<div class="hl"></div>
-<p class="hs">Let's build the database that developers deserve.</p>
-<p class="hm">Mauricio Gomez · 2025</p>
-<div style="margin-top:1.2em"><p style="line-height:1.65;margin:0.22em 0;font-size:0.82em;color:#a78bfa">mauricio@nebuladb.dev — github.com/nebuladb</p></div>
-</div>
-</div>
-
-<div class="sf"><span>Thank you</span><span>NebulaDB</span></div>
+<div class="sf"><span>Thank You</span><span>Q2 2026 — Investor Update</span></div>
       </section>
 </div></div>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>

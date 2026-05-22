@@ -24,6 +24,22 @@ const TH: T[] = [{
   id: 'warm', light: false,
   fontH: 'Lora', fontB: 'Inter',
   c: { bg: '#1c1410', surf: '#2a1f19', acc: '#e8924f', a2: '#f0b87b', tx: '#ede0d4', tx2: '#9a8878', hd: '#faf3ea', bd: '#3a2e26', ok: '#6fb86f', err: '#e06b6b', wrn: '#e8a74f', grd: '#2e221a', kpi: 'linear-gradient(135deg, #251a1411 0%, #251a1444 100%)' },
+}, {
+  id: 'crimson', light: false,
+  fontH: 'Playfair Display', fontB: 'Inter',
+  c: { bg: '#1a0a0c', surf: '#2d1518', acc: '#dc2626', a2: '#f87171', tx: '#e5d8d9', tx2: '#9e7c7e', hd: '#faf0f0', bd: '#3d1c1f', ok: '#22c55e', err: '#dc2626', wrn: '#f59e0b', grd: '#2d181a', kpi: 'linear-gradient(135deg, #1a0a0c44 0%, #2d151844 100%)' },
+}, {
+  id: 'sage', light: true,
+  fontH: 'Lora', fontB: 'Inter',
+  c: { bg: '#f7faf5', surf: '#ffffff', acc: '#5d8a3c', a2: '#84b559', tx: '#3a4d2d', tx2: '#8a9e7a', hd: '#1a2e0e', bd: '#dce8d2', ok: '#5d8a3c', err: '#dc2626', wrn: '#d97706', grd: '#edf2e8', kpi: 'linear-gradient(135deg, #f0f7e8 0%, #e8f0db 100%)' },
+}, {
+  id: 'navy', light: false,
+  fontH: 'DM Serif Display', fontB: 'Inter',
+  c: { bg: '#0a1128', surf: '#151d3d', acc: '#3b82f6', a2: '#60a5fa', tx: '#d1d9e8', tx2: '#6b7da0', hd: '#f0f4fc', bd: '#1e2a4d', ok: '#22c55e', err: '#ef4444', wrn: '#f59e0b', grd: '#182244', kpi: 'linear-gradient(135deg, #151d3d22 0%, #151d3d55 100%)' },
+}, {
+  id: 'neon', light: false,
+  fontH: 'Space Grotesk', fontB: 'Inter',
+  c: { bg: '#0d0d0d', surf: '#1a1a1a', acc: '#00ff88', a2: '#00ccff', tx: '#e0e0e0', tx2: '#666666', hd: '#ffffff', bd: '#2a2a2a', ok: '#00ff88', err: '#ff3366', wrn: '#ffaa00', grd: '#1a1a1a', kpi: 'linear-gradient(135deg, #1a1a1a44 0%, #1a1a1a88 100%)' },
 }]
 
 function gt(id: string): T { return TH.find(t => t.id === id) || TH[0] }
@@ -112,6 +128,69 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
 .if{display:flex!important;flex-direction:column;align-items:center;justify-content:center}
 .if img{max-width:85%;max-height:52vh;border-radius:var(--r);box-shadow:0 16px 48px rgba(0,0,0,0.2)}
 
+/* Big Number — dramatic single stat */
+.big-num{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center;padding:50px 100px!important}
+.big-num .bn-val{font-family:'${t.fontH}',Georgia,serif;font-size:5em;font-weight:900;color:var(--accent);line-height:1;letter-spacing:-0.04em;margin-bottom:0.1em}
+.big-num .bn-lbl{font-size:0.85em;color:var(--tx2);font-weight:600;text-transform:uppercase;letter-spacing:0.12em}
+.big-num .bn-desc{font-size:0.75em;color:var(--tx2);margin-top:0.8em;max-width:24em;line-height:1.5;font-weight:400}
+
+/* Timeline */
+.tl{position:relative;padding-left:2.5em;margin:0.4em 0}
+.tl:before{content:'';position:absolute;left:0.7em;top:0.4em;bottom:0.4em;width:2px;background:linear-gradient(180deg,var(--accent),var(--a2));border-radius:1px}
+.tl-item{position:relative;margin-bottom:0.7em;padding-left:1.2em}
+.tl-item:before{content:'';position:absolute;left:-2.5em;top:0.45em;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 2px var(--accent)}
+.tl-item .tl-date{font-size:0.6em;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:0.08em}
+.tl-item .tl-title{font-weight:700;font-size:0.85em;margin:0.08em 0;color:var(--hd)}
+.tl-item .tl-desc{font-size:0.72em;color:var(--tx2);line-height:1.45}
+
+/* Logo Grid */
+.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1em;margin:0.4em 0;align-items:center}
+.lg-item{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:0.8em;display:flex;align-items:center;justify-content:center;transition:transform 0.2s ease}
+.lg-item:hover{transform:scale(1.04)}
+.lg-item img{max-width:80%;max-height:60px;filter:grayscale(30%);opacity:0.85;transition:filter 0.2s ease,opacity 0.2s ease}
+.lg-item:hover img{filter:grayscale(0%);opacity:1}
+
+/* Flowchart */
+.fc{display:flex;flex-wrap:wrap;gap:0.8em;justify-content:center;margin:0.4em 0}
+.fc-node{background:var(--surf);border:2px solid var(--accent);border-radius:var(--r);padding:0.6em 1em;text-align:center;font-weight:600;font-size:0.82em;min-width:100px;position:relative;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
+.fc-node:after{content:'↓';display:block;color:var(--accent);font-size:1.1em;margin-top:0.4em;font-weight:700}
+.fc-node:last-child:after{content:none}
+
+/* Agenda */
+.ag{display:flex;flex-direction:column;gap:0.5em;margin:0.3em 0}
+.ag-item{display:flex;align-items:center;gap:1em;padding:0.5em 0;border-bottom:1px solid var(--bd)}
+.ag-num{font-family:'${t.fontH}',Georgia,serif;font-size:1.8em;font-weight:800;color:var(--accent);min-width:1.5em;text-align:center;line-height:1}
+.ag-title{font-weight:700;font-size:0.9em;color:var(--hd)}
+.ag-desc{font-size:0.72em;color:var(--tx2)}
+
+/* Contact */
+.ctct{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center}
+.ctct h1{font-size:3em;margin-bottom:0.3em}
+.ctct .ctct-info{font-size:0.85em;color:var(--tx2);margin:0.3em 0;line-height:1.6}
+.ctct .ctct-line{width:60px;height:4px;background:linear-gradient(90deg,var(--accent),var(--a2));border-radius:2px;margin:0.8em auto}
+
+/* Team */
+.tm{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1em;margin:0.4em 0}
+.tm-card{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:1em;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.03)}
+.tm-card img{width:72px;height:72px;border-radius:50%;object-fit:cover;margin-bottom:0.6em;box-shadow:0 4px 16px rgba(0,0,0,0.1)}
+.tm-name{font-weight:700;font-size:0.85em;color:var(--hd)}
+.tm-role{font-size:0.7em;color:var(--accent);font-weight:600;margin-top:0.2em;text-transform:uppercase;letter-spacing:0.05em}
+.tm-bio{font-size:0.68em;color:var(--tx2);margin-top:0.4em;line-height:1.4}
+
+/* Dashboard */
+.db{display:grid;grid-template-columns:1fr 1fr;gap:0.8em;margin:0.3em 0}
+.db-chart{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:0.6em;box-shadow:0 2px 8px rgba(0,0,0,0.03)}
+.db-chart canvas{width:100%!important;height:180px!important}
+
+/* Progress bars */
+.pg{margin:0.3em 0}
+.pg-bar{margin:0.5em 0}
+.pg-lbl{display:flex;justify-content:space-between;font-size:0.75em;font-weight:600;margin-bottom:0.2em}
+.pg-lbl .pg-val{color:var(--accent)}
+.pg-track{height:8px;background:var(--grd);border-radius:4px;overflow:hidden}
+.pg-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--a2));transition:width 0.6s ease}
+
+
 /* Freeform layout container */
 .ff{padding:30px 60px!important}
 `
@@ -154,6 +233,16 @@ function slide(s: Slide, i: number, t: T, m: DeckMeta): string {
     case 'comparison': c = comparison(s, t); break
     case 'image-full': c = imgFull(s, t); break
     case 'blank': c = freeform(s, t); break
+    case 'big-number': c = bigNumber(s, t); break
+    case 'timeline': c = timeline(s, t); break
+    case 'logo-grid': c = logoGrid(s, t); break
+    case 'flowchart': c = flowChart(s, t); break
+    case 'kpi': c = kpiSlide(s, t); break
+    case 'agenda': c = agendaSlide(s, t); break
+    case 'contact': c = contactSlide(s, t); break
+    case 'team': c = teamSlide(s, t); break
+    case 'dashboard': c = dashboardSlide(s, t); break
+    case 'progress': c = progressSlide(s, t); break
     default: c = standard(s, t)
   }
   const cls = s.blocks.some(b => b.position) ? 'ff' : ''
@@ -253,6 +342,198 @@ function freeform(s: Slide, t: T): string {
   return `<div style="position:relative;min-height:460px">${blox(s.blocks, t)}</div>`
 }
 
+// ── Big Number ──
+function bigNumber(s: Slide, t: T): string {
+  const val = s.blocks.find(b => b.type === 'text' && (b as any).style?.size === 'xlarge')
+  const lbl = s.blocks.find(b => b.type === 'text' && (b as any).style?.size === 'small')
+  const desc = s.blocks.find(b => b.type === 'text' && (!(b as any).style?.size || (b as any).style?.size === 'medium'))
+  return `<div class="big-num">
+    ${val ? `<div class="bn-val">${esc((val as any).content)}</div>` : ''}
+    ${lbl ? `<div class="bn-lbl">${esc((lbl as any).content)}</div>` : ''}
+    ${s.subtitle ? `<div class="bn-desc">${esc(s.subtitle)}</div>` : desc ? `<div class="bn-desc">${esc((desc as any).content)}</div>` : ''}
+  </div>`
+}
+
+// ── KPI Grid ──
+function kpiSlide(s: Slide, t: T): string {
+  const kpiVals = s.blocks.filter(b => b.type === 'text' && (b as any).style?.size === 'xlarge')
+  const kpiLbls = s.blocks.filter(b => b.type === 'text' && (b as any).style?.size === 'small')
+  const rest = s.blocks.filter(b => {
+    if (b.type !== 'text') return true
+    const sz = (b as any).style?.size
+    return sz !== 'xlarge' && sz !== 'small'
+  })
+  const n = Math.max(kpiVals.length, kpiLbls.length)
+  const cards: string[] = []
+  for (let i = 0; i < n; i++) {
+    const val = i < kpiVals.length ? esc((kpiVals[i] as any).content) : ''
+    const lbl = i < kpiLbls.length ? esc((kpiLbls[i] as any).content) : ''
+    cards.push(`<div class="kp"><div class="kv">${val}</div><div class="kl">${lbl}</div></div>`)
+  }
+  const p: string[] = []
+  if (s.title) p.push(`<h2><span class="ha">${esc(s.title)}</span></h2>`)
+  if (s.subtitle) p.push(`<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">${esc(s.subtitle)}</p>`)
+  p.push(`<div class="sr">${cards.join('')}</div>`)
+  if (rest.length > 0) p.push(blox(rest, t))
+  return p.join('\n')
+}
+
+// ── Timeline ──
+function timeline(s: Slide, t: T): string {
+  const items = s.blocks.filter(b => b.type === 'text').map((b: any) => ({
+    date: b.style?.size === 'small' ? b.content : '',
+    title: b.style?.size === 'xlarge' ? b.content : '',
+    desc: b.style?.size ? b.content : ''
+  }))
+  // Use subtitle as first date if no small text blocks
+  let html = ''
+  if (s.title) html += `<h2><span class="ha">${esc(s.title)}</span></h2>`
+  if (s.subtitle) html += `<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em">${esc(s.subtitle)}</p>`
+  html += '<div class="tl">'
+  // Alternate: date=xlarge text, title=medium/large text, desc=small text
+  let i = 0
+  const dates = s.blocks.filter(b => b.type === 'text' && (b as any).style?.color === 'var(--accent)').length > 0
+    ? s.blocks.filter(b => b.type === 'text')
+    : []
+  if (dates.length >= 3) {
+    // Explicit timeline items: consecutive text blocks forming date/title/desc triples
+    for (let j = 0; j < dates.length; j += 3) {
+      const d = dates[j] as any
+      const tl = dates[j + 1] as any
+      const ds = dates[j + 2] as any
+      html += `<div class="tl-item"><div class="tl-date">${esc(d?.content || '')}</div><div class="tl-title">${esc(tl?.content || '')}</div><div class="tl-desc">${esc(ds?.content || '')}</div></div>`
+    }
+  } else {
+    // Simple timeline from bullet items
+    const bullets = s.blocks.filter(b => b.type === 'bullets' || b.type === 'numbered')
+    if (bullets.length > 0) {
+      for (const b of bullets) {
+        for (const item of (b as any).items) {
+          const parts = item.split(' — ')
+          const date = parts[0] || ''
+          const desc = parts.slice(1).join(' — ')
+          html += `<div class="tl-item"><div class="tl-date">${esc(date)}</div><div class="tl-desc">${esc(desc)}</div></div>`
+        }
+      }
+    } else {
+      html += '<p style="color:var(--tx2)">No timeline items found. Add bullets with "Date — Description" format.</p>'
+    }
+  }
+  html += '</div>'
+  return html
+}
+
+// ── Logo Grid ──
+function logoGrid(s: Slide, t: T): string {
+  const imgs = s.blocks.filter(b => b.type === 'image')
+  const p: string[] = []
+  if (s.title) p.push(`<h2><span class="ha">${esc(s.title)}</span></h2>`)
+  if (s.subtitle) p.push(`<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em">${esc(s.subtitle)}</p>`)
+  p.push('<div class="lg">')
+  imgs.forEach(b => {
+    const img = (b as any).source
+    p.push(`<div class="lg-item"><img src="${esc(img.url||'')}" alt="${esc(img.alt||'')}" loading="lazy"></div>`)
+  })
+  p.push('</div>')
+  const rest = s.blocks.filter(b => b.type !== 'image')
+  if (rest.length > 0) p.push(blox(rest, t))
+  return p.join('\n')
+}
+
+// ── Flowchart ──
+function flowChart(s: Slide, t: T): string {
+  const nodes = s.blocks.filter(b => b.type === 'text')
+  const p: string[] = []
+  if (s.title) p.push(`<h2><span class="ha">${esc(s.title)}</span></h2>`)
+  if (s.subtitle) p.push(`<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em">${esc(s.subtitle)}</p>`)
+  p.push('<div class="fc">')
+  nodes.forEach((b: any) => { p.push(`<div class="fc-node">${esc(b.content)}</div>`) })
+  p.push('</div>')
+  return p.join('\n')
+}
+
+// ── Agenda ──
+function agendaSlide(s: Slide, t: T): string {
+  const p: string[] = []
+  if (s.title) p.push(`<h2><span class="ha">${esc(s.title)}</span></h2>`)
+  p.push('<div class="ag">')
+  s.blocks.forEach((b, i) => {
+    if (b.type === 'text') {
+      const c = (b as any).content
+      const parts = c.split(' — ')
+      const title = parts[0] || ''
+      const desc = parts.slice(1).join(' — ')
+      p.push(`<div class="ag-item"><div class="ag-num">${String(i+1).padStart(2,'0')}</div><div><div class="ag-title">${esc(title)}</div>${desc?`<div class="ag-desc">${esc(desc)}</div>`:''}</div></div>`)
+    } else if (b.type === 'bullets' || b.type === 'numbered') {
+      (b as any).items.forEach((item: string) => {
+        const parts = item.split(' — ')
+        p.push(`<div class="ag-item"><div class="ag-num">${String(i+1).padStart(2,'0')}</div><div><div class="ag-title">${esc(parts[0]||'')}</div>${parts[1]?`<div class="ag-desc">${esc(parts.slice(1).join(' — '))}</div>`:''}</div></div>`)
+      })
+    }
+  })
+  p.push('</div>')
+  return p.join('\n')
+}
+
+// ── Contact / CTA ──
+function contactSlide(s: Slide, t: T): string {
+  const texts = s.blocks.filter(b => b.type === 'text').map((b: any) => b.content)
+  return `<div class="ctct">
+    ${s.title?`<h1>${esc(s.title)}</h1>`:''}
+    <div class="ctct-line"></div>
+    ${s.subtitle?`<p style="font-size:1.1em;color:var(--tx2);margin-bottom:0.8em">${esc(s.subtitle)}</p>`:''}
+    ${texts.map(txt => `<p class="ctct-info">${esc(txt)}</p>`).join('')}
+  </div>`
+}
+
+// ── Team ──
+function teamSlide(s: Slide, t: T): string {
+  const imgs = s.blocks.filter(b => b.type === 'image')
+  const texts = s.blocks.filter(b => b.type === 'text')
+  const p: string[] = []
+  if (s.title) p.push(`<h2><span class="ha">${esc(s.title)}</span></h2>`)
+  p.push('<div class="tm">')
+  for (let i = 0; i < texts.length; i += 2) {
+    const name = (texts[i] as any).content || ''
+    const role = i + 1 < texts.length ? (texts[i + 1] as any).content : ''
+    const img = imgs[i / 2]
+    p.push(`<div class="tm-card">
+      ${img?`<img src="${esc((img as any).source.url||'')}" alt="${esc((img as any).source.alt||name)}">`:'<div style="width:72px;height:72px;border-radius:50%;background:var(--grd);margin:0 auto 0.6em;display:flex;align-items:center;justify-content:center;font-size:1.5em;color:var(--accent);font-weight:700">${name.charAt(0).toUpperCase()}</div>'}
+      <div class="tm-name">${esc(name)}</div>
+      ${role?`<div class="tm-role">${esc(role)}</div>`:''}
+    </div>`)
+  }
+  p.push('</div>')
+  return p.join('\n')
+}
+
+// ── Dashboard ──
+function dashboardSlide(s: Slide, t: T): string {
+  const charts = s.blocks.filter(b => b.type === 'chart')
+  const p: string[] = []
+  if (s.title) p.push(`<h2><span class="ha">${esc(s.title)}</span></h2>`)
+  p.push('<div class="db">')
+  charts.forEach(b => { p.push(`<div class="db-chart">${blox([b], t)}</div>`) })
+  p.push('</div>')
+  return p.join('\n')
+}
+
+// ── Progress ──
+function progressSlide(s: Slide, t: T): string {
+  const p: string[] = []
+  if (s.title) p.push(`<h2><span class="ha">${esc(s.title)}</span></h2>`)
+  p.push('<div class="pg">')
+  const texts = s.blocks.filter(b => b.type === 'text')
+  for (let i = 0; i < texts.length; i += 2) {
+    const label = (texts[i] as any).content || ''
+    const val = i + 1 < texts.length ? (texts[i + 1] as any).content : ''
+    const pct = parseFloat(val) || 0
+    p.push(`<div class="pg-bar"><div class="pg-lbl"><span>${esc(label)}</span><span class="pg-val">${esc(val)}</span></div><div class="pg-track"><div class="pg-fill" style="width:${Math.min(100,Math.max(0,pct))}%"></div></div></div>`)
+  }
+  p.push('</div>')
+  return p.join('\n')
+}
+
 // ── Blocks ──
 
 function blox(bs: SlideBlock[], t: T): string { return bs.map(b => block(b, t)).join('\n') }
@@ -290,7 +571,19 @@ function chrt(b: Extract<SlideBlock, { type: 'chart' }>, t: T): string {
   const labels = JSON.stringify(b.labels.map(String))
   const datasets = JSON.stringify(b.datasets.map(d => ({ label: d.label, data: d.values, color: d.color || t.c.acc })))
   const id = `c${Math.random().toString(36).slice(2,8)}`
-  const palette = [t.c.acc, t.c.a2, t.c.wrn, t.c.err, t.c.ok]
+  const pal = [t.c.acc, t.c.a2, t.c.wrn, t.c.err, t.c.ok]
+  const ct = b.chartType || 'bar'
+
+  if (ct === 'donut' || ct === 'pie') {
+    return chrtDonut(b, t, labels, datasets, id, pal)
+  }
+  if (ct === 'scatter') {
+    return chrtScatter(b, t, labels, datasets, id, pal)
+  }
+  return chrtBar(b, t, labels, datasets, id, pal)
+}
+
+function chrtBar(b: Extract<SlideBlock, { type: 'chart' }>, t: T, labels: string, datasets: string, id: string, pal: string[]): string {
   return `<div class="cb">
     ${b.title?`<div class="ctt">${esc(b.title)}</div>`:''}
     <canvas id="${id}" style="width:100%;height:300px"></canvas>
@@ -301,6 +594,28 @@ function chrt(b: Extract<SlideBlock, { type: 'chart' }>, t: T): string {
   data.datasets.forEach((ds,di)=>{const col=ds.color||pal[di%pal.length];ds.data.forEach((v,vi)=>{const x=pad.l+vi*gap+gg+di*barW;const bh=Math.max((v/maxV)*ch,2);const y=pad.t+ch-bh;const grd=ctx.createLinearGradient(x,pad.t,x,pad.t+ch);grd.addColorStop(0,col);grd.addColorStop(1,col+'22');ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(x,y,barW-3,bh,[5,5,0,0]);ctx.fill();ctx.fillStyle='${t.c.tx2==='#a3a3a3'?'#404040':t.c.tx}';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(Math.round(v),x+(barW-3)/2,y-7)})});
   ctx.fillStyle='${t.c.tx}';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';data.labels.forEach((l,vi)=>{ctx.fillText(String(l),pad.l+vi*gap+gap/2,h-12)});
   let lx=pad.l;ctx.textAlign='left';data.datasets.forEach((ds,di)=>{ctx.fillStyle=ds.color||pal[di%pal.length];ctx.beginPath();ctx.arc(lx+5,h-30,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='${t.c.tx2}';ctx.font='600 10px Inter,sans-serif';ctx.fillText(ds.label,lx+14,h-24);lx+=ctx.measureText(ds.label).width+34})})()</script>`
+}
+
+function chrtDonut(b: Extract<SlideBlock, { type: 'chart' }>, t: T, labels: string, datasets: string, id: string, pal: string[]): string {
+  const lblStr = JSON.stringify(b.labels)
+  return '<div class="cb">' +
+    (b.title ? '<div class="ctt">' + esc(b.title) + '</div>' : '') +
+    '<canvas id="' + id + '" style="width:100%;height:300px"></canvas></div>' +
+    '<script>(()=>{const c=document.getElementById(\'' + id + '\');if(!c)return;const ctx=c.getContext(\'2d\');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+\'px\';c.style.height=h+\'px\';ctx.scale(dpr,dpr);const data={labels:' + lblStr + ',datasets:' + datasets + '};const cx=w/2,cy=h/2-10,r=Math.min(w,h)/2-55,ir=r*0.55;const ds=data.datasets[0];const total=ds.data.reduce(function(a,v){return a+v},0);if(total===0)return;const colors=[\'' + t.c.acc + '\',\'' + t.c.a2 + '\',\'' + t.c.wrn + '\',\'' + t.c.err + '\',\'' + t.c.ok + '\'];let angle=-Math.PI/2;' +
+    'ds.data.forEach(function(v,i){var slice=v/total*Math.PI*2;var color=ds.color||colors[i%colors.length];ctx.fillStyle=color;ctx.beginPath();ctx.arc(cx,cy,r,angle,angle+slice);ctx.arc(cx,cy,ir,angle+slice,angle,true);ctx.closePath();ctx.fill();var mid=angle+slice/2;var pct=Math.round(v/total*100);if(pct>5){var lx=cx+Math.cos(mid)*(r+ir)/2,ly=cy+Math.sin(mid)*(r+ir)/2;ctx.fillStyle=\'' + (t.light ? '#fff' : t.c.bg) + '\';ctx.font=\'600 12px Inter,sans-serif\';ctx.textAlign=\'center\';ctx.textBaseline=\'middle\';ctx.fillText(pct+\'%\',lx,ly)}angle+=slice});' +
+    'var lx=20,ly=h-20;ds.data.forEach(function(v,i){var color=ds.color||colors[i%colors.length];var pct=Math.round(v/total*100);ctx.fillStyle=color;ctx.fillRect(lx,ly-8,10,10);ctx.fillStyle=\'' + t.c.tx + '\';ctx.font=\'600 10px Inter,sans-serif\';ctx.textAlign=\'left\';ctx.fillText(data.labels[i]+\' \'+pct+\'%\',lx+14,ly);lx+=ctx.measureText(data.labels[i]+\' \'+pct+\'%\').width+28})})()</script>'
+}
+
+function chrtScatter(b: Extract<SlideBlock, { type: 'chart' }>, t: T, labels: string, datasets: string, id: string, pal: string[]): string {
+  const lblStr = JSON.stringify(b.labels)
+  return '<div class="cb">' +
+    (b.title ? '<div class="ctt">' + esc(b.title) + '</div>' : '') +
+    '<canvas id="' + id + '" style="width:100%;height:300px"></canvas></div>' +
+    '<script>(()=>{const c=document.getElementById(\'' + id + '\');if(!c)return;const ctx=c.getContext(\'2d\');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+\'px\';c.style.height=h+\'px\';ctx.scale(dpr,dpr);const data={labels:' + lblStr + ',datasets:' + datasets + '};const pad={t:20,b:40,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(function(d){return d.data}),1);const colors=[\'' + t.c.acc + '\',\'' + t.c.a2 + '\',\'' + t.c.wrn + '\',\'' + t.c.err + '\',\'' + t.c.ok + '\'];' +
+    'ctx.strokeStyle=\'' + t.c.grd + '\';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle=\'' + t.c.tx2 + '\';ctx.font=\'600 10px Inter,sans-serif\';ctx.textAlign=\'right\';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}' +
+    'data.datasets.forEach(function(ds,di){var color=ds.color||colors[di%colors.length];ds.data.forEach(function(v,vi){var x=pad.l+(vi/(ds.data.length-1||1))*cw;var y=pad.t+ch-(v/maxV)*ch;ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();ctx.strokeStyle=\'' + t.c.bg + '\';ctx.lineWidth=2;ctx.stroke()})});' +
+    'ctx.fillStyle=\'' + t.c.tx + '\';ctx.font=\'600 11px Inter,sans-serif\';ctx.textAlign=\'center\';data.labels.forEach(function(l,vi){ctx.fillText(String(l),pad.l+vi*cw/(data.labels.length-1||1),h-12)});' +
+    'let lx=pad.l;ctx.textAlign=\'left\';data.datasets.forEach(function(ds,di){ctx.fillStyle=ds.color||colors[di%colors.length];ctx.beginPath();ctx.arc(lx+5,h-30,5,0,Math.PI*2);ctx.fill();ctx.fillStyle=\'' + t.c.tx2 + '\';ctx.font=\'600 10px Inter,sans-serif\';ctx.fillText(ds.label,lx+14,h-24);lx+=ctx.measureText(ds.label).width+34})})()</script>'
 }
 
 function math(b: Extract<SlideBlock, { type: 'math' }>): string {

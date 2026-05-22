@@ -85,7 +85,7 @@ function SlideEditor({ slide, onSlideChange }: { slide: Slide; onSlideChange: (s
           onChange={e => onSlideChange({ ...slide, kind: e.target.value as any })}
           style={{ display: 'block', width: '100%', padding: '0.3em', borderRadius: 4, border: '1px solid #ccc', fontSize: '0.85em', marginTop: '0.2em' }}
         >
-          {['title', 'section', 'content', 'two-column', 'image-full', 'quote', 'comparison', 'chart', 'math', 'blank'].map(k => (
+          {['title', 'section', 'content', 'two-column', 'image-full', 'quote', 'comparison', 'chart', 'math', 'blank', 'kpi', 'big-number', 'timeline', 'logo-grid', 'flowchart', 'agenda', 'contact', 'dashboard', 'team', 'progress'].map(k => (
             <option key={k} value={k}>{k}</option>
           ))}
         </select>
