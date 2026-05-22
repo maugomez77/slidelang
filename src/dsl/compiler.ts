@@ -48,10 +48,10 @@ function gt(id: string): T { return TH.find(t => t.id === id) || TH[0] }
 function css(t: T): string {
   return `:root{--bg:${t.c.bg};--surf:${t.c.surf};--accent:${t.c.acc};--a2:${t.c.a2};--tx:${t.c.tx};--tx2:${t.c.tx2};--hd:${t.c.hd};--bd:${t.c.bd};--ok:${t.c.ok};--err:${t.c.err};--wrn:${t.c.wrn};--grd:${t.c.grd};--kpi:${t.c.kpi};--r:14px;--r2:22px}
 *,*:before,*:after{box-sizing:border-box}
-html,body{background:var(--bg);color:var(--tx);font-family:'${t.fontB}',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body,.reveal,.reveal .slides,.reveal .slides section{background:var(--bg)!important;color:var(--tx)!important;font-family:'${t.fontB}',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .reveal{font-family:'${t.fontB}',-apple-system,sans-serif;font-size:30px}
 .reveal .slides{text-align:left}
-.reveal .slides section{padding:52px 80px 28px 80px;display:flex!important;flex-direction:column;justify-content:flex-start;background:var(--bg);overflow:hidden;box-sizing:border-box}
+.reveal .slides section{padding:52px 80px 28px 80px;display:flex!important;flex-direction:column;justify-content:flex-start;background:var(--bg)!important;overflow:hidden;box-sizing:border-box}
 .reveal .slides section>*{flex-shrink:0}
 .slide-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
 
@@ -380,31 +380,32 @@ function kpiSlide(s: Slide, t: T): string {
 
 // ── Timeline ──
 function timeline(s: Slide, t: T): string {
-  const items = s.blocks.filter(b => b.type === 'text').map((b: any) => ({
-    date: b.style?.size === 'small' ? b.content : '',
-    title: b.style?.size === 'xlarge' ? b.content : '',
-    desc: b.style?.size ? b.content : ''
-  }))
-  // Use subtitle as first date if no small text blocks
   let html = ''
   if (s.title) html += `<h2><span class="ha">${esc(s.title)}</span></h2>`
   if (s.subtitle) html += `<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em">${esc(s.subtitle)}</p>`
   html += '<div class="tl">'
-  // Alternate: date=xlarge text, title=medium/large text, desc=small text
-  let i = 0
-  const dates = s.blocks.filter(b => b.type === 'text' && (b as any).style?.color === 'var(--accent)').length > 0
-    ? s.blocks.filter(b => b.type === 'text')
-    : []
-  if (dates.length >= 3) {
-    // Explicit timeline items: consecutive text blocks forming date/title/desc triples
-    for (let j = 0; j < dates.length; j += 3) {
-      const d = dates[j] as any
-      const tl = dates[j + 1] as any
-      const ds = dates[j + 2] as any
-      html += `<div class="tl-item"><div class="tl-date">${esc(d?.content || '')}</div><div class="tl-title">${esc(tl?.content || '')}</div><div class="tl-desc">${esc(ds?.content || '')}</div></div>`
+
+  // Try text blocks first: parse "Date — Title — Description" or "Date — Description"
+  const texts = s.blocks.filter(b => b.type === 'text')
+  if (texts.length > 0) {
+    for (const tb of texts) {
+      const content = (tb as any).content || ''
+      const parts = content.split(' — ')
+      if (parts.length >= 2) {
+        const date = parts[0]
+        const title = parts.length >= 3 ? parts[1] : ''
+        const desc = parts.length >= 3 ? parts.slice(2).join(' — ') : parts.slice(1).join(' — ')
+        if (title) {
+          html += `<div class="tl-item"><div class="tl-date">${esc(date)}</div><div class="tl-title">${esc(title)}</div><div class="tl-desc">${esc(desc)}</div></div>`
+        } else {
+          html += `<div class="tl-item"><div class="tl-date">${esc(date)}</div><div class="tl-desc">${esc(desc)}</div></div>`
+        }
+      } else {
+        html += `<div class="tl-item"><div class="tl-date">${esc(content)}</div></div>`
+      }
     }
   } else {
-    // Simple timeline from bullet items
+    // Fallback to bullet/numbered lists
     const bullets = s.blocks.filter(b => b.type === 'bullets' || b.type === 'numbered')
     if (bullets.length > 0) {
       for (const b of bullets) {
@@ -416,10 +417,12 @@ function timeline(s: Slide, t: T): string {
         }
       }
     } else {
-      html += '<p style="color:var(--tx2)">No timeline items found. Add bullets with "Date — Description" format.</p>'
+      html += '<p style="color:var(--tx2)">No timeline items found. Add text blocks with "Date — Description" format.</p>'
     }
   }
+
   html += '</div>'
+  html += blox(s.blocks.filter(b => b.type !== 'text' && b.type !== 'bullets' && b.type !== 'numbered'), t)
   return html
 }
 

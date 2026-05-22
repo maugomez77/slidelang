@@ -6,10 +6,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <style>:root{--bg:#fafaf9;--surf:#ffffff;--accent:#1d4ed8;--a2:#3b82f6;--tx:#334155;--tx2:#94a3b8;--hd:#0f172a;--bd:#e8ecf0;--ok:#10b981;--err:#ef4444;--wrn:#f59e0b;--grd:#f1f5f9;--kpi:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);--r:14px;--r2:22px}
 *,*:before,*:after{box-sizing:border-box}
-html,body{background:var(--bg);color:var(--tx);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body,.reveal,.reveal .slides,.reveal .slides section{background:var(--bg)!important;color:var(--tx)!important;font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .reveal{font-family:'Inter',-apple-system,sans-serif;font-size:30px}
 .reveal .slides{text-align:left}
-.reveal .slides section{padding:52px 80px 28px 80px;display:flex!important;flex-direction:column;justify-content:flex-start;background:var(--bg);overflow:hidden;box-sizing:border-box}
+.reveal .slides section{padding:52px 80px 28px 80px;display:flex!important;flex-direction:column;justify-content:flex-start;background:var(--bg)!important;overflow:hidden;box-sizing:border-box}
 .reveal .slides section>*{flex-shrink:0}
 .slide-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
 
@@ -229,9 +229,9 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
 <h2><span class="ha">Performance Benchmarks</span></h2>
 <div class="cb">
     <div class="ctt">Operations per second (higher is better)</div>
-    <canvas id="cpbz8fx" style="width:100%;height:300px"></canvas>
+    <canvas id="c2v1sfy" style="width:100%;height:300px"></canvas>
   </div>
-  <script>(()=>{const c=document.getElementById('cpbz8fx');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Point Read","Range Scan","Full-text","Vector KNN","Graph Traversal"],datasets:[{"label":"NebulaDB","data":[45000,28000,15200,8900,4200],"color":"#0ea5e9"},{"label":"Postgres","data":[48000,22000,3200,400,0],"color":"#94a3b8"}]};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['#1d4ed8','#3b82f6','#f59e0b','#ef4444','#10b981'];
+  <script>(()=>{const c=document.getElementById('c2v1sfy');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Point Read","Range Scan","Full-text","Vector KNN","Graph Traversal"],datasets:[{"label":"NebulaDB","data":[45000,28000,15200,8900,4200],"color":"#0ea5e9"},{"label":"Postgres","data":[48000,22000,3200,400,0],"color":"#94a3b8"}]};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['#1d4ed8','#3b82f6','#f59e0b','#ef4444','#10b981'];
   ctx.strokeStyle='#f1f5f9';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='right';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}
   const gap=data.labels.length>1?cw/data.labels.length:80;const barW=Math.min(gap*0.5,44);const groupW=barW*data.datasets.length;const gg=(gap-groupW)/2;
   data.datasets.forEach((ds,di)=>{const col=ds.color||pal[di%pal.length];ds.data.forEach((v,vi)=>{const x=pad.l+vi*gap+gg+di*barW;const bh=Math.max((v/maxV)*ch,2);const y=pad.t+ch-bh;const grd=ctx.createLinearGradient(x,pad.t,x,pad.t+ch);grd.addColorStop(0,col);grd.addColorStop(1,col+'22');ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(x,y,barW-3,bh,[5,5,0,0]);ctx.fill();ctx.fillStyle='#334155';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(Math.round(v),x+(barW-3)/2,y-7)})});
