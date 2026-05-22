@@ -35,7 +35,9 @@ function css(t: T): string {
 html,body{background:var(--bg);color:var(--tx);font-family:'${t.fontB}',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .reveal{font-family:'${t.fontB}',-apple-system,sans-serif;font-size:30px}
 .reveal .slides{text-align:left}
-.reveal .slides section{padding:64px 80px;display:flex!important;flex-direction:column;justify-content:center;background:var(--bg)}
+.reveal .slides section{padding:52px 80px 28px 80px;display:flex!important;flex-direction:column;justify-content:flex-start;background:var(--bg);overflow:hidden;box-sizing:border-box}
+.reveal .slides section>*{flex-shrink:0}
+.slide-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
 
 /* Typography */
 h1{font-family:'${t.fontH}',Georgia,serif;font-size:3.6em;font-weight:800;letter-spacing:-0.04em;line-height:1.08;margin:0 0 0.1em 0;color:var(--hd)}
@@ -69,11 +71,11 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
 .sec .ss{font-size:0.95em;color:var(--tx2);margin-top:0.5em;font-weight:400}
 
 /* KPI stat cards */
-.sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.85em;margin:0.6em 0}
-.kp{background:var(--kpi);border:1px solid var(--bd);border-radius:var(--r2);padding:1.2em 0.9em;text-align:center;transition:transform 0.2s ease,box-shadow 0.2s ease}
+.sr{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.85em;margin:0.5em 0}
+.kp{background:var(--kpi);border:1px solid var(--bd);border-radius:var(--r2);padding:1.4em 1em;text-align:center;transition:transform 0.2s ease,box-shadow 0.2s ease}
 .kp:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.08)}
-.kv{font-family:'${t.fontH}',Georgia,serif;font-size:2.6em;font-weight:800;color:var(--accent);line-height:1.05;letter-spacing:-0.03em}
-.kl{font-size:0.6em;color:var(--tx2);margin-top:0.45em;font-weight:600;text-transform:uppercase;letter-spacing:0.1em}
+.kv{font-family:'${t.fontH}',Georgia,serif;font-size:2.8em;font-weight:800;color:var(--accent);line-height:1.05;letter-spacing:-0.03em;margin-bottom:0.15em}
+.kl{font-size:0.62em;color:var(--tx2);font-weight:600;text-transform:uppercase;letter-spacing:0.1em}
 
 /* Comparison panels */
 .cmp{display:grid;grid-template-columns:1fr 1fr;gap:1.2em;margin:0.35em 0}
@@ -103,8 +105,8 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
 .fig{text-align:center;margin:0.25em 0}
 .fig img{border-radius:var(--r);box-shadow:0 12px 40px rgba(0,0,0,0.15)}
 
-/* Footer */
-.sf{position:absolute;bottom:28px;left:80px;right:80px;display:flex;justify-content:space-between;font-size:0.44em;color:var(--tx2);opacity:0.45;font-weight:500;letter-spacing:0.03em}
+/* Footer — sits at bottom without overlapping */
+.sf{margin-top:auto;padding-top:18px;font-size:0.44em;color:var(--tx2);opacity:0.45;font-weight:500;letter-spacing:0.03em;display:flex;justify-content:space-between;flex-shrink:0}
 
 /* Image full */
 .if{display:flex!important;flex-direction:column;align-items:center;justify-content:center}
@@ -155,7 +157,7 @@ function slide(s: Slide, i: number, t: T, m: DeckMeta): string {
     default: c = standard(s, t)
   }
   const cls = s.blocks.some(b => b.position) ? 'ff' : ''
-  return `      <section${bg} class="${cls}">\n${c}\n${notes}\n${ft}\n      </section>`
+  return `      <section${bg} class="${cls}">\n<div class="slide-body">\n${c}\n</div>\n${notes}\n${ft}\n      </section>`
 }
 
 // ── Slide Layouts ──
@@ -202,14 +204,15 @@ function standard(s: Slide, t: T): string {
   if (s.subtitle) p.push(`<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">${esc(s.subtitle)}</p>`)
 
   if (hasKPI) {
-    p.push(`<div class="sr">`)
-    kpiVals.forEach(b => p.push(`<div class="kp"><div class="kv">${esc((b as any).content)}</div></div>`))
-    p.push(`</div>`)
-    if (kpiLbls.length > 0) {
-      p.push(`<div class="sr" style="margin-top:-0.3em">`)
-      kpiLbls.forEach(b => p.push(`<div class="kp" style="padding-top:0.3em"><div class="kl">${esc((b as any).content)}</div></div>`))
-      p.push(`</div>`)
+    // Group values and labels by their order: each value paired with the corresponding label
+    const n = Math.max(kpiVals.length, kpiLbls.length)
+    const kpiCards: string[] = []
+    for (let i = 0; i < n; i++) {
+      const val = i < kpiVals.length ? esc((kpiVals[i] as any).content) : ''
+      const lbl = i < kpiLbls.length ? esc((kpiLbls[i] as any).content) : ''
+      kpiCards.push(`<div class="kp"><div class="kv">${val}</div><div class="kl">${lbl}</div></div>`)
     }
+    p.push(`<div class="sr">${kpiCards.join('')}</div>`)
     if (rest.length > 0) p.push(blox(rest, t))
   } else {
     p.push(blox(s.blocks, t))
