@@ -48,17 +48,17 @@ function gt(id: string): T { return TH.find(t => t.id === id) || TH[0] }
 function css(t: T): string {
   return `:root{--bg:${t.c.bg};--surf:${t.c.surf};--accent:${t.c.acc};--a2:${t.c.a2};--tx:${t.c.tx};--tx2:${t.c.tx2};--hd:${t.c.hd};--bd:${t.c.bd};--ok:${t.c.ok};--err:${t.c.err};--wrn:${t.c.wrn};--grd:${t.c.grd};--kpi:${t.c.kpi};--r:14px;--r2:22px}
 *,*:before,*:after{box-sizing:border-box}
-html,body,.reveal,.reveal .slides,.reveal .slides section{background:var(--bg)!important;color:var(--tx)!important;font-family:'${t.fontB}',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body,.reveal,.reveal .slides,.reveal .slides section{background:var(--bg);color:var(--tx);font-family:'${t.fontB}',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .reveal{font-family:'${t.fontB}',-apple-system,sans-serif;font-size:30px}
 .reveal .slides{text-align:left}
-.reveal .slides section{padding:52px 80px 28px 80px;display:flex!important;flex-direction:column;justify-content:flex-start;background:var(--bg)!important;overflow:hidden;box-sizing:border-box}
+.reveal .slides section{padding:52px 80px 28px 80px;display:flex;flex-direction:column;justify-content:flex-start;background:var(--bg);overflow:hidden;box-sizing:border-box}
 .reveal .slides section>*{flex-shrink:0}
 .slide-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
 
 /* Typography */
-h1{font-family:'${t.fontH}',Georgia,serif!important;font-size:3.6em!important;font-weight:800!important;letter-spacing:-0.04em!important;line-height:1.08!important;margin:0 0 0.1em 0!important;color:var(--hd)!important}
-h2{font-family:'${t.fontH}',Georgia,serif!important;font-size:2.1em!important;font-weight:700!important;letter-spacing:-0.025em!important;line-height:1.18!important;margin:0 0 0.45em 0!important;color:var(--hd)!important}
-h3{font-family:'${t.fontH}',Georgia,serif!important;font-size:1.35em!important;font-weight:600!important;margin:0 0 0.35em 0!important;color:var(--hd)!important}
+h1{font-family:'${t.fontH}',Georgia,serif;font-size:3.6em;font-weight:800;letter-spacing:-0.04em;line-height:1.08;margin:0 0 0.1em 0;color:var(--hd)}
+h2{font-family:'${t.fontH}',Georgia,serif;font-size:2.1em;font-weight:700;letter-spacing:-0.025em;line-height:1.18;margin:0 0 0.45em 0;color:var(--hd)}
+h3{font-family:'${t.fontH}',Georgia,serif;font-size:1.35em;font-weight:600;margin:0 0 0.35em 0;color:var(--hd)}
 p{margin:0.2em 0;line-height:1.65}
 
 /* Lists — clean with accent markers */
@@ -199,15 +199,17 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
 // ── Compiler ──
 
 export function compileDeckToHTML(spec: DeckSpec): string {
-  const t = gt(spec.meta.theme)
+  const cloned = JSON.parse(JSON.stringify(spec)) as DeckSpec
+  const t = gt(cloned.meta.theme)
+  const fixes = autoFix(cloned, t)
+  if (fixes.length > 0) console.log('[Slidelang] Auto-fixed:', fixes.join(', '))
   const fw = `Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&DM+Serif+Display:ital@0;1&Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&Space+Grotesk:wght@500;600;700`
-  const slides = spec.slides.map((s, i) => slide(s, i, t, spec.meta)).join('\n')
+  const slides = cloned.slides.map((s, i) => slide(s, i, t, cloned.meta)).join('\n')
 
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${esc(spec.meta.title)}</title>
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${esc(cloned.meta.title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=${fw}&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <style>${css(t)}</style></head><body><div class="reveal"><div class="slides">
 ${slides}
@@ -652,4 +654,48 @@ function pos(b: SlideBlock, inner: string): string {
 
 function esc(s: string): string {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+}
+
+// ── Auto-fix engine — catches and corrects issues during compilation ──
+
+function autoFix(spec: DeckSpec, t: T): string[] {
+  const fixes: string[] = []
+
+  for (const slide of spec.slides) {
+    for (const block of slide.blocks) {
+      if (block.type === 'text') {
+        // Fix 1: low-contrast text colors → use theme default
+        if (block.style?.color && t.c.bg) {
+          const cr = _contrastRatio(block.style.color, t.c.bg)
+          if (cr < 3.0) {
+            block.style.color = t.c.tx
+            fixes.push(`Low-contrast text "${block.content.slice(0,20)}" (${cr.toFixed(1)}:1) → auto-fixed to theme text color`)
+          }
+        }
+        // Fix 2: KPI values too long → reduce font size
+        if (block.style?.size === 'xlarge' && block.content.length > 7) {
+          block.style.size = 'large'
+          fixes.push(`KPI value "${block.content}" too long for card → font reduced to large`)
+        }
+      }
+    }
+  }
+
+  return fixes
+}
+
+function hexToRgb(hex: string): [number, number, number] | null {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  return m ? [parseInt(m[1],16), parseInt(m[2],16), parseInt(m[3],16)] : null
+}
+
+function _contrastRatio(hex1: string, hex2: string): number {
+  const rgb1 = hexToRgb(hex1), rgb2 = hexToRgb(hex2)
+  if (!rgb1 || !rgb2) return 21
+  const lum = (r: number, g: number, b: number) => {
+    const lin = (c: number) => { c/=255; return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055,2.4) }
+    return 0.2126*lin(r) + 0.7152*lin(g) + 0.0722*lin(b)
+  }
+  const l1 = lum(...rgb1), l2 = lum(...rgb2)
+  return (Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05)
 }

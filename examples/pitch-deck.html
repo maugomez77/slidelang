@@ -2,21 +2,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&DM+Serif+Display:ital@0;1&Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <style>:root{--bg:#08080f;--surf:#111122;--accent:#d4a853;--a2:#f0c969;--tx:#eeebe5;--tx2:#a0998c;--hd:#ffffff;--bd:#252540;--ok:#5bb87a;--err:#e0556a;--wrn:#d4a853;--grd:#1a1a30;--kpi:linear-gradient(135deg, #1a1a3011 0%, #1a1a3044 100%);--r:14px;--r2:22px}
 *,*:before,*:after{box-sizing:border-box}
-html,body,.reveal,.reveal .slides,.reveal .slides section{background:var(--bg)!important;color:var(--tx)!important;font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body,.reveal,.reveal .slides,.reveal .slides section{background:var(--bg);color:var(--tx);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .reveal{font-family:'Inter',-apple-system,sans-serif;font-size:30px}
 .reveal .slides{text-align:left}
-.reveal .slides section{padding:52px 80px 28px 80px;display:flex!important;flex-direction:column;justify-content:flex-start;background:var(--bg)!important;overflow:hidden;box-sizing:border-box}
+.reveal .slides section{padding:52px 80px 28px 80px;display:flex;flex-direction:column;justify-content:flex-start;background:var(--bg);overflow:hidden;box-sizing:border-box}
 .reveal .slides section>*{flex-shrink:0}
 .slide-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
 
 /* Typography */
-h1{font-family:'Playfair Display',Georgia,serif!important;font-size:3.6em!important;font-weight:800!important;letter-spacing:-0.04em!important;line-height:1.08!important;margin:0 0 0.1em 0!important;color:var(--hd)!important}
-h2{font-family:'Playfair Display',Georgia,serif!important;font-size:2.1em!important;font-weight:700!important;letter-spacing:-0.025em!important;line-height:1.18!important;margin:0 0 0.45em 0!important;color:var(--hd)!important}
-h3{font-family:'Playfair Display',Georgia,serif!important;font-size:1.35em!important;font-weight:600!important;margin:0 0 0.35em 0!important;color:var(--hd)!important}
+h1{font-family:'Playfair Display',Georgia,serif;font-size:3.6em;font-weight:800;letter-spacing:-0.04em;line-height:1.08;margin:0 0 0.1em 0;color:var(--hd)}
+h2{font-family:'Playfair Display',Georgia,serif;font-size:2.1em;font-weight:700;letter-spacing:-0.025em;line-height:1.18;margin:0 0 0.45em 0;color:var(--hd)}
+h3{font-family:'Playfair Display',Georgia,serif;font-size:1.35em;font-weight:600;margin:0 0 0.35em 0;color:var(--hd)}
 p{margin:0.2em 0;line-height:1.65}
 
 /* Lists — clean with accent markers */
@@ -218,9 +217,9 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
 <h2><span class="ha">Revenue Growth</span></h2>
 <div class="cb">
     <div class="ctt">Monthly Recurring Revenue ($K)</div>
-    <canvas id="crqyo0s" style="width:100%;height:300px"></canvas>
+    <canvas id="cc8zzng" style="width:100%;height:300px"></canvas>
   </div>
-  <script>(()=>{const c=document.getElementById('crqyo0s');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Jan","Feb","Mar","Apr","May","Jun"],datasets:[{"label":"Self-Serve","data":[12,18,27,41,58,82],"color":"#6366f1"},{"label":"Enterprise","data":[8,12,18,25,40,65],"color":"#a78bfa"}]};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['#d4a853','#f0c969','#d4a853','#e0556a','#5bb87a'];
+  <script>(()=>{const c=document.getElementById('cc8zzng');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:["Jan","Feb","Mar","Apr","May","Jun"],datasets:[{"label":"Self-Serve","data":[12,18,27,41,58,82],"color":"#6366f1"},{"label":"Enterprise","data":[8,12,18,25,40,65],"color":"#a78bfa"}]};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['#d4a853','#f0c969','#d4a853','#e0556a','#5bb87a'];
   ctx.strokeStyle='#1a1a30';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#a0998c';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='right';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}
   const gap=data.labels.length>1?cw/data.labels.length:80;const barW=Math.min(gap*0.5,44);const groupW=barW*data.datasets.length;const gg=(gap-groupW)/2;
   data.datasets.forEach((ds,di)=>{const col=ds.color||pal[di%pal.length];ds.data.forEach((v,vi)=>{const x=pad.l+vi*gap+gg+di*barW;const bh=Math.max((v/maxV)*ch,2);const y=pad.t+ch-bh;const grd=ctx.createLinearGradient(x,pad.t,x,pad.t+ch);grd.addColorStop(0,col);grd.addColorStop(1,col+'22');ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(x,y,barW-3,bh,[5,5,0,0]);ctx.fill();ctx.fillStyle='#eeebe5';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(Math.round(v),x+(barW-3)/2,y-7)})});
