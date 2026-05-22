@@ -9,7 +9,7 @@ import { validateDeck, repairDeck } from './validation/validator'
 import { downloadDeck, downloadJSON, printDeck } from './publishing/publisher'
 
 const DEFAULT_SPEC: DeckSpec = {
-  meta: { title: 'My Presentation', theme: 'midnight', date: new Date().toISOString().slice(0, 10) },
+  meta: { title: 'My Presentation', theme: 'noir', date: new Date().toISOString().slice(0, 10) },
   slides: [
     {
       kind: 'title',

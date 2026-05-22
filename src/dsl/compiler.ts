@@ -1,604 +1,330 @@
 import { DeckSpec, Slide, SlideBlock, Position, DeckMeta } from './schema'
 
-// ── Professional Theme Definitions ──
+// ── Theme Definitions ──
 
-type ThemeDef = {
-  id: string
-  name: string
-  fontHeading: string
-  fontBody: string
-  colors: Record<string, string>
-  css: string
+type T = {
+  id: string; light: boolean
+  fontH: string; fontB: string
+  c: Record<string, string>
 }
 
-const THEMES: ThemeDef[] = [
-  {
-    id: 'midnight',
-    name: 'Midnight',
-    fontHeading: 'Playfair Display',
-    fontBody: 'Inter',
-    colors: { bg: '#0a0a1a', surface: '#141428', accent: '#6366f1', accent2: '#a78bfa', text: '#e2e8f0', textMuted: '#94a3b8', heading: '#f8fafc', border: '#1e1e3a', success: '#22c55e', danger: '#ef4444', warning: '#f59e0b', chartGrid: '#1e1e3a' },
-    css: '--bg:#0a0a1a;--surface:#141428;--accent:#6366f1;--accent2:#a78bfa;--text:#e2e8f0;--textMuted:#94a3b8;--heading:#f8fafc;--border:#1e1e3a;--success:#22c55e;--danger:#ef4444;--warning:#f59e0b;--chartGrid:#1e1e3a',
-  },
-  {
-    id: 'ocean',
-    name: 'Ocean',
-    fontHeading: 'DM Serif Display',
-    fontBody: 'Inter',
-    colors: { bg: '#f8fafc', surface: '#ffffff', accent: '#0ea5e9', accent2: '#06b6d4', text: '#334155', textMuted: '#94a3b8', heading: '#0f172a', border: '#e2e8f0', success: '#10b981', danger: '#ef4444', warning: '#f59e0b', chartGrid: '#e2e8f0' },
-    css: '--bg:#f8fafc;--surface:#ffffff;--accent:#0ea5e9;--accent2:#06b6d4;--text:#334155;--textMuted:#94a3b8;--heading:#0f172a;--border:#e2e8f0;--success:#10b981;--danger:#ef4444;--warning:#f59e0b;--chartGrid:#e2e8f0',
-  },
-  {
-    id: 'sunset',
-    name: 'Sunset',
-    fontHeading: 'Lora',
-    fontBody: 'Inter',
-    colors: { bg: '#1a0a0a', surface: '#2d1515', accent: '#f97316', accent2: '#fbbf24', text: '#fef3c7', textMuted: '#d4a574', heading: '#ffedd5', border: '#3d1a1a', success: '#22c55e', danger: '#ef4444', warning: '#f59e0b', chartGrid: '#3d1a1a' },
-    css: '--bg:#1a0a0a;--surface:#2d1515;--accent:#f97316;--accent2:#fbbf24;--text:#fef3c7;--textMuted:#d4a574;--heading:#ffedd5;--border:#3d1a1a;--success:#22c55e;--danger:#ef4444;--warning:#f59e0b;--chartGrid:#3d1a1a',
-  },
-  {
-    id: 'forest',
-    name: 'Forest',
-    fontHeading: 'Crimson Text',
-    fontBody: 'Source Sans 3',
-    colors: { bg: '#f0fdf4', surface: '#ffffff', accent: '#16a34a', accent2: '#22c55e', text: '#166534', textMuted: '#4d7c5d', heading: '#052e16', border: '#bbf7d0', success: '#16a34a', danger: '#dc2626', warning: '#d97706', chartGrid: '#dcfce7' },
-    css: '--bg:#f0fdf4;--surface:#ffffff;--accent:#16a34a;--accent2:#22c55e;--text:#166534;--textMuted:#4d7c5d;--heading:#052e16;--border:#bbf7d0;--success:#16a34a;--danger:#dc2626;--warning:#d97706;--chartGrid:#dcfce7',
-  },
-  {
-    id: 'mono',
-    name: 'Monochrome',
-    fontHeading: 'Space Grotesk',
-    fontBody: 'Inter',
-    colors: { bg: '#ffffff', surface: '#f5f5f5', accent: '#171717', accent2: '#525252', text: '#404040', textMuted: '#a3a3a3', heading: '#0a0a0a', border: '#e5e5e5', success: '#171717', danger: '#525252', warning: '#737373', chartGrid: '#e5e5e5' },
-    css: '--bg:#ffffff;--surface:#f5f5f5;--accent:#171717;--accent2:#525252;--text:#404040;--textMuted:#a3a3a3;--heading:#0a0a0a;--border:#e5e5e5;--success:#171717;--danger:#525252;--warning:#737373;--chartGrid:#e5e5e5',
-  },
-  {
-    id: 'plum',
-    name: 'Plum',
-    fontHeading: 'Fraunces',
-    fontBody: 'Inter',
-    colors: { bg: '#faf5ff', surface: '#ffffff', accent: '#7c3aed', accent2: '#a855f7', text: '#4a1d96', textMuted: '#8b5cf6', heading: '#2e1065', border: '#e9d5ff', success: '#16a34a', danger: '#dc2626', warning: '#d97706', chartGrid: '#f3e8ff' },
-    css: '--bg:#faf5ff;--surface:#ffffff;--accent:#7c3aed;--accent2:#a855f7;--text:#4a1d96;--textMuted:#8b5cf6;--heading:#2e1065;--border:#e9d5ff;--success:#16a34a;--danger:#dc2626;--warning:#d97706;--chartGrid:#f3e8ff',
-  },
-]
+const TH: T[] = [{
+  id: 'noir', light: false,
+  fontH: 'Playfair Display', fontB: 'Inter',
+  c: { bg: '#08080f', surf: '#111122', acc: '#d4a853', a2: '#f0c969', tx: '#d4d0c8', tx2: '#7a766e', hd: '#faf8f2', bd: '#1e1e33', ok: '#5bb87a', err: '#e0556a', wrn: '#d4a853', grd: '#1a1a30', kpi: 'linear-gradient(135deg, #1a1a3011 0%, #1a1a3044 100%)' },
+}, {
+  id: 'air', light: true,
+  fontH: 'DM Serif Display', fontB: 'Inter',
+  c: { bg: '#fafaf9', surf: '#ffffff', acc: '#1d4ed8', a2: '#3b82f6', tx: '#334155', tx2: '#94a3b8', hd: '#0f172a', bd: '#e8ecf0', ok: '#10b981', err: '#ef4444', wrn: '#f59e0b', grd: '#f1f5f9', kpi: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)' },
+}, {
+  id: 'bold', light: true,
+  fontH: 'Space Grotesk', fontB: 'Inter',
+  c: { bg: '#ffffff', surf: '#f5f5f5', acc: '#0a0a0a', a2: '#525252', tx: '#404040', tx2: '#a3a3a3', hd: '#0a0a0a', bd: '#e8e8e8', ok: '#0a0a0a', err: '#dc2626', wrn: '#d97706', grd: '#f5f5f5', kpi: 'linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%)' },
+}, {
+  id: 'warm', light: false,
+  fontH: 'Lora', fontB: 'Inter',
+  c: { bg: '#1c1410', surf: '#2a1f19', acc: '#e8924f', a2: '#f0b87b', tx: '#ede0d4', tx2: '#9a8878', hd: '#faf3ea', bd: '#3a2e26', ok: '#6fb86f', err: '#e06b6b', wrn: '#e8a74f', grd: '#2e221a', kpi: 'linear-gradient(135deg, #251a1411 0%, #251a1444 100%)' },
+}]
 
-function getTheme(themeId: string): ThemeDef {
-  return THEMES.find(t => t.id === themeId) || THEMES[0]
-}
+function gt(id: string): T { return TH.find(t => t.id === id) || TH[0] }
 
-// ── Common CSS shared across all themes ──
+// ── Design System ──
+function css(t: T): string {
+  return `:root{--bg:${t.c.bg};--surf:${t.c.surf};--accent:${t.c.acc};--a2:${t.c.a2};--tx:${t.c.tx};--tx2:${t.c.tx2};--hd:${t.c.hd};--bd:${t.c.bd};--ok:${t.c.ok};--err:${t.c.err};--wrn:${t.c.wrn};--grd:${t.c.grd};--kpi:${t.c.kpi};--r:14px;--r2:22px}
+*,*:before,*:after{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--tx);font-family:'${t.fontB}',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.reveal{font-family:'${t.fontB}',-apple-system,sans-serif;font-size:30px}
+.reveal .slides{text-align:left}
+.reveal .slides section{padding:64px 80px;display:flex!important;flex-direction:column;justify-content:center;background:var(--bg)}
 
-const SHARED_CSS = `
-.reveal { font-size: 28px; }
-.reveal .slides { text-align: left; }
-.reveal .slides section {
-  padding: 50px 70px;
-  display: flex !important;
-  flex-direction: column;
-  justify-content: center;
-}
-.reveal h1 { font-size: 2.8em; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin: 0 0 0.15em 0; }
-.reveal h2 { font-size: 1.8em; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 0.4em 0; position: relative; }
-.reveal h3 { font-size: 1.3em; font-weight: 700; margin: 0 0 0.3em 0; }
-.reveal h4 { font-size: 1.1em; font-weight: 600; margin: 0 0 0.2em 0; }
-.reveal p { margin: 0.3em 0; line-height: 1.55; }
-.reveal ul, .reveal ol { margin: 0.4em 0; padding-left: 1.6em; }
-.reveal li { margin: 0.35em 0; line-height: 1.5; }
-.reveal li::marker { color: var(--accent); font-weight: 700; }
-.reveal a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
-.reveal img { border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+/* Typography */
+h1{font-family:'${t.fontH}',Georgia,serif;font-size:3.6em;font-weight:800;letter-spacing:-0.04em;line-height:1.08;margin:0 0 0.1em 0;color:var(--hd)}
+h2{font-family:'${t.fontH}',Georgia,serif;font-size:2.1em;font-weight:700;letter-spacing:-0.025em;line-height:1.18;margin:0 0 0.45em 0;color:var(--hd)}
+h3{font-family:'${t.fontH}',Georgia,serif;font-size:1.35em;font-weight:600;margin:0 0 0.35em 0;color:var(--hd)}
+p{margin:0.2em 0;line-height:1.65}
 
-/* Accent bar under headings */
-.slide-heading-accent {
-  display: inline-block;
-  border-bottom: 4px solid var(--accent);
-  padding-bottom: 0.15em;
-  margin-bottom: 0.3em;
-}
+/* Lists — clean with accent markers */
+ul,ol{margin:0.25em 0;padding-left:1.5em}
+li{margin:0.38em 0;line-height:1.5;font-size:0.82em}
+li::marker{color:var(--accent);font-weight:700}
+ol{counter-reset:sl;padding-left:0;list-style:none}
+ol li{counter-increment:sl;padding-left:2.3em;position:relative}
+ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:translateY(-50%);width:1.7em;height:1.7em;background:var(--accent);color:${t.light?'#fff':t.c.bg};border-radius:50%;font-size:0.62em;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'${t.fontB}',sans-serif}
 
-/* Section divider */
-.slide-section-divider {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center;
-}
-.slide-section-divider h1 { font-size: 3em; }
-.slide-section-divider .section-number {
-  display: inline-block;
-  font-size: 0.4em;
-  font-weight: 600;
-  color: var(--accent);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.8em;
-}
+/* Accent heading bar — gradient underline */
+.ha{position:relative;padding-bottom:0.3em;margin-bottom:0.5em;display:inline-block}
+.ha:after{content:'';position:absolute;left:0;bottom:0;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--a2));border-radius:2px}
 
-/* Title slide */
-.slide-hero {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center;
-}
-.slide-hero h1 { font-size: 3.2em; margin-bottom: 0.15em; }
-.slide-hero .hero-subtitle { font-size: 1.3em; color: var(--textMuted); font-weight: 400; margin-bottom: 1em; }
-.slide-hero .hero-line {
-  width: 60px; height: 4px; background: var(--accent); border-radius: 2px; margin: 0 auto 1em auto;
-}
-.slide-hero .hero-meta {
-  font-size: 0.8em; color: var(--textMuted); letter-spacing: 0.05em; text-transform: uppercase;
-}
+/* Hero title slide */
+.hero{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center;padding:60px 100px!important}
+.hero h1{font-size:4em;line-height:1.06;margin-bottom:0.22em}
+.hero .hl{width:72px;height:5px;background:linear-gradient(90deg,var(--accent),var(--a2));border-radius:3px;margin:0 auto 1.4em}
+.hero .hs{font-size:1.15em;color:var(--tx2);font-weight:400;max-width:30em;line-height:1.55}
+.hero .hm{font-size:0.68em;color:var(--tx2);letter-spacing:0.1em;text-transform:uppercase;font-weight:600;margin-top:1.6em}
 
-/* Card used for stats, KPI, comparison */
-.kpi-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1em 1.2em;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-.kpi-card .kpi-value {
-  font-size: 2em; font-weight: 800; color: var(--accent); line-height: 1.1;
-}
-.kpi-card .kpi-label {
-  font-size: 0.75em; color: var(--textMuted); margin-top: 0.3em; text-transform: uppercase; letter-spacing: 0.08em;
-}
+/* Section divider — dramatic, centered */
+.sec{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center}
+.sec h1{font-size:3.4em;font-weight:800}
+.sec .sn{display:inline-block;font-size:0.36em;font-weight:700;color:var(--accent);letter-spacing:0.22em;text-transform:uppercase;margin-bottom:0.9em;font-family:'${t.fontB}',sans-serif}
+.sec .ss{font-size:0.95em;color:var(--tx2);margin-top:0.5em;font-weight:400}
 
-/* Stat grid */
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.8em; margin: 0.5em 0; }
+/* KPI stat cards */
+.sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.85em;margin:0.6em 0}
+.kp{background:var(--kpi);border:1px solid var(--bd);border-radius:var(--r2);padding:1.2em 0.9em;text-align:center;transition:transform 0.2s ease,box-shadow 0.2s ease}
+.kp:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.08)}
+.kv{font-family:'${t.fontH}',Georgia,serif;font-size:2.6em;font-weight:800;color:var(--accent);line-height:1.05;letter-spacing:-0.03em}
+.kl{font-size:0.6em;color:var(--tx2);margin-top:0.45em;font-weight:600;text-transform:uppercase;letter-spacing:0.1em}
 
-/* Comparison two-panel */
-.comparison-panels {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1em; margin: 0.5em 0;
-}
-.comparison-panels .panel {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1em 1.2em;
-}
-.comparison-panels .panel h3 { text-align: center; margin-bottom: 0.6em; padding-bottom: 0.4em; border-bottom: 2px solid var(--accent); }
+/* Comparison panels */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1.2em;margin:0.35em 0}
+.cp{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:1.1em 1.2em;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.cp h3{font-size:1.05em;text-align:center;margin-bottom:0.7em;padding-bottom:0.45em;border-bottom:2px solid var(--accent)}
+.cp li{font-size:0.78em}
 
-/* Timeline */
-.timeline { position: relative; padding-left: 2em; margin: 0.5em 0; }
-.timeline::before {
-  content: ''; position: absolute; left: 0.5em; top: 0; bottom: 0; width: 2px; background: var(--accent); opacity: 0.3;
-}
-.timeline-item { position: relative; margin-bottom: 0.8em; padding-left: 1em; }
-.timeline-item::before {
-  content: ''; position: absolute; left: -2.1em; top: 0.4em; width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
-}
-.timeline-item .timeline-date { font-size: 0.7em; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-.timeline-item .timeline-title { font-weight: 700; margin: 0.1em 0; }
-.timeline-item .timeline-desc { font-size: 0.8em; color: var(--textMuted); }
+/* Two column */
+.ct{display:grid;grid-template-columns:1fr 1fr;gap:1.4em;margin:0.25em 0}
+.ct>div{min-width:0}
+
+/* Quote — large, centered, dramatic */
+.qt{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center}
+.qt blockquote{font-family:'${t.fontH}',Georgia,serif;font-size:2em;font-style:italic;line-height:1.4;max-width:70%;border:none;padding:0;box-shadow:none;background:none;color:var(--hd)}
+.qt blockquote:before{content:'"';font-size:2.6em;color:var(--accent);display:block;margin-bottom:0.05em;font-style:normal;line-height:1}
+.qt .qa{font-size:0.78em;color:var(--tx2);font-weight:600;margin-top:1.1em;letter-spacing:0.04em}
 
 /* Chart container */
-.chart-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.8em; margin: 0.3em 0; }
-.chart-title { font-size: 0.85em; font-weight: 600; color: var(--textMuted); margin-bottom: 0.4em; }
+.cb{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:1em;margin:0.25em 0;box-shadow:0 2px 10px rgba(0,0,0,0.03)}
+.cb .ctt{font-size:0.72em;font-weight:700;color:var(--tx2);margin-bottom:0.5em;text-transform:uppercase;letter-spacing:0.07em}
 
-/* Math container */
-.math-block {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.6em 1em; margin: 0.4em 0;
-  text-align: center; overflow-x: auto;
-}
-.math-block-inline { padding: 0.15em 0.4em; background: var(--surface); border-radius: 4px; }
+/* Math display */
+.mb{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:0.75em 1.2em;margin:0.35em 0;text-align:center;overflow-x:auto;box-shadow:0 1px 8px rgba(0,0,0,0.03)}
+.mi{padding:0.15em 0.45em;background:var(--surf);border-radius:6px;border:1px solid var(--bd)}
 
-/* Two-column grid */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2em; margin: 0.4em 0; }
-.two-col > div { min-width: 0; }
+/* Image */
+.fig{text-align:center;margin:0.25em 0}
+.fig img{border-radius:var(--r);box-shadow:0 12px 40px rgba(0,0,0,0.15)}
 
-/* Quote slide */
-.slide-quote {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center;
-}
-.slide-quote blockquote {
-  font-size: 1.6em; font-style: italic; line-height: 1.4; max-width: 80%; border: none; padding: 0;
-  box-shadow: none; background: none;
-}
-.slide-quote blockquote::before { content: '"'; font-size: 2em; color: var(--accent); display: block; margin-bottom: 0.2em; }
-.slide-quote .quote-author { font-size: 0.85em; color: var(--textMuted); margin-top: 0.8em; }
+/* Footer */
+.sf{position:absolute;bottom:28px;left:80px;right:80px;display:flex;justify-content:space-between;font-size:0.44em;color:var(--tx2);opacity:0.45;font-weight:500;letter-spacing:0.03em}
 
-/* Blank / freeform slide */
-.slide-blank { padding: 30px 50px !important; }
-.slide-blank > div { position: relative; min-height: 400px; }
+/* Image full */
+.if{display:flex!important;flex-direction:column;align-items:center;justify-content:center}
+.if img{max-width:85%;max-height:52vh;border-radius:var(--r);box-shadow:0 16px 48px rgba(0,0,0,0.2)}
 
-/* Thank you slide */
-.slide-thanks {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center;
-}
-.slide-thanks h1 { font-size: 3em; }
-.slide-thanks .thanks-line { width: 80px; height: 4px; background: var(--accent); border-radius: 2px; margin: 0.6em auto; }
-
-/* Footer decoration */
-.slide-footer {
-  position: absolute; bottom: 20px; left: 70px; right: 70px;
-  display: flex; justify-content: space-between;
-  font-size: 0.5em; color: var(--textMuted); opacity: 0.6;
-}
+/* Freeform layout container */
+.ff{padding:30px 60px!important}
 `
+}
 
-// ── Main Compiler ──
+// ── Compiler ──
 
 export function compileDeckToHTML(spec: DeckSpec): string {
-  const theme = getTheme(spec.meta.theme)
-  const slidesHTML = spec.slides.map((slide, i) => compileSlide(slide, i, theme, spec.meta)).join('\n')
+  const t = gt(spec.meta.theme)
+  const fw = `Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&DM+Serif+Display:ital@0;1&Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&Space+Grotesk:wght@500;600;700`
+  const slides = spec.slides.map((s, i) => slide(s, i, t, spec.meta)).join('\n')
 
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHTML(spec.meta.title)}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&family=DM+Serif+Display&family=Lora:wght@600;700&family=Crimson+Text:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=Space+Grotesk:wght@500;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <style>
-    :root { ${theme.css} }
-    * { box-sizing: border-box; }
-    body { font-family: '${theme.fontBody}', -apple-system, sans-serif; background: var(--bg); color: var(--text); }
-    .reveal { font-family: '${theme.fontBody}', -apple-system, sans-serif; }
-    .reveal h1, .reveal h2, .reveal h3, .reveal h4 { font-family: '${theme.fontHeading}', Georgia, serif; color: var(--heading); }
-    .reveal .slides section { background: var(--bg); }
-    ${SHARED_CSS}
-  </style>
-</head>
-<body>
-  <div class="reveal">
-    <div class="slides">
-${slidesHTML}
-    </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script>
-    Reveal.initialize({
-      controls: true, progress: true, center: false, hash: true,
-      transition: 'slide', transitionSpeed: 'default',
-      width: 1280, height: 720, margin: 0.04,
-      plugins: [ RevealMath.KaTeX ]
-    });
-  </script>
-</body>
-</html>`
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${esc(spec.meta.title)}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=${fw}&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>${css(t)}</style></head><body><div class="reveal"><div class="slides">
+${slides}
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script>Reveal.initialize({controls:true,progress:true,center:false,hash:true,transition:'fade',transitionSpeed:'default',width:1280,height:720,margin:0.04,plugins:[RevealMath.KaTeX]})</script></body></html>`
 }
 
-// ── Slide Compilation ──
+// ── Slide ──
 
-function compileSlide(slide: Slide, index: number, theme: ThemeDef, meta: DeckMeta): string {
-  const bgStyle = slide.background ? ` style="background: ${slide.background};"` : ''
-  const notes = slide.notes ? `<aside class="notes">${escapeHTML(slide.notes)}</aside>` : ''
-  const footerHTML = `<div class="slide-footer"><span>${escapeHTML(slide.title || '')}</span><span>${escapeHTML(meta.title)}</span></div>`
-
-  let content = ''
-  switch (slide.kind) {
-    case 'title': content = _compileHeroSlide(slide, theme, meta); break
-    case 'section': content = compileSectionDivider(slide, theme, index); break
-    case 'quote': content = compileQuoteSlide(slide, theme); break
-    case 'two-column': content = compileTwoColumnSlide(slide, theme); break
-    case 'comparison': content = compileComparisonSlide(slide, theme); break
-    case 'image-full': content = compileImageFullSlide(slide, theme); break
-    case 'blank': content = compileBlankSlide(slide, theme); break
-    default: content = compileStandardSlide(slide, theme)
+function slide(s: Slide, i: number, t: T, m: DeckMeta): string {
+  const bg = s.background ? ` style="background:${s.background}"` : ''
+  const notes = s.notes ? `<aside class="notes">${esc(s.notes)}</aside>` : ''
+  const ft = `<div class="sf"><span>${esc(s.title||'')}</span><span>${esc(m.title)}</span></div>`
+  let c = ''
+  switch (s.kind) {
+    case 'title': c = hero(s, t, m); break
+    case 'section': c = divider(s, t); break
+    case 'quote': c = quote(s); break
+    case 'two-column': c = twocol(s, t); break
+    case 'comparison': c = comparison(s, t); break
+    case 'image-full': c = imgFull(s, t); break
+    case 'blank': c = freeform(s, t); break
+    default: c = standard(s, t)
   }
-
-  const hasSpatial = slide.blocks.some(b => b.position)
-  const slideClass = hasSpatial ? 'slide-blank' : ''
-
-  return `      <section${bgStyle} class="${slideClass}">
-        ${content}
-        ${notes}
-        ${footerHTML}
-      </section>`
+  const cls = s.blocks.some(b => b.position) ? 'ff' : ''
+  return `      <section${bg} class="${cls}">\n${c}\n${notes}\n${ft}\n      </section>`
 }
 
-// ── Hero / Title ──
+// ── Slide Layouts ──
 
-function _compileHeroSlide(slide: Slide, theme: ThemeDef, meta: DeckMeta): string {
-  const parts: string[] = []
-  if (slide.title) parts.push(`<h1>${escapeHTML(slide.title)}</h1>`)
-  parts.push(`<div class="hero-line"></div>`)
-  if (slide.subtitle) parts.push(`<p class="hero-subtitle">${escapeHTML(slide.subtitle)}</p>`)
-  if (meta.author) parts.push(`<p class="hero-meta">${escapeHTML(meta.author)}${meta.date ? ' · ' + escapeHTML(meta.date) : ''}</p>`)
-  const extraContent = compileBlocks(slide.blocks, theme).trim()
-  if (extraContent) parts.push(`<div style="margin-top:0.8em;">${extraContent}</div>`)
-  return parts.join('\n')
+function hero(s: Slide, t: T, m: DeckMeta): string {
+  const p: string[] = []
+  if (s.title) p.push(`<h1>${esc(s.title)}</h1>`)
+  p.push(`<div class="hl"></div>`)
+  if (s.subtitle) p.push(`<p class="hs">${esc(s.subtitle)}</p>`)
+  if (m.author) p.push(`<p class="hm">${esc(m.author)}${m.date?' · '+esc(m.date):''}</p>`)
+  const xtra = blox(s.blocks, t).trim()
+  if (xtra) p.push(`<div style="margin-top:1.2em">${xtra}</div>`)
+  return `<div class="hero">\n${p.join('\n')}\n</div>`
 }
 
-// ── Section Divider ──
-function compileSectionDivider(slide: Slide, theme: ThemeDef, index: number): string {
-  const parts: string[] = []
-  parts.push(`<p class="section-number">Section ${String(index).padStart(2, '0')}</p>`)
-  if (slide.title) parts.push(`<h1>${escapeHTML(slide.title)}</h1>`)
-  if (slide.subtitle) parts.push(`<p class="hero-subtitle" style="margin-top:0.3em;">${escapeHTML(slide.subtitle)}</p>`)
-  return `<div class="slide-section-divider">\n${parts.join('\n')}\n</div>`
-}
-
-// ── Quote ──
-function compileQuoteSlide(slide: Slide, theme: ThemeDef): string {
-  const textBlock = slide.blocks.find(b => b.type === 'text')
-  const quote = textBlock ? (textBlock as any).content : slide.title || ''
-  return `<div class="slide-quote">
-    <blockquote>${escapeHTML(quote)}</blockquote>
-    ${slide.subtitle ? `<p class="quote-author">— ${escapeHTML(slide.subtitle)}</p>` : ''}
+function divider(s: Slide, t: T): string {
+  return `<div class="sec">
+    <p class="sn">${esc(s.title||'')}</p>
+    ${s.subtitle?`<p class="ss">${esc(s.subtitle)}</p>`:''}
   </div>`
 }
 
-// ── Standard ──
-function compileStandardSlide(slide: Slide, theme: ThemeDef): string {
-  // Detect KPI blocks: text with large size + list = stat cards
-  const hasKPIs = slide.blocks.filter(b => b.type === 'text' && (b as any).style?.size === 'xlarge').length >= 2
+function quote(s: Slide): string {
+  const tb = s.blocks.find(b => b.type === 'text')
+  const q = tb ? (tb as any).content : s.title || ''
+  return `<div class="qt">
+    <blockquote>${esc(q)}</blockquote>
+    ${s.subtitle?`<p class="qa">— ${esc(s.subtitle)}</p>`:''}
+  </div>`
+}
 
-  const parts: string[] = []
-  if (slide.title) {
-    parts.push(`<h2><span class="slide-heading-accent">${escapeHTML(slide.title)}</span></h2>`)
-  }
-  if (slide.subtitle) {
-    parts.push(`<p style="color:var(--textMuted);font-size:0.9em;margin-bottom:0.6em;">${escapeHTML(slide.subtitle)}</p>`)
-  }
+function standard(s: Slide, t: T): string {
+  const kpiVals = s.blocks.filter(b => b.type === 'text' && (b as any).style?.size === 'xlarge')
+  const kpiLbls = s.blocks.filter(b => b.type === 'text' && (b as any).style?.size === 'small')
+  const rest = s.blocks.filter(b => {
+    if (b.type !== 'text') return true
+    const sz = (b as any).style?.size
+    return sz !== 'xlarge' && sz !== 'small'
+  })
 
-  if (hasKPIs) {
-    // Render KPI grid
-    parts.push(`<div class="stat-grid">`)
-    slide.blocks.forEach(b => {
-      if (b.type === 'text' && (b as any).style?.size === 'xlarge') {
-        parts.push(`<div class="kpi-card"><div class="kpi-value">${escapeHTML((b as any).content)}</div></div>`)
-      }
-    })
-    // Labels
-    const labels = slide.blocks.filter(b => b.type === 'text' && (b as any).style?.size === 'small')
-    if (labels.length > 0) {
-      parts.push(`</div><div class="stat-grid" style="margin-top:-0.4em;">`)
-      labels.forEach(b => {
-        parts.push(`<div class="kpi-card" style="padding-top:0.3em;"><div class="kpi-label">${escapeHTML((b as any).content)}</div></div>`)
-      })
+  const hasKPI = kpiVals.length >= 2
+  const p: string[] = []
+  if (s.title) p.push(`<h2><span class="ha">${esc(s.title)}</span></h2>`)
+  if (s.subtitle) p.push(`<p style="color:var(--tx2);font-size:0.8em;margin-bottom:0.7em;font-weight:500;line-height:1.5">${esc(s.subtitle)}</p>`)
+
+  if (hasKPI) {
+    p.push(`<div class="sr">`)
+    kpiVals.forEach(b => p.push(`<div class="kp"><div class="kv">${esc((b as any).content)}</div></div>`))
+    p.push(`</div>`)
+    if (kpiLbls.length > 0) {
+      p.push(`<div class="sr" style="margin-top:-0.3em">`)
+      kpiLbls.forEach(b => p.push(`<div class="kp" style="padding-top:0.3em"><div class="kl">${esc((b as any).content)}</div></div>`))
+      p.push(`</div>`)
     }
-    parts.push(`</div>`)
-    // Remaining blocks (non-stat)
-    const remaining = slide.blocks.filter(b => !(b.type === 'text' && ((b as any).style?.size === 'xlarge' || (b as any).style?.size === 'small')))
-    if (remaining.length > 0) {
-      parts.push(compileBlocks(remaining, theme))
-    }
+    if (rest.length > 0) p.push(blox(rest, t))
   } else {
-    parts.push(compileBlocks(slide.blocks, theme))
+    p.push(blox(s.blocks, t))
   }
-
-  return parts.join('\n')
+  return p.join('\n')
 }
 
-// ── Two Column ──
-function compileTwoColumnSlide(slide: Slide, theme: ThemeDef): string {
-  const mid = Math.ceil(slide.blocks.length / 2)
-  const left = slide.blocks.slice(0, mid)
-  const right = slide.blocks.slice(mid)
-  return `
-        <h2><span class="slide-heading-accent">${escapeHTML(slide.title || '')}</span></h2>
-        <div class="two-col">
-          <div>${compileBlocks(left, theme)}</div>
-          <div>${compileBlocks(right, theme)}</div>
-        </div>`
+function twocol(s: Slide, t: T): string {
+  const mid = Math.ceil(s.blocks.length / 2)
+  return `<h2><span class="ha">${esc(s.title||'')}</span></h2>
+<div class="ct"><div>${blox(s.blocks.slice(0,mid),t)}</div><div>${blox(s.blocks.slice(mid),t)}</div></div>`
 }
 
-// ── Comparison ──
-function compileComparisonSlide(slide: Slide, theme: ThemeDef): string {
-  const mid = Math.ceil(slide.blocks.length / 2)
-  const left = slide.blocks.slice(0, mid)
-  const right = slide.blocks.slice(mid)
-
-  const leftTitle = left.length >= 1 && left[0].type === 'text' ? (left[0] as any).content : 'Left'
-  const rightTitle = right.length >= 1 && right[0].type === 'text' ? (right[0] as any).content : 'Right'
-  const leftBlocks = left.length >= 1 && left[0].type === 'text' ? left.slice(1) : left
-  const rightBlocks = right.length >= 1 && right[0].type === 'text' ? right.slice(1) : right
-
-  return `
-        <h2><span class="slide-heading-accent">${escapeHTML(slide.title || '')}</span></h2>
-        <div class="comparison-panels">
-          <div class="panel"><h3>${escapeHTML(leftTitle)}</h3>${compileBlocks(leftBlocks, theme)}</div>
-          <div class="panel"><h3>${escapeHTML(rightTitle)}</h3>${compileBlocks(rightBlocks, theme)}</div>
-        </div>`
+function comparison(s: Slide, t: T): string {
+  const mid = Math.ceil(s.blocks.length / 2)
+  const L = s.blocks.slice(0, mid), R = s.blocks.slice(mid)
+  const lt = L.length > 0 && L[0].type === 'text' ? (L[0] as any).content : ''
+  const rt = R.length > 0 && R[0].type === 'text' ? (R[0] as any).content : ''
+  const lb = L.length > 0 && L[0].type === 'text' ? L.slice(1) : L
+  const rb = R.length > 0 && R[0].type === 'text' ? R.slice(1) : R
+  return `<h2><span class="ha">${esc(s.title||'')}</span></h2>
+<div class="cmp">
+  <div class="cp"><h3>${esc(lt)}</h3>${blox(lb,t)}</div>
+  <div class="cp"><h3>${esc(rt)}</h3>${blox(rb,t)}</div>
+</div>`
 }
 
-// ── Image Full ──
-function compileImageFullSlide(slide: Slide, theme: ThemeDef): string {
-  const imgBlock = slide.blocks.find(b => b.type === 'image') as Extract<SlideBlock, { type: 'image' }> | undefined
-  const img = imgBlock?.source
-  if (!img?.url) return `<p style="color:var(--textMuted);text-align:center;">[No image specified]</p>`
-  return `
-        ${slide.title ? `<h2><span class="slide-heading-accent">${escapeHTML(slide.title)}</span></h2>` : ''}
-        <div style="text-align:center;margin:0.5em 0;">
-          <img src="${escapeHTML(img.url)}" alt="${escapeHTML(img.alt || '')}" />
-          ${img.caption ? `<p style="font-size:0.7em;color:var(--textMuted);margin-top:0.4em;">${escapeHTML(img.caption)}</p>` : ''}
-        </div>`
+function imgFull(s: Slide, t: T): string {
+  const ib = s.blocks.find(b => b.type === 'image') as any
+  return `<div class="if">
+    ${s.title?`<h2><span class="ha">${esc(s.title)}</span></h2>`:''}
+    ${ib?`<img src="${esc(ib.source.url||'')}" alt="${esc(ib.source.alt||'')}"><p style="font-size:0.62em;color:var(--tx2);margin-top:0.5em;font-weight:500">${esc(ib.source.caption||'')}</p>`:'<p style="color:var(--tx2)">[No image]</p>'}
+  </div>`
 }
 
-// ── Blank / Spatial ──
-function compileBlankSlide(slide: Slide, theme: ThemeDef): string {
-  const hasSpatial = slide.blocks.some(b => b.position)
-  if (!hasSpatial) {
-    return compileBlocks(slide.blocks, theme)
-  }
-  return `<div style="position:relative;min-height:400px;">
-        ${compileBlocks(slide.blocks, theme)}
-      </div>`
+function freeform(s: Slide, t: T): string {
+  if (!s.blocks.some(b => b.position)) return blox(s.blocks, t)
+  return `<div style="position:relative;min-height:460px">${blox(s.blocks, t)}</div>`
 }
 
-// ── Block Compilation ──
+// ── Blocks ──
 
-function compileBlocks(blocks: SlideBlock[], theme: ThemeDef): string {
-  return blocks.map(b => compileBlock(b, theme)).join('\n')
-}
+function blox(bs: SlideBlock[], t: T): string { return bs.map(b => block(b, t)).join('\n') }
 
-function compileBlock(block: SlideBlock, theme: ThemeDef): string {
+function block(b: SlideBlock, t: T): string {
   let inner = ''
-  switch (block.type) {
-    case 'text': inner = compileTextBlock(block, theme); break
-    case 'bullets':
-    case 'numbered': inner = compileListBlock(block, theme); break
-    case 'chart': inner = compileChartBlock(block, theme); break
-    case 'math': inner = compileMathBlock(block); break
-    case 'image': inner = compileImageBlock(block); break
-    default: return ''
+  switch (b.type) {
+    case 'text': inner = txt(b); break
+    case 'bullets': case 'numbered': inner = lst(b); break
+    case 'chart': inner = chrt(b, t); break
+    case 'math': inner = math(b); break
+    case 'image': inner = img(b); break
   }
-  return withPos(block, inner)
+  return pos(b, inner)
 }
 
-function compileTextBlock(block: Extract<SlideBlock, { type: 'text' }>, theme: ThemeDef): string {
-  const style = block.style || {}
-  const sizeMap: Record<string, string> = { small: '0.75em', medium: '0.9em', large: '1.15em', xlarge: '1.5em' }
-  const css: string[] = []
-  if (style.bold) css.push('font-weight:700')
-  if (style.italic) css.push('font-style:italic')
-  if (style.size) css.push(`font-size:${sizeMap[style.size] || '0.9em'}`)
-  if (style.color) css.push(`color:${style.color}`)
-  if (style.align) css.push(`text-align:${style.align}`)
-  return `<p style="${css.join(';')};line-height:1.55;margin:0.3em 0;">${escapeHTML(block.content)}</p>`
+function txt(b: Extract<SlideBlock, { type: 'text' }>): string {
+  const st = b.style || {}
+  const sz: Record<string, string> = { small: '0.68em', medium: '0.82em', large: '1.08em', xlarge: '1.7em' }
+  const css: string[] = ['line-height:1.65', 'margin:0.22em 0']
+  if (st.bold) css.push('font-weight:700')
+  if (st.italic) css.push('font-style:italic')
+  if (st.size) css.push(`font-size:${sz[st.size]||'0.82em'}`)
+  if (st.color) css.push(`color:${st.color}`)
+  if (st.align) css.push(`text-align:${st.align}`)
+  return `<p style="${css.join(';')}">${esc(b.content)}</p>`
 }
 
-function compileListBlock(block: Extract<SlideBlock, { type: 'bullets' } | { type: 'numbered' }>, theme: ThemeDef): string {
-  const tag = block.type === 'numbered' ? 'ol' : 'ul'
-  const items = block.items.map(i => `<li>${escapeHTML(i)}</li>`).join('')
-  return `<${tag}>${items}</${tag}>`
+function lst(b: Extract<SlideBlock, { type: 'bullets' }|{ type: 'numbered' }>): string {
+  const tag = b.type === 'numbered' ? 'ol' : 'ul'
+  return `<${tag}>${b.items.map(i=>`<li>${esc(i)}</li>`).join('')}</${tag}>`
 }
 
-function compileChartBlock(block: Extract<SlideBlock, { type: 'chart' }>, theme: ThemeDef): string {
-  const labels = JSON.stringify(block.labels.map(String))
-  const datasets = JSON.stringify(block.datasets.map(ds => ({
-    label: ds.label,
-    data: ds.values,
-    borderColor: ds.color || theme.colors.accent,
-    backgroundColor: ds.color || theme.colors.accent,
-  })))
-  const chartId = `c${Math.random().toString(36).slice(2, 8)}`
-  return `
-        <div class="chart-wrapper">
-          ${block.title ? `<div class="chart-title">${escapeHTML(block.title)}</div>` : ''}
-          <canvas id="${chartId}" style="width:100%;height:320px;"></canvas>
-        </div>
-        <script>
-        (() => {
-          const c = document.getElementById('${chartId}');
-          if (!c) return;
-          const ctx = c.getContext('2d');
-          if (!ctx) return;
-          const dpr = window.devicePixelRatio || 1;
-          const w = c.parentElement.clientWidth - 16;
-          const h = 320;
-          c.width = w * dpr; c.height = h * dpr;
-          c.style.width = w + 'px'; c.style.height = h + 'px';
-          ctx.scale(dpr, dpr);
-          const data = { labels: ${labels}, datasets: ${datasets} };
-          const pad = { t: 30, b: 40, l: 55, r: 25 };
-          const cw = w - pad.l - pad.r;
-          const ch = h - pad.t - pad.b;
-          const maxV = Math.max(...data.datasets.flatMap(d => d.data), 1);
-          const palette = ['${theme.colors.accent}', '${theme.colors.accent2}', '${theme.colors.warning}', '${theme.colors.danger}', '${theme.colors.success}'];
-
-          // Grid lines
-          ctx.strokeStyle = '${theme.colors.chartGrid}';
-          ctx.lineWidth = 1;
-          const steps = 5;
-          for (let i = 0; i <= steps; i++) {
-            const y = pad.t + (ch / steps) * i;
-            ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
-            ctx.fillStyle = '${theme.colors.textMuted}';
-            ctx.font = '11px Inter, sans-serif';
-            ctx.textAlign = 'right';
-            ctx.fillText(Math.round(maxV - (maxV / steps) * i), pad.l - 8, y + 4);
-          }
-
-          // Bars
-          const gap = data.labels.length > 1 ? cw / data.labels.length : 60;
-          const barW = Math.min(gap * 0.55, 50);
-          const dsCount = data.datasets.length;
-          const groupW = barW * dsCount;
-          const groupGap = (gap - groupW) / 2;
-
-          data.datasets.forEach((ds, di) => {
-            const color = ds.borderColor || palette[di % palette.length];
-            ds.data.forEach((v, vi) => {
-              const x = pad.l + vi * gap + groupGap + di * barW;
-              const bh = Math.max((v / maxV) * ch, 1);
-              const y = pad.t + ch - bh;
-              ctx.fillStyle = color;
-              ctx.globalAlpha = 1;
-              ctx.beginPath();
-              ctx.roundRect(x, y, barW - 2, bh, [4, 4, 0, 0]);
-              ctx.fill();
-            });
-          });
-
-          // Labels
-          ctx.fillStyle = '${theme.colors.text}';
-          ctx.font = '12px Inter, sans-serif';
-          ctx.textAlign = 'center';
-          data.labels.forEach((l, vi) => {
-            const x = pad.l + vi * gap + gap / 2;
-            ctx.fillText(String(l), x, h - 8);
-          });
-
-          // Legend
-          let lx = pad.l;
-          data.datasets.forEach((ds, di) => {
-            ctx.fillStyle = ds.borderColor || palette[di % palette.length];
-            ctx.fillRect(lx, h - 28, 10, 10);
-            ctx.fillStyle = '${theme.colors.textMuted}';
-            ctx.font = '10px Inter, sans-serif';
-            ctx.textAlign = 'left';
-            ctx.fillText(ds.label, lx + 14, h - 20);
-            lx += ctx.measureText(ds.label).width + 30;
-          });
-        })();
-        </script>`
+function chrt(b: Extract<SlideBlock, { type: 'chart' }>, t: T): string {
+  const labels = JSON.stringify(b.labels.map(String))
+  const datasets = JSON.stringify(b.datasets.map(d => ({ label: d.label, data: d.values, color: d.color || t.c.acc })))
+  const id = `c${Math.random().toString(36).slice(2,8)}`
+  const palette = [t.c.acc, t.c.a2, t.c.wrn, t.c.err, t.c.ok]
+  return `<div class="cb">
+    ${b.title?`<div class="ctt">${esc(b.title)}</div>`:''}
+    <canvas id="${id}" style="width:100%;height:300px"></canvas>
+  </div>
+  <script>(()=>{const c=document.getElementById('${id}');if(!c)return;const ctx=c.getContext('2d');if(!ctx)return;const dpr=window.devicePixelRatio||1;const w=c.parentElement.clientWidth-20,h=300;c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';ctx.scale(dpr,dpr);const data={labels:${labels},datasets:${datasets}};const pad={t:28,b:46,l:56,r:20},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const maxV=Math.max(...data.datasets.flatMap(d=>d.data.map(v=>v)),1);const pal=['${t.c.acc}','${t.c.a2}','${t.c.wrn}','${t.c.err}','${t.c.ok}'];
+  ctx.strokeStyle='${t.c.grd}';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='${t.c.tx2}';ctx.font='600 10px Inter,sans-serif';ctx.textAlign='right';ctx.fillText(Math.round(maxV*(1-i/4)),pad.l-6,y+4)}
+  const gap=data.labels.length>1?cw/data.labels.length:80;const barW=Math.min(gap*0.5,44);const groupW=barW*data.datasets.length;const gg=(gap-groupW)/2;
+  data.datasets.forEach((ds,di)=>{const col=ds.color||pal[di%pal.length];ds.data.forEach((v,vi)=>{const x=pad.l+vi*gap+gg+di*barW;const bh=Math.max((v/maxV)*ch,2);const y=pad.t+ch-bh;const grd=ctx.createLinearGradient(x,pad.t,x,pad.t+ch);grd.addColorStop(0,col);grd.addColorStop(1,col+'22');ctx.fillStyle=grd;ctx.beginPath();ctx.roundRect(x,y,barW-3,bh,[5,5,0,0]);ctx.fill();ctx.fillStyle='${t.c.tx2==='#a3a3a3'?'#404040':t.c.tx}';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(Math.round(v),x+(barW-3)/2,y-7)})});
+  ctx.fillStyle='${t.c.tx}';ctx.font='600 11px Inter,sans-serif';ctx.textAlign='center';data.labels.forEach((l,vi)=>{ctx.fillText(String(l),pad.l+vi*gap+gap/2,h-12)});
+  let lx=pad.l;ctx.textAlign='left';data.datasets.forEach((ds,di)=>{ctx.fillStyle=ds.color||pal[di%pal.length];ctx.beginPath();ctx.arc(lx+5,h-30,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='${t.c.tx2}';ctx.font='600 10px Inter,sans-serif';ctx.fillText(ds.label,lx+14,h-24);lx+=ctx.measureText(ds.label).width+34})})()</script>`
 }
 
-function compileMathBlock(block: Extract<SlideBlock, { type: 'math' }>): string {
-  const expr = escapeHTML(block.expression)
-  if (block.inline) {
-    return `<span class="math-block-inline">$${expr}$</span>`
-  }
-  return `<div class="math-block">$$${expr}$$</div>`
+function math(b: Extract<SlideBlock, { type: 'math' }>): string {
+  return b.inline ? `<span class="mi">$${esc(b.expression)}$</span>` : `<div class="mb">$$${esc(b.expression)}$$</div>`
 }
 
-function compileImageBlock(block: Extract<SlideBlock, { type: 'image' }>): string {
-  const src = block.source
-  const imgStyle = [src.width ? `width:${src.width}` : '', src.height ? `height:${src.height}` : '', `max-width:100%`].filter(Boolean).join(';')
-  if (!src.url) return `<p style="color:var(--textMuted);">[Image URL missing]</p>`
-  return `
-        <figure style="text-align:center;margin:0.3em 0;">
-          <img src="${escapeHTML(src.url)}" alt="${escapeHTML(src.alt || '')}" style="${imgStyle}" loading="lazy" />
-          ${src.caption ? `<figcaption style="font-size:0.7em;color:var(--textMuted);margin-top:0.3em;">${escapeHTML(src.caption)}</figcaption>` : ''}
-        </figure>`
+function img(b: Extract<SlideBlock, { type: 'image' }>): string {
+  const s = b.source
+  if (!s.url) return `<p style="color:var(--tx2)">[Image URL missing]</p>`
+  return `<figure class="fig">
+    <img src="${esc(s.url)}" alt="${esc(s.alt||'')}" style="max-width:85%;max-height:45vh;${s.width?'width:'+s.width+';':''}${s.height?'height:'+s.height+';':''}" loading="lazy">
+    ${s.caption?`<figcaption style="font-size:0.62em;color:var(--tx2);margin-top:0.4em;font-weight:500">${esc(s.caption)}</figcaption>`:''}
+  </figure>`
 }
 
-// ── Positioning ──
+// ── Spatial Positioning ──
 
-function withPos(block: SlideBlock, inner: string): string {
-  const ps = posStyle(block.position)
-  if (!ps) return inner
-  return `<div style="${ps}">\n${inner}\n</div>`
+function pos(b: SlideBlock, inner: string): string {
+  if (!b.position) return inner
+  const pct = b.position.unit !== 'px'
+  const s = [`position:absolute`,`left:${b.position.x}${pct?'%':'px'}`,`top:${b.position.y}${pct?'%':'px'}`]
+  if (b.position.width) s.push(`width:${b.position.width}${pct?'%':'px'}`)
+  if (b.position.height) s.push(`height:${b.position.height}${pct?'%':'px'}`)
+  if (b.position.zIndex) s.push(`z-index:${b.position.zIndex}`)
+  return `<div style="${s.join(';')}">\n${inner}\n</div>`
 }
 
-function posStyle(pos?: Position): string {
-  if (!pos) return ''
-  const isPct = pos.unit !== 'px'
-  const parts: string[] = [`position:absolute;`, `left:${pos.x}${isPct ? '%' : 'px'};`, `top:${pos.y}${isPct ? '%' : 'px'};`]
-  if (pos.width) parts.push(`width:${pos.width}${isPct ? '%' : 'px'};`)
-  if (pos.height) parts.push(`height:${pos.height}${isPct ? '%' : 'px'};`)
-  if (pos.zIndex) parts.push(`z-index:${pos.zIndex};`)
-  return parts.join('')
-}
-
-function escapeHTML(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+function esc(s: string): string {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
 }
