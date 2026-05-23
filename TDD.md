@@ -1,110 +1,114 @@
 # Slidelang — Technical Design Document
+## AI Fund Build Challenge Submission
 
-## Deck Spec Schema (`src/dsl/schema.ts`)
-A typed TypeScript schema defines the deck specification:
+### Architecture Overview
+```
+Browser (React SPA)
+├── PromptInput → AI Planner (OpenRouter / Ollama) → DeckSpec (JSON)
+├── SpecEditor → Live edit blocks, kinds, themes, transitions
+├── SlideRenderer → 20 slide kind layout renderers matching compiler output
+├── Validator → 33 rules → auto-repair → validated spec
+└── Publisher → HTML export, JSON save, print
 
+CLI (Node.js)
+├── compile-examples.ts → Batch compilation with vision QA
+├── record-*.ts → Demo video generation (Ollama narration + TTS + FFmpeg)
+└── mcp-ollama/ → MCP server (text, vision, video tools)
+```
+
+### Deck Spec Schema (`src/dsl/schema.ts`)
 - **DeckSpec**: `{ meta: DeckMeta, slides: Slide[] }`
-- **Slide**: `{ kind: SlideKind, title?, subtitle?, blocks: SlideBlock[], background?, notes?, layoutIssues? }`
-- **SlideKind**: 10 variants — `title`, `section`, `content`, `two-column`, `image-full`, `quote`, `comparison`, `chart`, `math`, `blank`
-- **SlideBlock**: Union of `TextBlock`, `ListBlock` (bullets/numbered), `ChartBlock`, `MathBlock`, `ImageBlock`
-- **TextStyle**: Optional bold, italic, size (small-xlarge), color, alignment
-- **ChartBlock**: Supports bar/line/pie/area with labels and datasets
-- **ThemePreset**: 5 themes — default, dark, minimal, gradient, corporate
+- **DeckMeta**: title, author, date, theme, description, fontH, fontB
+- **SlideKind**: 20 variants (title, section, content, two-column, comparison, chart, kpi, dashboard, big-number, math, quote, image-full, logo-grid, team, timeline, flowchart, agenda, progress, contact, blank)
+- **SlideBlock**: Union of TextBlock, ListBlock (bullets/numbered), ChartBlock, MathBlock, ImageBlock
+- **ChartBlock**: bar, line, pie, donut — labels + datasets with colors
+- **SlideTransition**: fade, slide, zoom, convex, concave
+- **LayoutIssue**: 8 issue types with severity levels
+- The schema is the single source of truth for compiler, editor, validator, and AI planner.
 
-The schema is the single source of truth. All tooling (compiler, editor, validator, AI planner) operates on this schema.
+### Compiler (`src/dsl/compiler.ts` — 703 lines)
+Pure function: `DeckSpec → compileDeckToHTML() → string (full HTML page)`
 
-## Compiler Architecture (`src/dsl/compiler.ts`)
-The compiler transforms a DeckSpec into a self-contained HTML document:
+- Inlines CSS variables from theme (12 color tokens) or custom theme
+- Maps 20 slide kinds to dedicated layout functions with CSS class mappings
+- Inlines chart rendering as `<canvas>` + inline JS using Canvas 2D API (bar, line, pie, donut)
+- Chart renderer: DPR-aware, gradient fills, legends, grid lines, axis labels — zero dependencies
+- Uses KaTeX from CDN for math rendering (`$$` display, `$` inline)
+- Uses Reveal.js 6 from CDN for presentation controls
+- Auto-fix engine: corrects low-contrast inline colors, oversized KPI values at compile time
+- Per-slide transitions via `data-transition` attributes
+- Google Fonts loaded per theme with custom font overrides from DeckMeta
+- All theme colors, fonts, and transitions baked into self-contained HTML output
 
-```
-DeckSpec → compileDeckToHTML() → string (full HTML page)
-```
+### AI Planning (`src/ai/planner.ts` + `src/ai/ollama.ts`)
+- **OpenRouter**: GPT-4o, Claude via chat completions API with JSON response format
+- **Ollama**: Local models (llama3.2, qwen2.5, deepseek-r1) via `/api/generate`
+- **Backend selector**: Persisted in localStorage, switchable at runtime
+- **Fallback**: Built-in 7-slide template generator when no API key configured
+- **Vision**: Image-to-deck via Ollama vision (`ollamaDescribeImage`)
+- **API key**: Client-side only, stored in localStorage
 
-- Inlines CSS variables from the selected theme
-- Maps slide kinds to layout templates (title center, two-column grid, comparison grid, image-full)
-- Inlines chart rendering as <canvas> with inline JavaScript using the Canvas 2D API
-- Uses KaTeX from CDN for math rendering
-- Uses Reveal.js 5 from CDN for presentation controls
-- Generates validation badges directly in slide markup
-
-## AI Planning (`src/ai/planner.ts`)
-Converts a natural language prompt to a DeckSpec:
-
-```
-prompt → planDeck() → DeckSpec
-```
-
-- Calls OpenRouter API with a system prompt that defines the schema
-- Requests JSON response format for deterministic parsing
-- Validates and fills defaults on the returned spec
-- Falls back to a built-in template generator when no API key is configured
-- Fallback generates 6-7 slides with chart, math, image, comparison, and content slides
-- API key and model stored in localStorage (client-side only)
-
-## Browser Editor State Model (`src/editor/SpecEditor.tsx`)
-The editor operates on a single DeckSpec held in React state:
-
-- **SpecEditor**: Tabbed navigation by slide index. Each slide is independently editable.
-- **SlideEditor**: Per-slide form with kind selector, title/subtitle inputs, background picker, and block list.
-- **BlockEditor**: Each block type has a custom editor:
-  - Text: textarea + style toggles (bold, italic, size)
+### Browser Editor (`src/editor/SpecEditor.tsx` — 390 lines)
+- **SpecEditor**: Tabbed slide navigation, raw JSON toggle, add/remove slides
+- **SlideEditor**: Kind selector (20 options), title/subtitle/background inputs, transition picker (6 options), block list
+- **BlockEditor**: Type-specific editors:
+  - Text: textarea + AI Rewrite (formal, concise, persuasive, simplify, grammar via Ollama)
   - Lists: dynamic item array with add/remove
-  - Chart: type selector, label preview
+  - Image: URL + alt + Unsplash search integration (source.unsplash.com, no API key needed)
+  - Chart: type selector + label/dataset display
   - Math: LaTeX expression input
-  - Image: URL + alt text inputs
-- **RawSpecEditor**: Full JSON textarea with validation and apply button
 - State persists to localStorage on every change
 
-## Validation & Repair Pipeline (`src/validation/validator.ts`)
-Two-pass pipeline:
+### Slide Renderer (`src/renderers/SlideRenderer.tsx` — 380 lines)
+20 dedicated layout renderers matching compiler output pixel-for-pixel:
+- Title, Section, Quote — centered typography with accent bars
+- Content — auto-detected KPI cards from xlarge+small text pairs
+- Two-Column, Comparison — grid layouts with panel styling
+- Chart, Dashboard — Canvas 2D renderer with bar/line/pie/donut, legends, gradients
+- KPI, Big Number — card grids, dramatic single-stat layouts
+- Timeline — vertical line with dots, dates, titles, descriptions
+- Flowchart — connected nodes with arrows
+- Agenda — numbered items with descriptions
+- Team — profile cards with photos
+- Progress — labeled percentage bars
+- Logo Grid, Image-Full, Contact — visual layouts
+- Theme CSS variables injected for consistent coloring
 
-### Validation Pass
-Rules checked per slide:
-- Empty content blocks (warning)
-- Block count > 8 (warning — overflow risk)
-- Text > 500 chars (warning — truncation risk)
-- List items > 15 (warning — overflow risk)
-- List item > 200 chars (info — wordiness)
-- Chart with no labels/values (error — missing data)
-- Chart labels > 20 (warning — crowding)
-- Empty math expression (warning)
-- Missing image URL (error — broken asset)
-- Non-HTTP image URL (warning — may not load)
-- Custom background with text (info — contrast check)
+### Chart Renderer (`src/renderers/ChartRenderer.tsx` — 130 lines)
+- Pure Canvas 2D, zero dependencies
+- Bar: multi-dataset grouped bars, gradient fills, values above bars, grid lines, legend
+- Line: multi-series lines with dot markers, grid lines
+- Pie/Donut: slices with percentage labels, legend
+- DPR-aware rendering for sharp output on Retina displays
+- Theme-aware color palette from CSS variables
 
-### Repair Pass
-- Removes empty text blocks and empty lists
-- Adds placeholder text to empty slides
-- Injects "No Data" placeholder into charts with missing data
-- Returns list of repair actions taken
+### Validation & Repair (`src/validation/validator.ts`)
+- 33 validation rules across 8 categories: structure, content, text, layout, charts, math, images, accessibility
+- Auto-repair engine fixes: low-contrast text, oversized KPIs, empty slides, missing alt text
+- Vision QA (CLI): Playwright renders slides, screenshots, Ollama vision checks for rendering issues
+- Design critique module: Vision model reviews contrast, alignment, spacing, readability
 
-## Chart/Math/Image Rendering
+### Theme & Font System (`src/components/ThemeBuilder.tsx`)
+- 8 built-in themes (noir, air, bold, warm, crimson, sage, navy, neon)
+- 12 color variables per theme (bg, surf, acc, a2, tx, tx2, hd, bd, ok, err, wrn, grd)
+- Custom theme creation with localStorage persistence
+- 8 heading fonts + 8 body fonts, dynamically loaded from Google Fonts
+- Theme CSS variables injected at runtime, compiled into HTML output
 
-### Charts (`src/renderers/ChartRenderer.tsx`)
-- Renders bar charts using the Canvas 2D API
-- Supports multi-dataset overlays with semi-transparent colors
-- Auto-sizes to container width with device pixel ratio support
-- Y-axis gridlines and labels auto-scaled to data range
-- No external charting library — lightweight, fast, deterministic
+### Publishing (`src/publishing/publisher.ts`)
+- HTML export: Full deck compiled to self-contained HTML file
+- JSON export: Portable deck spec
+- Print: Browser print dialog
+- Deployment: GitHub Pages via CI workflow
 
-### Math (`src/renderers/MathRenderer.tsx`)
-- Renders LaTeX expressions using KaTeX
-- Lazy-loads KaTeX from CDN on first use
-- Falls back to raw LaTeX display if KaTeX fails to load
-- Supports both inline ($...$) and display ($$...$$) modes
+### MCP Server (`mcp-ollama/`)
+- Stdio transport, TypeScript SDK
+- 4 tools: ollama_generate, ollama_describe_image, ollama_list_models, create_demo_video
+- Vision: reads image from disk, base64-encodes, sends to llama3.2-vision
+- Video: generates demo videos from deck specs (narration + TTS + FFmpeg)
 
-### Images (`src/renderers/ImageRenderer.tsx`)
-- Renders <img> with max-height constraints
-- Graceful fallback on load error (shows placeholder text)
-
-## Publishing Flow (`src/publishing/publisher.ts`)
-Three export paths:
-1. **HTML export** — compileDeckToHTML → Blob → download (.html)
-2. **JSON export** — serialized DeckSpec → download (.slidelang.json)
-3. **Print** — open compiled HTML in new tab → window.print()
-4. **Presentation URL** — compiled HTML → object URL for live preview
-
-## CLI / Plugin Integration (Future)
-- The compiler is a pure function (DeckSpec → string), making it trivially usable from Node.js CLI
-- The schema is fully typed, enabling language server plugins (VS Code extension for .slidelang.json)
-- Planned: `slidelang build spec.json` CLI command and GitHub Action for automated deck generation
+### Demo Pipeline (`record-*.ts`)
+- Narration: Ollama generates scripts → macOS TTS (say) converts to audio
+- Rendering: Playwright screenshots each slide
+- Compositing: FFmpeg merges screenshots + audio → MP4
+- Vision QA: Optional per-slide quality check via llama3.2-vision
