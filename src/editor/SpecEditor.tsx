@@ -1,5 +1,23 @@
 import React, { useState } from 'react'
 import { DeckSpec, Slide, SlideBlock } from '../dsl/schema'
+import { UnsplashSearch } from '../components/UnsplashSearch'
+
+const OLLAMA_BASE = 'http://localhost:11434'
+
+async function aiRewrite(text: string, style: string): Promise<string> {
+  try {
+    const r = await fetch(`${OLLAMA_BASE}/api/generate`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama3.2',
+        prompt: `Rewrite the following text to be more ${style}. Return ONLY the rewritten text, nothing else.\n\nOriginal: "${text}"\n\nRewritten:`,
+        stream: false,
+      }),
+    })
+    if (r.ok) return ((await r.json()) as any).response.trim()
+  } catch { /* ollama not available */ }
+  return text
+}
 
 export function SpecEditor({ spec, onSpecChange }: { spec: DeckSpec; onSpecChange: (s: DeckSpec) => void }) {
   const [activeSlide, setActiveSlide] = useState(0)
@@ -110,6 +128,19 @@ function SlideEditor({ slide, onSlideChange }: { slide: Slide; onSlideChange: (s
             style={{ display: 'block', width: '100%', padding: '0.3em', borderRadius: 4, border: '1px solid #ccc', fontSize: '0.85em', marginTop: '0.2em' }}
           />
         </div>
+        <div style={{ width: 100 }}>
+          <label style={{ fontSize: '0.75em', opacity: 0.7 }}>Transition</label>
+          <select value={slide.transition || 'none'}
+            onChange={e => onSlideChange({ ...slide, transition: (e.target.value === 'none' ? undefined : e.target.value as any) })}
+            style={{ display: 'block', width: '100%', padding: '0.3em', borderRadius: 4, border: '1px solid #ccc', fontSize: '0.85em', marginTop: '0.2em' }}>
+            <option value="none">None</option>
+            <option value="fade">Fade</option>
+            <option value="slide">Slide</option>
+            <option value="zoom">Zoom</option>
+            <option value="convex">Convex</option>
+            <option value="concave">Concave</option>
+          </select>
+        </div>
       </div>
 
       <div style={{ marginBottom: '0.5em' }}>
@@ -164,27 +195,7 @@ function BlockEditor({ block, onChange, onRemove }: { block: SlideBlock; onChang
 function renderBlockFields(block: SlideBlock, onChange: (b: SlideBlock) => void) {
   switch (block.type) {
     case 'text':
-      return (
-        <>
-          <textarea
-            value={block.content}
-            onChange={e => onChange({ ...block, content: e.target.value })}
-            rows={2}
-            style={{ width: '100%', padding: '0.3em', border: '1px solid #ddd', borderRadius: 4, fontSize: '0.8em', resize: 'vertical' }}
-          />
-          <div style={{ display: 'flex', gap: '0.3em', marginTop: '0.3em', flexWrap: 'wrap' }}>
-            <label style={labelStyle}><input type="checkbox" checked={block.style?.bold || false} onChange={e => onChange({ ...block, style: { ...block.style, bold: e.target.checked } })} /> Bold</label>
-            <label style={labelStyle}><input type="checkbox" checked={block.style?.italic || false} onChange={e => onChange({ ...block, style: { ...block.style, italic: e.target.checked } })} /> Italic</label>
-            <select value={block.style?.size || ''} onChange={e => onChange({ ...block, style: { ...block.style, size: e.target.value as any || undefined } })} style={{ fontSize: '0.75em', padding: '0.15em' }}>
-              <option value="">Size</option>
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-              <option value="xlarge">XLarge</option>
-            </select>
-          </div>
-        </>
-      )
+      return <TextBlockEditor block={block} onChange={onChange} />
     case 'bullets':
     case 'numbered':
       return (
@@ -219,27 +230,72 @@ function renderBlockFields(block: SlideBlock, onChange: (b: SlideBlock) => void)
         />
       )
     case 'image':
-      return (
-        <>
-          <input
-            type="text"
-            value={block.source.url}
-            onChange={e => onChange({ ...block, source: { ...block.source, url: e.target.value } })}
-            placeholder="Image URL"
-            style={{ width: '100%', padding: '0.3em', border: '1px solid #ddd', borderRadius: 4, fontSize: '0.8em', marginBottom: '0.2em' }}
-          />
-          <input
-            type="text"
-            value={block.source.alt || ''}
-            onChange={e => onChange({ ...block, source: { ...block.source, alt: e.target.value } })}
-            placeholder="Alt text"
-            style={{ width: '100%', padding: '0.3em', border: '1px solid #ddd', borderRadius: 4, fontSize: '0.8em' }}
-          />
-        </>
-      )
+      return <ImageBlockEditor block={block} onChange={onChange} />
     default:
       return null
   }
+}
+
+function TextBlockEditor({ block, onChange }: { block: Extract<SlideBlock, { type: 'text' }>; onChange: (b: SlideBlock) => void }) {
+  const [rewriting, setRewriting] = useState(false)
+  const [showRewrite, setShowRewrite] = useState(false)
+
+  const handleRewrite = async (style: string) => {
+    setRewriting(true); setShowRewrite(false)
+    const result = await aiRewrite(block.content, style)
+    onChange({ ...block, content: result })
+    setRewriting(false)
+  }
+
+  const styles = [
+    { label: 'More formal', value: 'formal and professional' },
+    { label: 'More concise', value: 'concise and direct' },
+    { label: 'More persuasive', value: 'persuasive and compelling' },
+    { label: 'Simplify', value: 'simpler and easier to understand' },
+    { label: 'Fix grammar', value: 'grammatically correct and polished' },
+  ]
+
+  return (
+    <div>
+      <textarea value={block.content} onChange={e => onChange({ ...block, content: e.target.value })} rows={2}
+        style={{ width: '100%', padding: '0.3em', border: '1px solid #ddd', borderRadius: 4, fontSize: '0.8em', resize: 'vertical', boxSizing: 'border-box' }} />
+      <div style={{ display: 'flex', gap: '0.3em', marginTop: '0.2em', alignItems: 'center' }}>
+        <button onClick={() => setShowRewrite(!showRewrite)} disabled={rewriting} style={{ padding: '0.15em 0.5em', border: '1px solid #7209b7', borderRadius: 4, background: 'white', color: '#7209b7', cursor: 'pointer', fontSize: '0.7em', fontWeight: 600 }}>
+          {rewriting ? '...' : '🤖 Rewrite'}
+        </button>
+        {showRewrite && (
+          <div style={{ display: 'flex', gap: '0.2em', flexWrap: 'wrap' }}>
+            {styles.map(s => (
+              <button key={s.value} onClick={() => handleRewrite(s.value)} style={{ padding: '0.15em 0.4em', border: '1px solid #ddd', borderRadius: 3, background: '#fafafa', cursor: 'pointer', fontSize: '0.68em' }}>
+                {s.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function ImageBlockEditor({ block, onChange }: { block: Extract<SlideBlock, { type: 'image' }>; onChange: (b: SlideBlock) => void }) {
+  const [showUnsplash, setShowUnsplash] = useState(false)
+  return (
+    <div>
+      <div style={{ display: 'flex', gap: '0.3em', marginBottom: '0.2em' }}>
+        <input type="text" value={block.source.url} onChange={e => onChange({ ...block, source: { ...block.source, url: e.target.value } })} placeholder="Image URL" style={{ flex: 1, padding: '0.3em', border: '1px solid #ddd', borderRadius: 4, fontSize: '0.8em' }} />
+        <button onClick={() => setShowUnsplash(!showUnsplash)} style={{ padding: '0.3em 0.6em', border: '1px solid #4361ee', borderRadius: 4, background: showUnsplash ? '#4361ee' : 'white', color: showUnsplash ? 'white' : '#4361ee', cursor: 'pointer', fontSize: '0.75em', fontWeight: 600, whiteSpace: 'nowrap' }}>
+          🖼️ Unsplash
+        </button>
+      </div>
+      {showUnsplash && (
+        <UnsplashSearch onSelect={(url, alt) => {
+          onChange({ ...block, source: { ...block.source, url, alt } })
+          setShowUnsplash(false)
+        }} />
+      )}
+      <input type="text" value={block.source.alt || ''} onChange={e => onChange({ ...block, source: { ...block.source, alt: e.target.value } })} placeholder="Alt text" style={{ width: '100%', padding: '0.3em', border: '1px solid #ddd', borderRadius: 4, fontSize: '0.8em', marginTop: '0.2em' }} />
+    </div>
+  )
 }
 
 function ChartBlockEditor({ block, onChange }: { block: Extract<SlideBlock, { type: 'chart' }>; onChange: (b: SlideBlock) => void }) {

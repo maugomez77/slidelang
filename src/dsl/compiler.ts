@@ -201,6 +201,8 @@ ol li:before{content:counter(sl);position:absolute;left:0;top:50%;transform:tran
 export function compileDeckToHTML(spec: DeckSpec): string {
   const cloned = JSON.parse(JSON.stringify(spec)) as DeckSpec
   const t = gt(cloned.meta.theme)
+  if (cloned.meta.fontH) t.fontH = cloned.meta.fontH
+  if (cloned.meta.fontB) t.fontB = cloned.meta.fontB
   const fixes = autoFix(cloned, t)
   if (fixes.length > 0) console.log('[Slidelang] Auto-fixed:', fixes.join(', '))
   const fw = `Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&DM+Serif+Display:ital@0;1&Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&Space+Grotesk:wght@500;600;700`
@@ -224,6 +226,7 @@ ${slides}
 
 function slide(s: Slide, i: number, t: T, m: DeckMeta): string {
   const bg = s.background ? ` style="background:${s.background}"` : ''
+  const trans = s.transition && s.transition !== 'none' ? ` data-transition="${s.transition}"` : ''
   const notes = s.notes ? `<aside class="notes">${esc(s.notes)}</aside>` : ''
   const ft = `<div class="sf"><span>${esc(s.title||'')}</span><span>${esc(m.title)}</span></div>`
   let c = ''
@@ -248,7 +251,7 @@ function slide(s: Slide, i: number, t: T, m: DeckMeta): string {
     default: c = standard(s, t)
   }
   const cls = s.blocks.some(b => b.position) ? 'ff' : ''
-  return `      <section${bg} class="${cls}">\n<div class="slide-body">\n${c}\n</div>\n${notes}\n${ft}\n      </section>`
+  return `      <section${bg}${trans} class="${cls}">\n<div class="slide-body">\n${c}\n</div>\n${notes}\n${ft}\n      </section>`
 }
 
 // ── Slide Layouts ──

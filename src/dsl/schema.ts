@@ -1,6 +1,8 @@
 export type SlideKind = 'title' | 'section' | 'content' | 'two-column' | 'image-full' | 'quote' | 'comparison' | 'chart' | 'math' | 'blank' | 'kpi' | 'timeline' | 'big-number' | 'logo-grid' | 'flowchart' | 'agenda' | 'contact' | 'dashboard' | 'team' | 'progress'
 
-export type ThemePreset = 'noir' | 'air' | 'bold' | 'warm' | 'crimson' | 'sage' | 'navy' | 'neon'
+export type SlideTransition = 'fade' | 'slide' | 'zoom' | 'convex' | 'concave' | 'none'
+
+export type ThemePreset = string
 
 export type TextStyle = {
   bold?: boolean
@@ -87,6 +89,7 @@ export type Slide = {
   background?: string
   notes?: string
   datetime?: string
+  transition?: SlideTransition
   layoutIssues?: LayoutIssue[]
 }
 
@@ -96,6 +99,8 @@ export type DeckMeta = {
   date?: string
   theme: ThemePreset
   description?: string
+  fontH?: string
+  fontB?: string
 }
 
 export type DeckSpec = {
