@@ -1,0 +1,703 @@
+{
+  "meta": {
+    "title": "Slidelang \u2014 Full DSL Showcase",
+    "author": "Slidelang Demo",
+    "date": "2026",
+    "theme": "noir",
+    "description": "A comprehensive demo showcasing all 20 slide kinds and every block type in the Slidelang DSL."
+  },
+  "slides": [
+    {
+      "kind": "title",
+      "title": "Slidelang DSL Showcase",
+      "subtitle": "20 Slide Kinds \u00b7 Charts \u00b7 Math \u00b7 Images \u00b7 KPIs \u00b7 Timelines & More",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "A comprehensive walkthrough of every component in the deck-as-code specification",
+          "style": {
+            "italic": true,
+            "size": "large"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "agenda",
+      "title": "What We'll Cover",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Core Slides \u2014 Title, Section, Content, Two-Column, Comparison"
+        },
+        {
+          "type": "text",
+          "content": "Data Slides \u2014 Chart, KPI, Dashboard, Big Number, Progress"
+        },
+        {
+          "type": "text",
+          "content": "Visual Slides \u2014 Image-Full, Logo Grid, Team, Timeline"
+        },
+        {
+          "type": "text",
+          "content": "Interactive \u2014 Quote, Math, Flowchart, Agenda, Contact, Blank"
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "Core Slides",
+      "blocks": []
+    },
+    {
+      "kind": "content",
+      "title": "Content Slide",
+      "subtitle": "The most common slide type \u2014 text blocks, bullet lists, and numbered lists",
+      "blocks": [
+        {
+          "type": "bullets",
+          "items": [
+            "Content slides support mixed block types in any order",
+            "Bullet lists use accent-colored markers for visual hierarchy",
+            "Numbered lists show circular step indicators",
+            "KPI cards auto-detect from xlarge + small text pairs"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Content slides are the workhorse \u2014 use them for explanations, feature lists, and detailed breakdowns.",
+          "style": {
+            "italic": true,
+            "size": "small"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "two-column",
+      "title": "Two-Column Layout",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Column A",
+          "style": {
+            "bold": true,
+            "size": "large"
+          }
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Split content evenly",
+            "Great for comparisons",
+            "Text, bullets, or images",
+            "Responsive grid layout"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Column B",
+          "style": {
+            "bold": true,
+            "size": "large"
+          }
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Independent content",
+            "Different block types",
+            "Auto-balanced spacing",
+            "Clean visual separation"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "comparison",
+      "title": "Comparison Slide",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Before Slidelang",
+          "style": {
+            "bold": true,
+            "size": "large"
+          }
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Hours in PowerPoint",
+            "Inconsistent branding",
+            "Manual chart creation",
+            "No version control",
+            "One-off, non-reusable"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "With Slidelang",
+          "style": {
+            "bold": true,
+            "size": "large"
+          }
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Generate in seconds",
+            "Theme-enforced consistency",
+            "AI-powered charts & math",
+            "Git-friendly JSON specs",
+            "Reusable, composable decks"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "Data Slides",
+      "blocks": []
+    },
+    {
+      "kind": "chart",
+      "title": "Chart Slide \u2014 Bar Chart",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "bar",
+          "title": "Quarterly Revenue",
+          "labels": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q4"
+          ],
+          "datasets": [
+            {
+              "label": "Revenue",
+              "values": [
+                245,
+                312,
+                298,
+                387
+              ],
+              "color": "#4361ee"
+            },
+            {
+              "label": "Profit",
+              "values": [
+                82,
+                115,
+                103,
+                152
+              ],
+              "color": "#f72585"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Chart Slide \u2014 Pie & Line",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "pie",
+          "title": "Market Share",
+          "labels": [
+            "Product A",
+            "Product B",
+            "Product C",
+            "Others"
+          ],
+          "datasets": [
+            {
+              "label": "Share %",
+              "values": [
+                42,
+                28,
+                18,
+                12
+              ],
+              "color": "#4361ee"
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "chartType": "line",
+          "title": "Growth Trend",
+          "labels": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun"
+          ],
+          "datasets": [
+            {
+              "label": "Users",
+              "values": [
+                120,
+                195,
+                240,
+                310,
+                380,
+                450
+              ],
+              "color": "#7209b7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "kpi",
+      "title": "KPI Dashboard",
+      "subtitle": "Key metrics at a glance \u2014 auto-detected from xlarge + small text pairs",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "$12.4M",
+          "style": {
+            "size": "xlarge",
+            "bold": true,
+            "color": "#4361ee"
+          }
+        },
+        {
+          "type": "text",
+          "content": "Annual Revenue",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "48.2%",
+          "style": {
+            "size": "xlarge",
+            "bold": true,
+            "color": "#f72585"
+          }
+        },
+        {
+          "type": "text",
+          "content": "Gross Margin",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "2.4M",
+          "style": {
+            "size": "xlarge",
+            "bold": true,
+            "color": "#7209b7"
+          }
+        },
+        {
+          "type": "text",
+          "content": "Active Users",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "98.7%",
+          "style": {
+            "size": "xlarge",
+            "bold": true,
+            "color": "#10b981"
+          }
+        },
+        {
+          "type": "text",
+          "content": "Uptime SLA",
+          "style": {
+            "size": "small"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "big-number",
+      "title": "Big Number",
+      "subtitle": "Dramatic single-stat slides for emphasis and impact",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "$50M+",
+          "style": {
+            "size": "xlarge",
+            "bold": true,
+            "color": "#d4a853"
+          }
+        },
+        {
+          "type": "text",
+          "content": "Total value delivered to customers in 2025",
+          "style": {
+            "size": "small"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "dashboard",
+      "title": "Dashboard \u2014 Multi-Chart",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "bar",
+          "title": "Revenue by Region",
+          "labels": [
+            "NA",
+            "EU",
+            "APAC",
+            "LATAM"
+          ],
+          "datasets": [
+            {
+              "label": "Revenue",
+              "values": [
+                520,
+                340,
+                280,
+                110
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "chartType": "donut",
+          "title": "Customer Segments",
+          "labels": [
+            "Enterprise",
+            "Mid-Market",
+            "SMB"
+          ],
+          "datasets": [
+            {
+              "label": "Count",
+              "values": [
+                45,
+                120,
+                340
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "progress",
+      "title": "Progress Bars",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Product Development",
+          "style": {
+            "size": "medium",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "85%"
+        },
+        {
+          "type": "text",
+          "content": "Market Expansion",
+          "style": {
+            "size": "medium",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "62%"
+        },
+        {
+          "type": "text",
+          "content": "Team Growth",
+          "style": {
+            "size": "medium",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "94%"
+        },
+        {
+          "type": "text",
+          "content": "Revenue Target",
+          "style": {
+            "size": "medium",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "78%"
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "Visual Slides",
+      "blocks": []
+    },
+    {
+      "kind": "image-full",
+      "title": "Image-Full Slide",
+      "blocks": [
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/showcase/800/500",
+            "alt": "Showcase visual",
+            "caption": "Full-bleed image with title overlay \u2014 great for visual storytelling"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "logo-grid",
+      "title": "Logo Grid",
+      "blocks": [
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/logo1/200/80",
+            "alt": "Partner 1"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/logo2/200/80",
+            "alt": "Partner 2"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/logo3/200/80",
+            "alt": "Partner 3"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/logo4/200/80",
+            "alt": "Partner 4"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/logo5/200/80",
+            "alt": "Partner 5"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/logo6/200/80",
+            "alt": "Partner 6"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "team",
+      "title": "Team Slide",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Maya Chen",
+          "style": {
+            "size": "large",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "CEO & Co-Founder",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "Alex Rivera",
+          "style": {
+            "size": "large",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "CTO",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "Jordan Park",
+          "style": {
+            "size": "large",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "VP of Product",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/maya/200/200",
+            "alt": "Maya"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/alex/200/200",
+            "alt": "Alex"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/jordan/200/200",
+            "alt": "Jordan"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "timeline",
+      "title": "Timeline",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Q1 2025 \u2014 Product Launch \u2014 Shipped v1.0 with 5 slide kinds and basic compiler"
+        },
+        {
+          "type": "text",
+          "content": "Q2 2025 \u2014 AI Integration \u2014 Added OpenRouter support and fallback template generator"
+        },
+        {
+          "type": "text",
+          "content": "Q3 2025 \u2014 DSL Expansion \u2014 Grew to 15 slide kinds, added KPI, timeline, dashboard"
+        },
+        {
+          "type": "text",
+          "content": "Q4 2025 \u2014 Vision & MCP \u2014 Ollama backend, vision QA, MCP server, 20 slide kinds"
+        },
+        {
+          "type": "text",
+          "content": "Q1 2026 \u2014 Launch \u2014 Public release, documentation, community building"
+        }
+      ]
+    },
+    {
+      "kind": "section",
+      "title": "Interactive & Special Slides",
+      "blocks": []
+    },
+    {
+      "kind": "quote",
+      "title": "Quote Slide",
+      "subtitle": "Satisfied Customer",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Slidelang transformed how our team creates presentations. From hours of manual PowerPoint work to minutes of prompt-driven generation. The JSON spec approach means we can version-control our decks like code."
+        }
+      ]
+    },
+    {
+      "kind": "math",
+      "title": "Math Slide",
+      "blocks": [
+        {
+          "type": "math",
+          "expression": "\\text{ROI} = \\frac{\\text{Gain} - \\text{Cost}}{\\text{Cost}} \\times 100\\%"
+        },
+        {
+          "type": "math",
+          "expression": "\\text{CAC} = \\frac{\\text{Total Sales + Marketing Cost}}{\\text{New Customers Acquired}}"
+        },
+        {
+          "type": "math",
+          "expression": "\\text{LTV} = \\text{ARPU} \\times \\frac{1}{\\text{Churn Rate}}"
+        },
+        {
+          "type": "text",
+          "content": "All formulas rendered with KaTeX \u2014 no manual equation editing needed. Just write LaTeX in the JSON spec.",
+          "style": {
+            "size": "small",
+            "italic": true
+          }
+        }
+      ]
+    },
+    {
+      "kind": "flowchart",
+      "title": "Flowchart \u2014 How Slidelang Works",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "User Prompt"
+        },
+        {
+          "type": "text",
+          "content": "AI Generates Deck Spec"
+        },
+        {
+          "type": "text",
+          "content": "Edit & Validate JSON"
+        },
+        {
+          "type": "text",
+          "content": "Real-time Preview"
+        },
+        {
+          "type": "text",
+          "content": "Export HTML / JSON / Print"
+        }
+      ]
+    },
+    {
+      "kind": "contact",
+      "title": "Thank You",
+      "subtitle": "Let's build better presentations together.",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "github.com/maugomez77/slidelang"
+        },
+        {
+          "type": "text",
+          "content": "Deck-as-code \u00b7 Open source \u00b7 AI-powered"
+        }
+      ]
+    }
+  ]
+}

@@ -15,11 +15,11 @@ const TH: T[] = [{
 }, {
   id: 'air', light: true,
   fontH: 'DM Serif Display', fontB: 'Inter',
-  c: { bg: '#fafaf9', surf: '#ffffff', acc: '#1d4ed8', a2: '#3b82f6', tx: '#334155', tx2: '#94a3b8', hd: '#0f172a', bd: '#e8ecf0', ok: '#10b981', err: '#ef4444', wrn: '#f59e0b', grd: '#f1f5f9', kpi: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)' },
+  c: { bg: '#fafaf9', surf: '#ffffff', acc: '#1d4ed8', a2: '#3b82f6', tx: '#1e293b', tx2: '#475569', hd: '#0f172a', bd: '#e8ecf0', ok: '#10b981', err: '#ef4444', wrn: '#f59e0b', grd: '#f1f5f9', kpi: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)' },
 }, {
   id: 'bold', light: true,
   fontH: 'Space Grotesk', fontB: 'Inter',
-  c: { bg: '#ffffff', surf: '#f5f5f5', acc: '#0a0a0a', a2: '#525252', tx: '#404040', tx2: '#a3a3a3', hd: '#0a0a0a', bd: '#e8e8e8', ok: '#0a0a0a', err: '#dc2626', wrn: '#d97706', grd: '#f5f5f5', kpi: 'linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%)' },
+  c: { bg: '#ffffff', surf: '#f5f5f5', acc: '#0a0a0a', a2: '#525252', tx: '#404040', tx2: '#595959', hd: '#0a0a0a', bd: '#e8e8e8', ok: '#0a0a0a', err: '#dc2626', wrn: '#d97706', grd: '#f5f5f5', kpi: 'linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%)' },
 }, {
   id: 'warm', light: false,
   fontH: 'Lora', fontB: 'Inter',
@@ -31,7 +31,7 @@ const TH: T[] = [{
 }, {
   id: 'sage', light: true,
   fontH: 'Lora', fontB: 'Inter',
-  c: { bg: '#f7faf5', surf: '#ffffff', acc: '#5d8a3c', a2: '#84b559', tx: '#3a4d2d', tx2: '#8a9e7a', hd: '#1a2e0e', bd: '#dce8d2', ok: '#5d8a3c', err: '#dc2626', wrn: '#d97706', grd: '#edf2e8', kpi: 'linear-gradient(135deg, #f0f7e8 0%, #e8f0db 100%)' },
+  c: { bg: '#f7faf5', surf: '#ffffff', acc: '#5d8a3c', a2: '#84b559', tx: '#2d3a22', tx2: '#4a5a3f', hd: '#1a2e0e', bd: '#dce8d2', ok: '#5d8a3c', err: '#dc2626', wrn: '#d97706', grd: '#edf2e8', kpi: 'linear-gradient(135deg, #f0f7e8 0%, #e8f0db 100%)' },
 }, {
   id: 'navy', light: false,
   fontH: 'DM Serif Display', fontB: 'Inter',

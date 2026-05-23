@@ -11,7 +11,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-
   "dependencies": {
     "katex": "^0.16.47",
     "react": "^19.2.6",
@@ -20,6 +19,8 @@
     "reveal.js": "^6.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",

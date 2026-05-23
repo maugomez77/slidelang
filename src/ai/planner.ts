@@ -1,7 +1,10 @@
 import { DeckSpec, ThemePreset } from '../dsl/schema'
+import { ollamaGenerate, isOllamaConfigured } from './ollama'
 
 const OPENROUTER_API = 'https://openrouter.ai/api/v1/chat/completions'
 const DEFAULT_MODEL = 'openai/gpt-4o-mini'
+
+export type AIBackend = 'openrouter' | 'ollama'
 
 function getAPIKey(): string | null {
   return localStorage.getItem('slidelang_api_key') || null
@@ -9,6 +12,14 @@ function getAPIKey(): string | null {
 
 function getModel(): string {
   return localStorage.getItem('slidelang_model') || DEFAULT_MODEL
+}
+
+function getBackend(): AIBackend {
+  return (localStorage.getItem('slidelang_backend') as AIBackend) || 'openrouter'
+}
+
+export function setBackend(backend: AIBackend): void {
+  localStorage.setItem('slidelang_backend', backend)
 }
 
 const SYSTEM_PROMPT = `You are Slidelang, a deck specification generator. 
@@ -19,12 +30,12 @@ The deck spec schema is:
   meta: { title, author?, date?, theme: "noir"|"air"|"bold"|"warm"|"crimson"|"sage"|"navy"|"neon", description? },
   slides: [
     {
-      kind: "title"|"section"|"content"|"two-column"|"image-full"|"quote"|"comparison"|"chart"|"math"|"blank",
+      kind: "title"|"section"|"content"|"two-column"|"image-full"|"quote"|"comparison"|"chart"|"math"|"blank"|"kpi"|"timeline"|"big-number"|"logo-grid"|"flowchart"|"agenda"|"contact"|"dashboard"|"team"|"progress",
       title?, subtitle?,
       blocks: [
         { type: "text", content: string, style?: { bold?, italic?, size?: "small"|"medium"|"large"|"xlarge", color?, align? } },
         { type: "bullets"|"numbered", items: string[] },
-        { type: "chart", chartType: "bar"|"line"|"pie"|"area", title?, labels: string[], datasets: [{ label: string, values: number[], color? }] },
+        { type: "chart", chartType: "bar"|"line"|"pie"|"donut"|"area"|"scatter", title?, labels: string[], datasets: [{ label: string, values: number[], color? }] },
         { type: "math", expression: string, inline?: boolean },
         { type: "image", source: { url: string, alt?, caption?, width?, height? }, fit? }
       ],
@@ -46,6 +57,16 @@ Rules:
 10. Return ONLY valid JSON — no markdown, no explanation.`
 
 export async function planDeck(prompt: string): Promise<DeckSpec> {
+  const backend = getBackend()
+
+  if (backend === 'ollama') {
+    try {
+      return await ollamaGenerate(prompt)
+    } catch (err) {
+      console.warn('Ollama generation failed, trying fallback:', err)
+    }
+  }
+
   const apiKey = getAPIKey()
   if (!apiKey) {
     return generateFallbackDeck(prompt)
@@ -177,7 +198,7 @@ function generateFallbackDeck(prompt: string): DeckSpec {
 }
 
 export function isAIConfigured(): boolean {
-  return !!localStorage.getItem('slidelang_api_key')
+  return getBackend() === 'ollama' || !!localStorage.getItem('slidelang_api_key')
 }
 
 export function setAIConfig(apiKey: string, model?: string): void {

@@ -19,5 +19,6 @@
     "resolveJsonModule": true,
     "allowJs": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/ai/vision-check.ts", "src/ai/video-generator.ts"]
 }
