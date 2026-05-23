@@ -8,8 +8,10 @@ import { PresentationMode } from './components/PresentationMode'
 import { SpecEditor } from './editor/SpecEditor'
 import { SlideRenderer } from './renderers/SlideRenderer'
 import { validateDeck, repairDeck } from './validation/validator'
-import { downloadDeck, downloadJSON, printDeck } from './publishing/publisher'
+import { downloadDeck, downloadJSON, printDeck, downloadCSV } from './publishing/publisher'
 import { downloadPPTX } from './publishing/pptx-exporter'
+import { exportToGoogleSlides } from './publishing/google-slides-exporter'
+import { critiqueSlide } from './ai/design-ai'
 
 const THEMES: Record<string, ThemeVars> = {
   noir:   { bg: '#08080f', surf: '#111122', acc: '#d4a853', a2: '#f0c969', tx: '#eeebe5', tx2: '#a0998c', hd: '#ffffff', bd: '#252540', ok: '#5bb87a', err: '#e0556a', wrn: '#d4a853', grd: '#1a1a30' },
@@ -58,20 +60,94 @@ function App() {
   const [repairs, setRepairs] = useState<string[]>([])
   const [customThemes, setCustomThemes] = useState<Record<string, ThemeVars>>(loadCustomThemes)
   const [dragIndex, setDragIndex] = useState<number | null>(null)
+  const [undoStack, setUndoStack] = useState<DeckSpec[]>([])
+  const [redoStack, setRedoStack] = useState<DeckSpec[]>([])
+  const [critique, setCritique] = useState('')
+  const [critiquing, setCritiquing] = useState(false)
+  const [exportingSlides, setExportingSlides] = useState(false)
+  const [exportProgress, setExportProgress] = useState('')
 
   const allThemes = { ...THEMES, ...customThemes }
 
   const handleSpecChange = useCallback((newSpec: DeckSpec) => {
+    setUndoStack(prev => [...prev.slice(-49), spec])
+    setRedoStack([])
     setSpec(newSpec); setIssues(validateDeck(newSpec)); localStorage.setItem('slidelang_deck', JSON.stringify(newSpec))
-  }, [])
+  }, [spec])
 
   useEffect(() => { injectTheme(spec.meta.theme, allThemes) }, [spec.meta.theme, customThemes])
+
+  // Undo/redo keyboard shortcuts
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault()
+        if (undoStack.length > 0) {
+          setRedoStack(prev => [spec, ...prev.slice(0, 49)])
+          setSpec(undoStack[undoStack.length - 1])
+          setUndoStack(prev => prev.slice(0, -1))
+        }
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === 'z' && e.shiftKey) {
+        e.preventDefault()
+        if (redoStack.length > 0) {
+          setUndoStack(prev => [...prev.slice(-49), spec])
+          setSpec(redoStack[0])
+          setRedoStack(prev => prev.slice(1))
+        }
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [spec, undoStack, redoStack])
 
   const handleGenerate = useCallback((newSpec: DeckSpec) => { handleSpecChange(newSpec); setActiveSlide(0) }, [handleSpecChange])
 
   const handleRepair = useCallback(() => {
     const { spec: repaired, repairs: rep } = repairDeck(spec); handleSpecChange(repaired); setRepairs(rep); setTimeout(() => setRepairs([]), 5000)
   }, [spec, handleSpecChange])
+
+  const handleGoogleSlidesExport = async () => {
+    setExportingSlides(true)
+    const url = await exportToGoogleSlides(spec, (msg) => setExportProgress(msg))
+    setExportingSlides(false)
+    setExportProgress('')
+    if (url) window.open(url, '_blank')
+  }
+
+  const handleVisionCritique = async () => {
+    setCritiquing(true); setCritique('')
+    try {
+      const container = document.querySelector('#slide-preview-container')
+      if (!container) { setCritique('Preview not found.'); setCritiquing(false); return }
+      const canvas = document.createElement('canvas')
+      canvas.width = 1280; canvas.height = 720
+      const ctx = canvas.getContext('2d')
+      if (!ctx) { setCritique('Canvas not supported.'); setCritiquing(false); return }
+      const slideEl = container.children[0] || container
+      const html = slideEl.innerHTML
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720">
+        <foreignObject width="100%" height="100%">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Inter,sans-serif;font-size:14px;color:#333;background:white;padding:40px;width:1200px;height:640px">
+            ${html.replace(/<canvas[^>]*>[\s\S]*?<\/canvas>/g, '[Chart]').replace(/<img[^>]*>/g, '[Image]')}
+          </div>
+        </foreignObject>
+      </svg>`
+      const img = new Image()
+      const svgB64 = btoa(String.fromCharCode(...new TextEncoder().encode(svg)))
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve(); img.onerror = reject
+        img.src = 'data:image/svg+xml;base64,' + svgB64
+      })
+      ctx.fillStyle = 'white'; ctx.fillRect(0, 0, 1280, 720)
+      ctx.drawImage(img, 0, 0)
+      const result = await critiqueSlide(canvas.toDataURL('image/png').split(',')[1])
+      setCritique(result || 'No feedback returned.')
+    } catch (e) {
+      setCritique('Critique unavailable. Ensure Ollama is running with llama3.2-vision:11b.')
+    }
+    setCritiquing(false)
+  }
 
   const handleThemeApply = (name: string, vars: ThemeVars) => {
     if (!THEMES[name]) { const updated = { ...customThemes, [name]: vars }; setCustomThemes(updated); saveCustomThemes(updated) }
@@ -121,12 +197,17 @@ function App() {
           <button onClick={() => downloadJSON(spec)} style={headerBtnStyle}>💾 Save</button>
           <button onClick={() => downloadDeck(spec)} style={headerBtnStyle}>📤 HTML</button>
           <button onClick={() => downloadPPTX(spec)} style={headerBtnStyle}>📥 PPTX</button>
-          <button onClick={() => printDeck(spec)} style={headerBtnStyle}>🖨️ Print</button>
+          <button onClick={() => printDeck(spec)} style={headerBtnStyle}>📄 PDF</button>
+          <button onClick={() => downloadCSV(spec)} style={headerBtnStyle}>📊 CSV</button>
+          <button onClick={handleGoogleSlidesExport} disabled={exportingSlides} style={headerBtnStyle}>{exportingSlides ? '...' : '📑 Slides'}</button>
         </div>
       </header>
 
       <PromptInput onDeckGenerated={handleGenerate} />
       <ImagePromptInput onDeckGenerated={handleGenerate} />
+      {exportProgress && (
+        <div style={{ padding: '0.3em 1em', background: '#fef3c7', fontSize: '0.75em', color: '#92400e', fontWeight: 600 }}>{exportProgress}</div>
+      )}
 
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         {showSettings && (
@@ -142,20 +223,20 @@ function App() {
         {showEditor && <div style={{ width: 400, borderRight: '1px solid #e0e0e0', overflow: 'auto', flexShrink: 0 }}><SpecEditor spec={spec} onSpecChange={handleSpecChange} /></div>}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
           <div style={{ flex: 1, overflow: 'auto', padding: '1em', background: 'var(--grd, #f5f5f5)' }}>
-            <div style={{ maxWidth: 800, margin: '0 auto', background: 'var(--bg, white)', borderRadius: 12, boxShadow: '0 2px 20px rgba(0,0,0,0.1)', minHeight: 400, overflow: 'hidden', position: 'relative' }}>
+            <div id="slide-preview-container" style={{ maxWidth: 800, margin: '0 auto', background: 'var(--bg, white)', borderRadius: 12, boxShadow: '0 2px 20px rgba(0,0,0,0.1)', minHeight: 400, overflow: 'hidden', position: 'relative' }}>
               {currentSlide ? <SlideRenderer slide={currentSlide} /> : <div style={{ padding: '2em', textAlign: 'center', opacity: 0.5, color: 'var(--tx)' }}>No slides.</div>}
             </div>
           </div>
           <div style={{ padding: '0.5em 1em', borderTop: '1px solid #e0e0e0', background: 'white', display: 'flex', gap: '0.3em', overflowX: 'auto', flexShrink: 0 }}>
             {spec.slides.map((slide, i) => (
-              <button key={i} draggable onDragStart={() => handleDragStart(i)} onDragOver={handleDragOver} onDrop={() => handleDrop(i)} onDragEnd={() => setDragIndex(null)} onClick={() => setActiveSlide(i)}
+              <button key={i} draggable onDragStart={() => handleDragStart(i)} onDragOver={handleDragOver} onDrop={() => handleDrop(i)} onDragEnd={() => setDragIndex(null)} onClick={() => { setActiveSlide(i); setCritique('') }}
                 style={{ padding: '0.4em 0.75em', border: activeSlide === i ? '2px solid #4361ee' : dragIndex === i ? '2px dashed #999' : '1px solid #ddd', borderRadius: 6, background: activeSlide === i ? '#eef0ff' : 'white', cursor: 'grab', fontSize: '0.75em', whiteSpace: 'nowrap', fontWeight: activeSlide === i ? 600 : 400, flexShrink: 0, opacity: dragIndex === i ? 0.5 : 1 }}>
                 {slide.kind === 'title' ? '🏠' : slide.kind === 'section' ? '📂' : slide.kind === 'chart' ? '📊' : slide.kind === 'math' ? '∑' : slide.kind === 'image-full' ? '🖼️' : '📄'}
                 {' '}{slide.title?.slice(0, 25) || `Slide ${i + 1}`}
               </button>
             ))}
           </div>
-          <ValidationPanel issues={issues} repairs={repairs} onRepair={handleRepair} />
+          <ValidationPanel issues={issues} repairs={repairs} onRepair={handleRepair} onCritique={handleVisionCritique} critique={critique} critiquing={critiquing} />
         </div>
       </div>
     </div>

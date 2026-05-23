@@ -73,7 +73,18 @@ export function SpecEditor({ spec, onSpecChange }: { spec: DeckSpec; onSpecChang
           {showRaw ? (
             <RawSpecEditor spec={spec} onSpecChange={onSpecChange} />
           ) : currentSlide ? (
-            <SlideEditor slide={currentSlide} onSlideChange={(s) => updateSlide(activeSlide, s)} />
+            <SlideEditor slide={currentSlide} onSlideChange={(s) => updateSlide(activeSlide, s)}
+              onDuplicate={() => {
+                const slides = [...spec.slides]
+                slides.splice(activeSlide + 1, 0, JSON.parse(JSON.stringify(currentSlide)))
+                onSpecChange({ ...spec, slides })
+              }}
+              onDelete={spec.slides.length > 1 ? () => {
+                const slides = spec.slides.filter((_, i) => i !== activeSlide)
+                onSpecChange({ ...spec, slides })
+                if (activeSlide >= slides.length) setActiveSlide(slides.length - 1)
+              } : undefined}
+            />
           ) : (
             <p style={{ opacity: 0.5, padding: '2em', textAlign: 'center' }}>No slides yet</p>
           )}
@@ -93,20 +104,52 @@ export function SpecEditor({ spec, onSpecChange }: { spec: DeckSpec; onSpecChang
   )
 }
 
-function SlideEditor({ slide, onSlideChange }: { slide: Slide; onSlideChange: (s: Slide) => void }) {
+function SlideEditor({ slide, onSlideChange, onDuplicate, onDelete }: {
+  slide: Slide
+  onSlideChange: (s: Slide) => void
+  onDuplicate?: () => void
+  onDelete?: () => void
+}) {
+  const [showKindPicker, setShowKindPicker] = useState(false)
+  const allKinds = ['title', 'section', 'content', 'two-column', 'comparison', 'chart', 'kpi', 'dashboard', 'big-number', 'math', 'quote', 'image-full', 'logo-grid', 'team', 'timeline', 'flowchart', 'agenda', 'progress', 'contact', 'blank']
+
+  const kindIcons: Record<string, string> = {
+    title: '🏠', section: '📂', content: '📄', 'two-column': '⬜', comparison: '⚖️',
+    chart: '📊', kpi: '📈', dashboard: '🗂️', 'big-number': '🔢', math: '∑',
+    quote: '💬', 'image-full': '🖼️', 'logo-grid': '🔲', team: '👥',
+    timeline: '📅', flowchart: '🔄', agenda: '📋', progress: '📶', contact: '✉️', blank: '⬜',
+  }
+
   return (
     <div>
-      <div style={{ marginBottom: '0.5em' }}>
-        <label style={{ fontSize: '0.75em', opacity: 0.7 }}>Slide Kind</label>
-        <select
-          value={slide.kind}
-          onChange={e => onSlideChange({ ...slide, kind: e.target.value as any })}
-          style={{ display: 'block', width: '100%', padding: '0.3em', borderRadius: 4, border: '1px solid #ccc', fontSize: '0.85em', marginTop: '0.2em' }}
-        >
-          {['title', 'section', 'content', 'two-column', 'image-full', 'quote', 'comparison', 'chart', 'math', 'blank', 'kpi', 'big-number', 'timeline', 'logo-grid', 'flowchart', 'agenda', 'contact', 'dashboard', 'team', 'progress'].map(k => (
-            <option key={k} value={k}>{k}</option>
-          ))}
-        </select>
+      <div style={{ display: 'flex', gap: '0.3em', marginBottom: '0.3em', alignItems: 'center' }}>
+        <div style={{ flex: 1 }}>
+          <label style={{ fontSize: '0.75em', opacity: 0.7, display: 'block', marginBottom: '0.15em' }}>Slide Kind</label>
+          <div onClick={() => setShowKindPicker(!showKindPicker)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.3em', padding: '0.3em 0.5em', border: '1px solid #ccc', borderRadius: 4, cursor: 'pointer', fontSize: '0.85em', background: 'white' }}>
+            <span>{kindIcons[slide.kind] || '📄'}</span>
+            <span style={{ flex: 1 }}>{slide.kind}</span>
+            <span style={{ opacity: 0.4 }}>▾</span>
+          </div>
+          {showKindPicker && (
+            <div style={{ position: 'absolute', zIndex: 100, background: 'white', border: '1px solid #ddd', borderRadius: 8, boxShadow: '0 4px 16px rgba(0,0,0,0.12)', padding: '0.5em', marginTop: 2, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.2em', maxHeight: 300, overflow: 'auto', width: 300 }}
+              onClick={() => setShowKindPicker(false)}>
+              {allKinds.map(k => (
+                <div key={k} onClick={() => { onSlideChange({ ...slide, kind: k as any }); setShowKindPicker(false) }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.3em', padding: '0.3em 0.5em', borderRadius: 4, cursor: 'pointer', fontSize: '0.8em', background: slide.kind === k ? '#eef0ff' : 'transparent' }}
+                  onMouseEnter={e => { if (slide.kind !== k) (e.currentTarget as HTMLElement).style.background = '#f5f5f5' }}
+                  onMouseLeave={e => { if (slide.kind !== k) (e.currentTarget as HTMLElement).style.background = 'transparent' }}>
+                  <span>{kindIcons[k] || '📄'}</span>
+                  <span>{k}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div style={{ display: 'flex', gap: '0.2em', alignSelf: 'flex-end' }}>
+          {onDuplicate && <button onClick={onDuplicate} title="Duplicate slide" style={iconBtn}>📋</button>}
+          {onDelete && <button onClick={onDelete} title="Delete slide" style={{ ...iconBtn, color: '#e0556a' }}>🗑️</button>}
+        </div>
       </div>
 
       <div style={{ display: 'flex', gap: '0.5em', marginBottom: '0.5em' }}>
@@ -127,19 +170,6 @@ function SlideEditor({ slide, onSlideChange }: { slide: Slide; onSlideChange: (s
             onChange={e => onSlideChange({ ...slide, subtitle: e.target.value })}
             style={{ display: 'block', width: '100%', padding: '0.3em', borderRadius: 4, border: '1px solid #ccc', fontSize: '0.85em', marginTop: '0.2em' }}
           />
-        </div>
-        <div style={{ width: 100 }}>
-          <label style={{ fontSize: '0.75em', opacity: 0.7 }}>Transition</label>
-          <select value={slide.transition || 'none'}
-            onChange={e => onSlideChange({ ...slide, transition: (e.target.value === 'none' ? undefined : e.target.value as any) })}
-            style={{ display: 'block', width: '100%', padding: '0.3em', borderRadius: 4, border: '1px solid #ccc', fontSize: '0.85em', marginTop: '0.2em' }}>
-            <option value="none">None</option>
-            <option value="fade">Fade</option>
-            <option value="slide">Slide</option>
-            <option value="zoom">Zoom</option>
-            <option value="convex">Convex</option>
-            <option value="concave">Concave</option>
-          </select>
         </div>
       </div>
 
@@ -383,4 +413,9 @@ const labelStyle: React.CSSProperties = {
   alignItems: 'center',
   gap: '0.2em',
   cursor: 'pointer',
+}
+
+const iconBtn: React.CSSProperties = {
+  padding: '0.2em 0.4em', border: '1px solid #ddd', borderRadius: 4,
+  background: 'white', cursor: 'pointer', fontSize: '0.85em',
 }
