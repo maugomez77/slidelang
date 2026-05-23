@@ -41,7 +41,7 @@ function injectTheme(theme: string, customThemes: Record<string, ThemeVars>) {
   const t = customThemes[theme] || THEMES[theme] || THEMES.noir
   let el = document.getElementById('slidelang-theme') as HTMLStyleElement | null
   if (!el) { el = document.createElement('style'); el.id = 'slidelang-theme'; document.head.appendChild(el) }
-  el.textContent = `:root { --sl-bg: ${t.bg}; --sl-surf: ${t.surf}; --sl-accent: ${t.acc}; --sl-a2: ${t.a2}; --sl-tx: ${t.tx}; --sl-tx2: ${t.tx2}; --sl-hd: ${t.hd}; --sl-bd: ${t.bd}; --sl-ok: ${t.ok}; --sl-err: ${t.err}; --sl-wrn: ${t.wrn}; --sl-grd: ${t.grd}; }`
+  el.textContent = `:root { --bg: ${t.bg}; --surf: ${t.surf}; --accent: ${t.acc}; --a2: ${t.a2}; --tx: ${t.tx}; --tx2: ${t.tx2}; --hd: ${t.hd}; --bd: ${t.bd}; --ok: ${t.ok}; --err: ${t.err}; --wrn: ${t.wrn}; --grd: ${t.grd}; }`
 }
 
 function App() {
@@ -138,9 +138,9 @@ function App() {
         )}
         {showEditor && <div style={{ width: 400, borderRight: '1px solid #e0e0e0', overflow: 'auto', flexShrink: 0 }}><SpecEditor spec={spec} onSpecChange={handleSpecChange} /></div>}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          <div style={{ flex: 1, overflow: 'auto', padding: '1em', background: '#f5f5f5' }}>
-            <div style={{ maxWidth: 800, margin: '0 auto', background: 'white', borderRadius: 12, boxShadow: '0 2px 20px rgba(0,0,0,0.1)', minHeight: 400, overflow: 'hidden', position: 'relative' }}>
-              {currentSlide ? <SlideRenderer slide={currentSlide} /> : <div style={{ padding: '2em', textAlign: 'center', opacity: 0.5 }}>No slides.</div>}
+          <div style={{ flex: 1, overflow: 'auto', padding: '1em', background: 'var(--grd, #f5f5f5)' }}>
+            <div style={{ maxWidth: 800, margin: '0 auto', background: 'var(--bg, white)', borderRadius: 12, boxShadow: '0 2px 20px rgba(0,0,0,0.1)', minHeight: 400, overflow: 'hidden', position: 'relative' }}>
+              {currentSlide ? <SlideRenderer slide={currentSlide} /> : <div style={{ padding: '2em', textAlign: 'center', opacity: 0.5, color: 'var(--tx)' }}>No slides.</div>}
             </div>
           </div>
           <div style={{ padding: '0.5em 1em', borderTop: '1px solid #e0e0e0', background: 'white', display: 'flex', gap: '0.3em', overflowX: 'auto', flexShrink: 0 }}>

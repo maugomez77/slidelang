@@ -1,0 +1,309 @@
+{
+  "meta": {
+    "title": "SaaS Metrics — Monthly Review",
+    "author": "VP Product",
+    "date": "June 2026",
+    "theme": "navy",
+    "description": "Monthly SaaS metrics review with growth analytics"
+  },
+  "slides": [
+    {
+      "kind": "title",
+      "title": "SaaS Metrics Review",
+      "subtitle": "June 2026 · Monthly Growth & Retention Report",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Confidential — Internal Use Only",
+          "style": {
+            "size": "small",
+            "italic": true,
+            "color": "#8a9cc4"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "kpi",
+      "title": "Executive Summary",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "$4.2M",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "MRR",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "+12.4%",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "MoM Growth",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "2,847",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Active Accounts",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "97.8%",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Gross Retention",
+          "style": {
+            "size": "small"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "MRR Growth",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "line",
+          "title": "Monthly Recurring Revenue",
+          "labels": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun"
+          ],
+          "datasets": [
+            {
+              "label": "New MRR",
+              "values": [
+                180,
+                210,
+                245,
+                290,
+                340,
+                420
+              ]
+            },
+            {
+              "label": "Expansion MRR",
+              "values": [
+                120,
+                140,
+                165,
+                195,
+                230,
+                280
+              ]
+            },
+            {
+              "label": "Total MRR",
+              "values": [
+                2800,
+                3010,
+                3250,
+                3540,
+                3890,
+                4200
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "dashboard",
+      "title": "Growth Breakdown",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "bar",
+          "title": "New Accounts by Tier",
+          "labels": [
+            "Starter",
+            "Pro",
+            "Enterprise"
+          ],
+          "datasets": [
+            {
+              "label": "New",
+              "values": [
+                180,
+                95,
+                28
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "chartType": "donut",
+          "title": "Revenue Mix",
+          "labels": [
+            "Subscriptions",
+            "Professional Services",
+            "Add-ons"
+          ],
+          "datasets": [
+            {
+              "label": "%",
+              "values": [
+                72,
+                18,
+                10
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Cohort Retention",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "bar",
+          "title": "Month-over-Month Retention by Cohort",
+          "labels": [
+            "Month 1",
+            "Month 2",
+            "Month 3",
+            "Month 4",
+            "Month 5",
+            "Month 6"
+          ],
+          "datasets": [
+            {
+              "label": "Jan Cohort",
+              "values": [
+                100,
+                95,
+                92,
+                90,
+                88,
+                87
+              ]
+            },
+            {
+              "label": "Mar Cohort",
+              "values": [
+                100,
+                97,
+                94,
+                93,
+                91,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "two-column",
+      "title": "Key Initiatives for July",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Product",
+          "style": {
+            "size": "large",
+            "bold": true
+          }
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "Launch API v2 with webhook support",
+            "SSO for Enterprise tier",
+            "Audit log export for compliance",
+            "Performance: sub-100ms p95 latency"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Go-to-Market",
+          "style": {
+            "size": "large",
+            "bold": true
+          }
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "AWS Marketplace listing goes live",
+            "Partner program launch with 12 agencies",
+            "Case study: FinTech customer at $300K ARR",
+            "SaaStr Annual — booth and keynote slot"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "timeline",
+      "title": "Q3 Roadmap",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "July — Platform — API v2 launch, SSO, webhook infrastructure, audit logging"
+        },
+        {
+          "type": "text",
+          "content": "August — Growth — AWS Marketplace, partner program, case study pipeline, content engine"
+        },
+        {
+          "type": "text",
+          "content": "September — Scale — SOC 2 Type II audit, enterprise sales hire, pricing v2, internationalization"
+        }
+      ]
+    },
+    {
+      "kind": "contact",
+      "title": "Thank You",
+      "subtitle": "On track for $6M ARR by December",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "product@saasmetrics.com"
+        },
+        {
+          "type": "text",
+          "content": "Monthly reviews · Always data-driven · Always transparent"
+        }
+      ]
+    }
+  ]
+}

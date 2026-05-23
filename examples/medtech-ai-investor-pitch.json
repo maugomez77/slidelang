@@ -1,0 +1,278 @@
+{
+  "meta": {
+    "title": "MedTech AI — Investor Pitch",
+    "author": "CEO",
+    "date": "2026",
+    "theme": "sage",
+    "description": "Series A pitch for AI-powered medical imaging platform"
+  },
+  "slides": [
+    {
+      "kind": "title",
+      "title": "MedTech AI",
+      "subtitle": "Revolutionizing medical imaging with artificial intelligence",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Series A · Confidential",
+          "style": {
+            "size": "small",
+            "italic": true
+          }
+        }
+      ]
+    },
+    {
+      "kind": "big-number",
+      "title": "The Problem",
+      "subtitle": "Radiologists miss up to 30% of early-stage cancers in routine scans. Each missed diagnosis costs an average of $480K in delayed treatment.",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "30%",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Missed diagnoses in routine scans",
+          "style": {
+            "size": "small"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "content",
+      "title": "Our Solution",
+      "blocks": [
+        {
+          "type": "bullets",
+          "items": [
+            "AI-powered second reader for CT, MRI, and X-ray scans",
+            "FDA 510(k) clearance for 3 modalities",
+            "Integrates with existing PACS systems — zero workflow change",
+            "Reduces false negatives by 62% in clinical trials",
+            "Real-time analysis under 30 seconds per scan"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "We don't replace radiologists — we make them faster and more accurate.",
+          "style": {
+            "size": "medium",
+            "italic": true
+          }
+        }
+      ]
+    },
+    {
+      "kind": "kpi",
+      "title": "Traction",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "14",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Hospital systems live",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "1.2M",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Scans analyzed",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "$2.8M",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "ARR",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "99.7%",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Uptime",
+          "style": {
+            "size": "small"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Clinical Results",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "bar",
+          "title": "False Negative Reduction by Modality",
+          "labels": [
+            "CT Chest",
+            "Brain MRI",
+            "Mammogram",
+            "X-Ray Chest",
+            "Spine MRI"
+          ],
+          "datasets": [
+            {
+              "label": "Without AI",
+              "values": [
+                28,
+                22,
+                31,
+                25,
+                19
+              ]
+            },
+            {
+              "label": "With MedTech AI",
+              "values": [
+                11,
+                8,
+                12,
+                9,
+                7
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "comparison",
+      "title": "Competitive Landscape",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "MedTech AI"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "3 FDA clearances",
+            "PACS-native integration",
+            "62% improvement",
+            "14 hospital systems",
+            "Per-scan pricing"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Competitors"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            "1-2 clearances max",
+            "Separate workflow/tool",
+            "25-40% improvement",
+            "2-5 hospital systems",
+            "Enterprise contracts only"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "team",
+      "title": "Leadership",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Dr. Sarah Chen"
+        },
+        {
+          "type": "text",
+          "content": "CEO · Ex-Chief of Radiology, Stanford"
+        },
+        {
+          "type": "text",
+          "content": "Dr. James Park"
+        },
+        {
+          "type": "text",
+          "content": "CTO · PhD, MIT CSAIL"
+        },
+        {
+          "type": "text",
+          "content": "Maria Rodriguez"
+        },
+        {
+          "type": "text",
+          "content": "VP Clinical · 15yr healthcare ops"
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/sarah/200/200",
+            "alt": "Sarah"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/james/200/200",
+            "alt": "James"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/maria/200/200",
+            "alt": "Maria"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "contact",
+      "title": "Join Us",
+      "subtitle": "Series A · $8M · Closing Q2 2026",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "sarah@medtechai.com"
+        },
+        {
+          "type": "text",
+          "content": "San Francisco · FDA-cleared · HIPAA compliant"
+        }
+      ]
+    }
+  ]
+}

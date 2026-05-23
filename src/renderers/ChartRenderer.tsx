@@ -27,10 +27,10 @@ export function ChartRenderer({ block }: { block: ChartBlock }) {
     }
 
     const ct = block.chartType || 'bar'
-    const accent = getComputedStyle(document.documentElement).getPropertyValue('--sl-accent').trim() || '#4361ee'
-    const a2 = getComputedStyle(document.documentElement).getPropertyValue('--sl-a2').trim() || '#f72585'
-    const tx = getComputedStyle(document.documentElement).getPropertyValue('--sl-tx').trim() || '#333'
-    const tx2 = getComputedStyle(document.documentElement).getPropertyValue('--sl-tx2').trim() || '#999'
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#4361ee'
+    const a2 = getComputedStyle(document.documentElement).getPropertyValue('--a2').trim() || '#f72585'
+    const tx = getComputedStyle(document.documentElement).getPropertyValue('--tx').trim() || '#333'
+    const tx2 = getComputedStyle(document.documentElement).getPropertyValue('--tx2').trim() || '#999'
 
     const pal = [accent, a2, '#f59e0b', '#ef4444', '#22c55e']
 

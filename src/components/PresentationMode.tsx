@@ -30,7 +30,7 @@ export function PresentationMode({ spec, initialSlide, onClose }: {
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, zIndex: 9999, background: 'var(--sl-bg, #08080f)',
+      position: 'fixed', inset: 0, zIndex: 9999, background: 'var(--bg, #08080f)',
       display: 'flex', flexDirection: 'column', fontFamily: 'Inter, sans-serif',
     }}>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -41,19 +41,19 @@ export function PresentationMode({ spec, initialSlide, onClose }: {
 
       <div style={{
         padding: '0.5em 1.5em', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        color: 'var(--sl-tx2, #999)', fontSize: '0.75em', borderTop: '1px solid var(--sl-bd, #333)',
-        background: 'var(--sl-surf, #111)',
+        color: 'var(--tx2, #999)', fontSize: '0.75em', borderTop: '1px solid var(--bd, #333)',
+        background: 'var(--surf, #111)',
       }}>
         <span>{spec.meta.title}</span>
         <span>{current + 1} / {total}</span>
         <div style={{ display: 'flex', gap: '0.3em' }}>
           {slide.notes && <span title={slide.notes} style={{ cursor: 'help' }}>📝</span>}
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--sl-tx2)', cursor: 'pointer', fontSize: '1.2em' }}>✕</button>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--tx2)', cursor: 'pointer', fontSize: '1.2em' }}>✕</button>
         </div>
       </div>
 
-      <div style={{ height: 3, background: 'var(--sl-grd, #333)' }}>
-        <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg, var(--sl-accent), var(--sl-a2))', transition: 'width 0.3s ease' }} />
+      <div style={{ height: 3, background: 'var(--grd, #333)' }}>
+        <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg, var(--accent), var(--a2))', transition: 'width 0.3s ease' }} />
       </div>
     </div>
   )

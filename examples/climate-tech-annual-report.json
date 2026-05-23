@@ -1,0 +1,287 @@
+{
+  "meta": {
+    "title": "Climate Tech — Annual Report",
+    "author": "Sustainability Team",
+    "date": "2026",
+    "theme": "crimson",
+    "description": "Annual sustainability and carbon impact report"
+  },
+  "slides": [
+    {
+      "kind": "title",
+      "title": "Climate Impact Report",
+      "subtitle": "2026 Annual Sustainability Review",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Carbon Accounting · Offset Portfolio · Future Goals",
+          "style": {
+            "size": "large"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "big-number",
+      "title": "Our Carbon Footprint",
+      "subtitle": "We achieved net-zero operations in 2025 and are now carbon-negative through verified offset programs.",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "-12,400t",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Net CO2e (carbon negative)",
+          "style": {
+            "size": "small"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "kpi",
+      "title": "2026 Impact Metrics",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "24,800t",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "CO2e Offset",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "12,400t",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Gross Emissions",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "100%",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Renewable Energy",
+          "style": {
+            "size": "small"
+          }
+        },
+        {
+          "type": "text",
+          "content": "42",
+          "style": {
+            "size": "xlarge",
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "content": "Offset Projects",
+          "style": {
+            "size": "small"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Emissions Trajectory",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "line",
+          "title": "Annual CO2e Emissions (thousands of tons)",
+          "labels": [
+            "2021",
+            "2022",
+            "2023",
+            "2024",
+            "2025",
+            "2026"
+          ],
+          "datasets": [
+            {
+              "label": "Gross Emissions",
+              "values": [
+                42,
+                38,
+                31,
+                22,
+                16,
+                12.4
+              ]
+            },
+            {
+              "label": "Net Emissions",
+              "values": [
+                38,
+                30,
+                18,
+                5,
+                0,
+                -12.4
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "chart",
+      "title": "Offset Portfolio Breakdown",
+      "blocks": [
+        {
+          "type": "chart",
+          "chartType": "pie",
+          "title": "Offset Allocation by Project Type",
+          "labels": [
+            "Reforestation",
+            "Direct Air Capture",
+            "Renewable Energy",
+            "Methane Capture",
+            "Soil Carbon"
+          ],
+          "datasets": [
+            {
+              "label": "%",
+              "values": [
+                35,
+                25,
+                20,
+                12,
+                8
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "logo-grid",
+      "title": "Offset Partners",
+      "blocks": [
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/offset1/200/80",
+            "alt": "Partner 1"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/offset2/200/80",
+            "alt": "Partner 2"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/offset3/200/80",
+            "alt": "Partner 3"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/offset4/200/80",
+            "alt": "Partner 4"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/offset5/200/80",
+            "alt": "Partner 5"
+          }
+        },
+        {
+          "type": "image",
+          "source": {
+            "url": "https://picsum.photos/seed/offset6/200/80",
+            "alt": "Partner 6"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "progress",
+      "title": "2030 Goal Progress",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Carbon Negative"
+        },
+        {
+          "type": "text",
+          "content": "100%"
+        },
+        {
+          "type": "text",
+          "content": "Zero Waste to Landfill"
+        },
+        {
+          "type": "text",
+          "content": "78%"
+        },
+        {
+          "type": "text",
+          "content": "Supply Chain Net-Zero"
+        },
+        {
+          "type": "text",
+          "content": "45%"
+        },
+        {
+          "type": "text",
+          "content": "100% Circular Packaging"
+        },
+        {
+          "type": "text",
+          "content": "62%"
+        }
+      ]
+    },
+    {
+      "kind": "contact",
+      "title": "Join the Mission",
+      "subtitle": "Climate action is a team effort. Partner with us.",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "sustainability@climatecorp.com"
+        },
+        {
+          "type": "text",
+          "content": "Carbon-negative since 2025 · Science Based Targets certified"
+        }
+      ]
+    }
+  ]
+}
