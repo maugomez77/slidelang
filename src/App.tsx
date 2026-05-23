@@ -9,6 +9,7 @@ import { SpecEditor } from './editor/SpecEditor'
 import { SlideRenderer } from './renderers/SlideRenderer'
 import { validateDeck, repairDeck } from './validation/validator'
 import { downloadDeck, downloadJSON, printDeck } from './publishing/publisher'
+import { downloadPPTX } from './publishing/pptx-exporter'
 
 const THEMES: Record<string, ThemeVars> = {
   noir:   { bg: '#08080f', surf: '#111122', acc: '#d4a853', a2: '#f0c969', tx: '#eeebe5', tx2: '#a0998c', hd: '#ffffff', bd: '#252540', ok: '#5bb87a', err: '#e0556a', wrn: '#d4a853', grd: '#1a1a30' },
@@ -118,7 +119,9 @@ function App() {
             e.target.value = ''
           }} />
           <button onClick={() => downloadJSON(spec)} style={headerBtnStyle}>💾 Save</button>
-          <button onClick={() => downloadDeck(spec)} style={headerBtnStyle}>📤 Export</button>
+          <button onClick={() => downloadDeck(spec)} style={headerBtnStyle}>📤 HTML</button>
+          <button onClick={() => downloadPPTX(spec)} style={headerBtnStyle}>📥 PPTX</button>
+          <button onClick={() => printDeck(spec)} style={headerBtnStyle}>🖨️ Print</button>
         </div>
       </header>
 
