@@ -1,4 +1,4 @@
-const GOOGLE_CLIENT_ID = localStorage.getItem('slidelang_google_client_id') || ''
+const GOOGLE_CLIENT_ID = (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || localStorage.getItem('slidelang_google_client_id') || ''
 const SCOPES = 'https://www.googleapis.com/auth/presentations https://www.googleapis.com/auth/drive.file'
 
 let googleToken: string | null = null

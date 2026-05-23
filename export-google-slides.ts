@@ -7,7 +7,7 @@ async function getToken(): Promise<string> {
     const r = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `client_id=${process.env.GOOGLE_CLIENT_ID || ''}&client_secret=${process.env.GOOGLE_CLIENT_SECRET || ''}&refresh_token=${tokens.refresh_token}&grant_type=refresh_token`,
+      body: `client_id=${process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID || ''}&client_secret=${process.env.GOOGLE_CLIENT_SECRET || ''}&refresh_token=${tokens.refresh_token}&grant_type=refresh_token`,
     })
     const data = await r.json() as any
     return data.access_token
