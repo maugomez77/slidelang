@@ -8,7 +8,7 @@ import { PresentationMode } from './components/PresentationMode'
 import { SpecEditor } from './editor/SpecEditor'
 import { SlideRenderer } from './renderers/SlideRenderer'
 import { validateDeck, repairDeck } from './validation/validator'
-import { downloadDeck, downloadJSON, downloadCSV } from './publishing/publisher'
+import { downloadDeck, downloadJSON } from './publishing/publisher'
 import { downloadPPTX } from './publishing/pptx-exporter'
 
 const THEMES: Record<string, ThemeVars> = {
@@ -197,7 +197,6 @@ function App() {
           <button onClick={() => downloadJSON(spec)} style={headerBtnStyle}>💾 Save</button>
           <button onClick={() => downloadDeck(spec)} style={headerBtnStyle}>📤 HTML</button>
           <button onClick={() => downloadPPTX(spec)} style={headerBtnStyle}>📥 PPTX</button>
-          <button onClick={() => downloadCSV(spec)} style={headerBtnStyle}>📊 CSV</button>
         </div>
       </header>
 
