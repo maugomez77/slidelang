@@ -114,3 +114,42 @@ Pure function: `DeckSpec → compileDeckToHTML() → string (full HTML page)`
 - Rendering: Playwright screenshots each slide
 - Compositing: FFmpeg merges screenshots + audio → MP4
 - Vision QA: Optional per-slide quality check via llama3.2-vision
+- 5 scripts: submission-demo, full-walkthrough, editor-workflow, showcase, product-demo
+
+### Browser Architecture Deep Dive
+
+**App.tsx State Model**:
+- `spec: DeckSpec` — single source of truth, persisted to localStorage
+- `activeSlide: number` — current slide index for preview and editor
+- `showEditor/showSettings/showPresent: boolean` — panel visibility
+- `undoStack/redoStack: DeckSpec[]` — 50-state history for undo/redo
+- `critique: string` — AI design critique feedback
+- `customThemes: Record<string, ThemeVars>` — user-created themes, persisted
+
+**CSS Variable System**:
+- Theme injection via `useEffect`: maps theme name → 12 CSS variables on `:root`
+- Variables: `--bg`, `--surf`, `--accent`, `--a2`, `--tx`, `--tx2`, `--hd`, `--bd`, `--ok`, `--err`, `--wrn`, `--grd`
+- Same variable names used across: editor preview, presentation mode, compiled HTML output
+- Google Fonts loaded dynamically via `handleFontChange` → creates `<link>` element
+
+**AI Critique Flow**:
+1. User clicks "Analyze Current Slide" → builds text description from slide blocks
+2. Sends to Ollama (llama3.2) with design review prompt
+3. Renders critique in ValidationPanel AI Critique tab
+4. "✨ Apply Fixes" → sends critique + slide JSON to Ollama → receives improved JSON → updates spec
+
+### PPTX Export Architecture (`src/publishing/pptx-exporter.ts`)
+- Uses pptxgenjs library for PowerPoint file generation
+- Maps 8 theme color sets to PPTX slide backgrounds and text colors
+- Dedicated layout functions per slide kind: title (centered with accent line), section (large accent text), quote (italic with quote mark), two-column (grid), comparison (panel cards with borders), image (embedded), standard (heading + blocks)
+- Block rendering: text (styled), bullets (• prefix), numbered (1. prefix), math (italic expression)
+- Output: `.pptx` file downloaded via browser Blob API
+
+### Compilation vs Preview Parity
+The editor preview and compiled HTML share identical rendering logic:
+- Same 20 slide kind → layout function mapping
+- Same CSS variable names (`--bg`, `--tx`, `--accent`, etc.)
+- Same Canvas 2D chart rendering (multi-dataset bars, line, pie, donut)
+- Same KaTeX math expressions
+- Same theme color injection mechanism (12 variables on `:root`)
+- All three rendering surfaces (editor, present mode, compiled HTML) verified pixel-for-pixel

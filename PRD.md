@@ -54,3 +54,46 @@ Teams using AI for slide generation get static, brittle output that is hard to e
 - Spec compilation to HTML in < 1 second
 - Zero external dependencies for core rendering (charts, layout)
 - Editor preview matches compiled output pixel-for-pixel
+
+### What I Personally Built
+- **DSL schema** (`src/dsl/schema.ts`): TypeScript types for 20 slide kinds, 6 block types, 6 chart types, transitions, layout issues, themes, and deck metadata
+- **Compiler** (`src/dsl/compiler.ts` — 700 lines): Spec → self-contained HTML with 20 layout functions, inline Canvas 2D chart JS (bar/line/pie/donut), KaTeX math integration, 8 themes with 12 CSS variables each, auto-fix engine for contrast and KPI overflow, Google Fonts injection, per-slide data-transition attributes, slide footer and speaker notes
+- **Chart Renderer** (`src/renderers/ChartRenderer.tsx` — 130 lines): Pure Canvas 2D, zero dependencies — multi-dataset grouped bars with gradient fills, line charts with dot markers, pie/donut with percentage labels, legends, DPR-aware, theme-color-aware
+- **Slide Renderer** (`src/renderers/SlideRenderer.tsx` — 350 lines): 20 dedicated layout renderers matching compiler output — title, section, quote, content, two-column, comparison, image-full, chart, math, KPI, big-number, dashboard, timeline, logo-grid, flowchart, agenda, team, progress, contact, blank
+- **Browser Editor** (`src/editor/SpecEditor.tsx` — 430 lines): Visual kind picker grid with icons, per-block type editors (text/textarea, dynamic lists, image with Unsplash, chart, math), AI Rewrite for text blocks, duplicate/delete slides, raw JSON mode
+- **AI Planner** (`src/ai/planner.ts` + `src/ai/ollama.ts`): Multi-backend (OpenRouter + Ollama) with backend selector UI, system prompt with full schema, fallback template generator, Ollama vision-to-deck pipeline
+- **Validation Engine** (`src/validation/validator.ts`): 33 rules across structure, content, text, layout, charts, math, images, accessibility. Auto-repair at compile time
+- **AI Design Critique** (`src/ai/design-ai.ts`): Slide content analysis via Ollama (text density, readability, contrast) with one-click auto-fix that rewrites the slide JSON
+- **Theme Builder** (`src/components/ThemeBuilder.tsx`): Color pickers for 12 variables per theme, custom theme creation with localStorage persistence, Google Fonts selector (8 heading + 8 body)
+- **Presentation Mode** (`src/components/PresentationMode.tsx`): Full-screen with keyboard navigation, slide counter, progress bar, CSS variable parity with compiler output
+- **MCP Server** (`mcp-ollama/`): TypeScript SDK, stdio transport, 4 tools (generate, describe_image, list_models, create_demo_video)
+- **Demo Pipeline** (`record-*.ts`): 5 scripts — Ollama narration generation, macOS TTS, Playwright screenshot/recording, FFmpeg compositing, vision QA
+- **PPTX Export** (`src/publishing/pptx-exporter.ts`): Deck spec → PowerPoint with 8 themes, text, bullets, math, images
+- **App Shell** (`src/App.tsx`): Undo/redo (Cmd+Z, 50 states), drag-and-drop slide reorder, theme CSS injection, Google Fonts dynamic loading, localStorage persistence
+- **8 Sample Decks**: Showcase (23 slides, all 20 kinds), MedTech Series A (sage), SaaS Metrics (navy), Climate Report (crimson), NebulaDB pitch, Q4 Review, Conference Talk, Investor Update
+
+### What I Reused
+- **Reveal.js v6** (presentation framework, CDN — compiled HTML output)
+- **KaTeX v0.16** (math rendering, CDN — compiled HTML output)
+- **React v19 + Vite v8** (app framework and build tool)
+- **Playwright v1.60** (headless Chromium for screenshots, recording, PDF)
+- **FFmpeg v8** (video compositing — images + audio → MP4)
+- **macOS TTS / `say`** (voiceover narration for demos)
+- **Ollama** (llama3.2 for text generation, llama3.2-vision for image analysis)
+- **OpenRouter API** (cloud AI fallback — GPT-4o, Claude)
+- **@modelcontextprotocol/sdk v1.0** (MCP server framework)
+- **pptxgenjs v4** (PPTX file generation)
+- **Google Fonts** (Inter, Playfair Display, DM Serif Display, Lora, Space Grotesk)
+- **picsum.photos / source.unsplash.com** (placeholder images, Unsplash search)
+
+### What Broke and How I Debugged It
+- **Reveal.js white theme CSS overrides**: The default Reveal.css white theme was overriding dark theme backgrounds. Fixed by adding explicit `!important` background declarations to all slide sections in the compiler CSS.
+- **Playwright video recording producing 1-second files**: Vite's HMR websocket kept `networkidle` from ever resolving, causing the page load to timeout and the browser context to close early. Fixed by using static dist builds and `waitUntil: 'load'` instead of `'networkidle'`.
+- **Canvas 2D chart rendering mismatch**: The React ChartRenderer was a simplified placeholder (single-bar, no legends, no gradients) while the compiler's inline JS was full-featured. Rewrote the ChartRenderer from scratch to match — added multi-dataset grouped bars, gradient fills, line/pie/donut support, legends, and DPR-aware rendering.
+- **Theme contrast failures at 2:1 ratio**: Light themes (air, sage, bold) had secondary text colors (`tx2`) that failed WCAG AA (4.5:1 minimum) at ~2:1 contrast. Calculated proper ratios and darkened tx2 values: air #94a3b8→#475569 (5.1:1), sage #8a9e7a→#4a5a3f (5.0:1), bold #a3a3a3→#595959 (4.8:1).
+- **Server base path (/slidelang/) mismatch**: Vite builds with `base: '/slidelang/'` producing asset URLs like `/slidelang/assets/index.js`, but the local static file server served from `dist/` root. Fixed by stripping the `/slidelang/` prefix in the HTTP server's URL handler.
+- **Editor preview white vs dark theme background**: The slide preview container in App.tsx had hardcoded `background: 'white'` overriding the theme's background color. Changed to `background: 'var(--bg, white)'` and added the same to the Preivew area outer container.
+- **CSS variable name mismatch (--sl-* vs --*)**: The theme injection used `--sl-bg`, `--sl-tx` etc. but the compiled HTML and SlideRenderer used unprefixed `--bg`, `--tx`. Removed the `--sl-` prefix everywhere for consistency across all three rendering surfaces (editor, presentation mode, compiled HTML).
+- **App.tsx handler loss during rewrites**: Multiple edits caused `handleSpecChange`, `handleGenerate`, `handleRepair`, and `injectTheme` to be lost. Rebuilt the App component with all handlers, effects, and state properly ordered.
+- **Ollama model not found**: The planner defaulted to `llama3.2` which wasn't pulled (only vision models existed). Pulled `llama3.2` (2GB) enabling full local AI generation.
+- **Canvas tainting from SVG foreignObject**: Trying to capture the DOM as an image for vision critique produced "Tainted canvases may not be exported" errors. Replaced image-based critique with text-based analysis using the slide's JSON structure.
