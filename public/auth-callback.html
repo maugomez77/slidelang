@@ -1,0 +1,9 @@
+<!DOCTYPE html><html><body><script>
+const params = new URLSearchParams(window.location.search)
+const code = params.get('code')
+const state = params.get('state')
+if (code && state === 'slidelang-slides') {
+  window.opener?.postMessage({ type: 'slidelang-oauth', code }, window.location.origin)
+}
+window.close()
+</script></body></html>

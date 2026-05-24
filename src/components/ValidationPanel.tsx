@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { LayoutIssue } from '../dsl/schema'
 
-export function ValidationPanel({ issues, repairs, onRepair, onCritique, critique, critiquing }: {
+export function ValidationPanel({ issues, repairs, onRepair, onCritique, critique, critiquing, onApplyFix, applyingFix }: {
   issues: LayoutIssue[]
   repairs: string[]
   onRepair: () => void
   onCritique?: () => void
   critique?: string
   critiquing?: boolean
+  onApplyFix?: () => void
+  applyingFix?: boolean
 }) {
   const [tab, setTab] = useState<'static' | 'vision'>('static')
   const errors = issues.filter(i => i.severity === 'error')
@@ -118,10 +120,18 @@ export function ValidationPanel({ issues, repairs, onRepair, onCritique, critiqu
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5em' }}>
                 <strong>🔍 Vision Analysis</strong>
-                <button onClick={onCritique} disabled={critiquing} style={{
-                  padding: '0.2em 0.5em', border: '1px solid #7209b7', borderRadius: 4,
-                  background: 'white', color: '#7209b7', cursor: 'pointer', fontSize: '0.75em',
-                }}>{critiquing ? '...' : 'Refresh'}</button>
+                <div style={{ display: 'flex', gap: '0.3em' }}>
+                  <button onClick={onCritique} disabled={critiquing} style={{
+                    padding: '0.2em 0.5em', border: '1px solid #7209b7', borderRadius: 4,
+                    background: 'white', color: '#7209b7', cursor: 'pointer', fontSize: '0.75em',
+                  }}>{critiquing ? '...' : 'Refresh'}</button>
+                  {onApplyFix && (
+                    <button onClick={onApplyFix} disabled={applyingFix} style={{
+                      padding: '0.2em 0.5em', border: 'none', borderRadius: 4,
+                      background: '#22c55e', color: 'white', cursor: 'pointer', fontSize: '0.75em', fontWeight: 600,
+                    }}>{applyingFix ? 'Fixing...' : '✨ Apply Fixes'}</button>
+                  )}
+                </div>
               </div>
               {critique}
             </div>

@@ -10,8 +10,6 @@ import { SlideRenderer } from './renderers/SlideRenderer'
 import { validateDeck, repairDeck } from './validation/validator'
 import { downloadDeck, downloadJSON, printDeck, downloadCSV } from './publishing/publisher'
 import { downloadPPTX } from './publishing/pptx-exporter'
-import { exportToGoogleSlides } from './publishing/google-slides-exporter'
-import { critiqueSlide } from './ai/design-ai'
 
 const THEMES: Record<string, ThemeVars> = {
   noir:   { bg: '#08080f', surf: '#111122', acc: '#d4a853', a2: '#f0c969', tx: '#eeebe5', tx2: '#a0998c', hd: '#ffffff', bd: '#252540', ok: '#5bb87a', err: '#e0556a', wrn: '#d4a853', grd: '#1a1a30' },
@@ -64,10 +62,76 @@ function App() {
   const [redoStack, setRedoStack] = useState<DeckSpec[]>([])
   const [critique, setCritique] = useState('')
   const [critiquing, setCritiquing] = useState(false)
-  const [exportingSlides, setExportingSlides] = useState(false)
-  const [exportProgress, setExportProgress] = useState('')
+  const [applyingFix, setApplyingFix] = useState(false)
 
-  const allThemes = { ...THEMES, ...customThemes }
+  const handleVisionCritique = async () => {
+    setCritiquing(true); setCritique('')
+    try {
+      const slide = spec.slides[activeSlide]
+      if (!slide) { setCritique('No slide selected.'); setCritiquing(false); return }
+
+      // Build a text description of the slide for the critique
+      const title = slide.title || 'Untitled'
+      const blocks = slide.blocks.map(b => {
+        if (b.type === 'text') return `Text: "${(b as any).content}"`
+        if (b.type === 'bullets') return `Bullet points: ${(b as any).items?.join(', ')}`
+        if (b.type === 'numbered') return `Numbered list: ${(b as any).items?.join(', ')}`
+        if (b.type === 'chart') return `Chart (${(b as any).chartType}) with labels: ${(b as any).labels?.join(', ')}`
+        if (b.type === 'math') return `Math formula: ${(b as any).expression}`
+        if (b.type === 'image') return `Image: ${(b as any).source?.url}`
+        return b.type
+      }).join('\n')
+
+      const prompt = `Review this presentation slide for design issues. Slide kind: ${slide.kind}. Title: "${title}". Content:\n${blocks}\n\nAnalyze for: text density (too much text?), contrast issues, missing visual elements, readability, and layout balance. Give 2-3 specific, actionable suggestions. Be concise.`
+
+      const r = await fetch('http://localhost:11434/api/generate', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'llama3.2', prompt, stream: false }),
+      })
+      if (!r.ok) { setCritique('Ollama not available. Ensure llama3.2 is running.'); setCritiquing(false); return }
+      const data = await r.json() as any
+      setCritique(data.response?.trim() || 'No feedback returned.')
+    } catch (e) {
+      setCritique('Critique unavailable. ' + (e instanceof Error ? e.message : ''))
+    }
+    setCritiquing(false)
+  }
+
+  const handleApplyCritiqueFix = async () => {
+    if (!critique) return
+    setApplyingFix(true)
+    try {
+      const slide = spec.slides[activeSlide]
+      const slideJson = JSON.stringify(slide, null, 2)
+
+      const r = await fetch('http://localhost:11434/api/generate', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'llama3.2',
+          prompt: `Here is a slide specification in JSON and design critique feedback. Apply the feedback to improve the slide. Return ONLY the corrected JSON. Keep the same structure (kind, title, blocks). Only modify the content fields based on the critique.\n\nSlide JSON:\n${slideJson}\n\nCritique:\n${critique}\n\nReturn ONLY the JSON, nothing else:`,
+          stream: false,
+        }),
+      })
+      const data = await r.json() as any
+      const response = data.response?.trim() || ''
+      const match = response.match(/\{[\s\S]*\}/)
+      if (!match) { setCritique(critique + '\n\n(Could not parse AI response)'); setApplyingFix(false); return }
+
+      const improved = JSON.parse(match[0])
+      // Validate the improved slide has required fields
+      if (!improved.kind) improved.kind = slide.kind
+      if (!improved.blocks || !Array.isArray(improved.blocks)) improved.blocks = slide.blocks
+      if (improved.blocks.length === 0) improved.blocks = slide.blocks
+
+      const slides = [...spec.slides]
+      slides[activeSlide] = { ...slide, ...improved }
+      handleSpecChange({ ...spec, slides })
+      setCritique('')
+    } catch (e) {
+      setCritique(critique + '\n\n(Fix failed: ' + (e instanceof Error ? e.message : '') + ')')
+    }
+    setApplyingFix(false)
+  }
 
   const handleSpecChange = useCallback((newSpec: DeckSpec) => {
     setUndoStack(prev => [...prev.slice(-49), spec])
@@ -77,77 +141,11 @@ function App() {
 
   useEffect(() => { injectTheme(spec.meta.theme, allThemes) }, [spec.meta.theme, customThemes])
 
-  // Undo/redo keyboard shortcuts
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'z' && !e.shiftKey) {
-        e.preventDefault()
-        if (undoStack.length > 0) {
-          setRedoStack(prev => [spec, ...prev.slice(0, 49)])
-          setSpec(undoStack[undoStack.length - 1])
-          setUndoStack(prev => prev.slice(0, -1))
-        }
-      }
-      if ((e.metaKey || e.ctrlKey) && e.key === 'z' && e.shiftKey) {
-        e.preventDefault()
-        if (redoStack.length > 0) {
-          setUndoStack(prev => [...prev.slice(-49), spec])
-          setSpec(redoStack[0])
-          setRedoStack(prev => prev.slice(1))
-        }
-      }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [spec, undoStack, redoStack])
-
   const handleGenerate = useCallback((newSpec: DeckSpec) => { handleSpecChange(newSpec); setActiveSlide(0) }, [handleSpecChange])
 
   const handleRepair = useCallback(() => {
     const { spec: repaired, repairs: rep } = repairDeck(spec); handleSpecChange(repaired); setRepairs(rep); setTimeout(() => setRepairs([]), 5000)
   }, [spec, handleSpecChange])
-
-  const handleGoogleSlidesExport = async () => {
-    setExportingSlides(true)
-    const url = await exportToGoogleSlides(spec, (msg) => setExportProgress(msg))
-    setExportingSlides(false)
-    setExportProgress('')
-    if (url) window.open(url, '_blank')
-  }
-
-  const handleVisionCritique = async () => {
-    setCritiquing(true); setCritique('')
-    try {
-      const container = document.querySelector('#slide-preview-container')
-      if (!container) { setCritique('Preview not found.'); setCritiquing(false); return }
-      const canvas = document.createElement('canvas')
-      canvas.width = 1280; canvas.height = 720
-      const ctx = canvas.getContext('2d')
-      if (!ctx) { setCritique('Canvas not supported.'); setCritiquing(false); return }
-      const slideEl = container.children[0] || container
-      const html = slideEl.innerHTML
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720">
-        <foreignObject width="100%" height="100%">
-          <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Inter,sans-serif;font-size:14px;color:#333;background:white;padding:40px;width:1200px;height:640px">
-            ${html.replace(/<canvas[^>]*>[\s\S]*?<\/canvas>/g, '[Chart]').replace(/<img[^>]*>/g, '[Image]')}
-          </div>
-        </foreignObject>
-      </svg>`
-      const img = new Image()
-      const svgB64 = btoa(String.fromCharCode(...new TextEncoder().encode(svg)))
-      await new Promise<void>((resolve, reject) => {
-        img.onload = () => resolve(); img.onerror = reject
-        img.src = 'data:image/svg+xml;base64,' + svgB64
-      })
-      ctx.fillStyle = 'white'; ctx.fillRect(0, 0, 1280, 720)
-      ctx.drawImage(img, 0, 0)
-      const result = await critiqueSlide(canvas.toDataURL('image/png').split(',')[1])
-      setCritique(result || 'No feedback returned.')
-    } catch (e) {
-      setCritique('Critique unavailable. Ensure Ollama is running with llama3.2-vision:11b.')
-    }
-    setCritiquing(false)
-  }
 
   const handleThemeApply = (name: string, vars: ThemeVars) => {
     if (!THEMES[name]) { const updated = { ...customThemes, [name]: vars }; setCustomThemes(updated); saveCustomThemes(updated) }
@@ -177,6 +175,8 @@ function App() {
 
   const currentSlide = spec.slides[activeSlide] || null
 
+  const allThemes = { ...THEMES, ...customThemes }
+
   if (showPresent) return <PresentationMode spec={spec} initialSlide={activeSlide} onClose={() => setShowPresent(false)} />
 
   return (
@@ -199,16 +199,11 @@ function App() {
           <button onClick={() => downloadPPTX(spec)} style={headerBtnStyle}>📥 PPTX</button>
           <button onClick={() => printDeck(spec)} style={headerBtnStyle}>📄 PDF</button>
           <button onClick={() => downloadCSV(spec)} style={headerBtnStyle}>📊 CSV</button>
-          <button onClick={handleGoogleSlidesExport} disabled={exportingSlides} style={headerBtnStyle}>{exportingSlides ? '...' : '📑 Slides'}</button>
         </div>
       </header>
 
       <PromptInput onDeckGenerated={handleGenerate} />
       <ImagePromptInput onDeckGenerated={handleGenerate} />
-      {exportProgress && (
-        <div style={{ padding: '0.3em 1em', background: '#fef3c7', fontSize: '0.75em', color: '#92400e', fontWeight: 600 }}>{exportProgress}</div>
-      )}
-
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         {showSettings && (
           <div style={{ width: 280, borderRight: '1px solid #e0e0e0', overflow: 'auto', flexShrink: 0 }}>
@@ -236,7 +231,7 @@ function App() {
               </button>
             ))}
           </div>
-          <ValidationPanel issues={issues} repairs={repairs} onRepair={handleRepair} onCritique={handleVisionCritique} critique={critique} critiquing={critiquing} />
+          <ValidationPanel issues={issues} repairs={repairs} onRepair={handleRepair} onCritique={handleVisionCritique} critique={critique} critiquing={critiquing} onApplyFix={handleApplyCritiqueFix} applyingFix={applyingFix} />
         </div>
       </div>
     </div>
