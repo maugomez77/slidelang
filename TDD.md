@@ -48,15 +48,17 @@ Pure function: `DeckSpec → compileDeckToHTML() → string (full HTML page)`
 - **Vision**: Image-to-deck via Ollama vision (`ollamaDescribeImage`)
 - **API key**: Client-side only, stored in localStorage
 
-### Browser Editor (`src/editor/SpecEditor.tsx` — 390 lines)
-- **SpecEditor**: Tabbed slide navigation, raw JSON toggle, add/remove slides
-- **SlideEditor**: Kind selector (20 options), title/subtitle/background inputs, transition picker (6 options), block list
+### Browser Editor (`src/editor/SpecEditor.tsx` — 430 lines)
+- **SpecEditor**: Tabbed slide navigation, raw JSON toggle, add/remove/duplicate slides
+- **SlideEditor**: Visual kind picker (20 kinds with icons), title/subtitle/background inputs, block list
 - **BlockEditor**: Type-specific editors:
   - Text: textarea + AI Rewrite (formal, concise, persuasive, simplify, grammar via Ollama)
   - Lists: dynamic item array with add/remove
   - Image: URL + alt + Unsplash search integration (source.unsplash.com, no API key needed)
   - Chart: type selector + label/dataset display
   - Math: LaTeX expression input
+- **Undo/redo**: Cmd+Z / Cmd+Shift+Z across all spec changes, 50-state history
+- **Duplicate/delete slides**: One-click operations with keyboard-safe active slide selection
 - State persists to localStorage on every change
 
 ### Slide Renderer (`src/renderers/SlideRenderer.tsx` — 380 lines)
@@ -85,8 +87,8 @@ Pure function: `DeckSpec → compileDeckToHTML() → string (full HTML page)`
 ### Validation & Repair (`src/validation/validator.ts`)
 - 33 validation rules across 8 categories: structure, content, text, layout, charts, math, images, accessibility
 - Auto-repair engine fixes: low-contrast text, oversized KPIs, empty slides, missing alt text
+- AI Design Critique (`src/ai/design-ai.ts`): LLM analyzes slide content for text density, readability, contrast, and layout balance with one-click auto-fix that rewrites the slide JSON
 - Vision QA (CLI): Playwright renders slides, screenshots, Ollama vision checks for rendering issues
-- Design critique module: Vision model reviews contrast, alignment, spacing, readability
 
 ### Theme & Font System (`src/components/ThemeBuilder.tsx`)
 - 8 built-in themes (noir, air, bold, warm, crimson, sage, navy, neon)
@@ -95,11 +97,11 @@ Pure function: `DeckSpec → compileDeckToHTML() → string (full HTML page)`
 - 8 heading fonts + 8 body fonts, dynamically loaded from Google Fonts
 - Theme CSS variables injected at runtime, compiled into HTML output
 
-### Publishing (`src/publishing/publisher.ts`)
-- HTML export: Full deck compiled to self-contained HTML file
-- JSON export: Portable deck spec
-- Print: Browser print dialog
-- Deployment: GitHub Pages via CI workflow
+### Publishing (`src/publishing/`)
+- **HTML export**: Full deck compiled to self-contained HTML file
+- **PPTX export**: Deck spec → PowerPoint with themes, text, bullets, math (pptxgenjs). Imports directly into Google Slides
+- **JSON export**: Portable deck spec
+- **Deployment**: GitHub Pages via CI workflow
 
 ### MCP Server (`mcp-ollama/`)
 - Stdio transport, TypeScript SDK

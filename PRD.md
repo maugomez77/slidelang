@@ -17,20 +17,24 @@ Teams using AI for slide generation get static, brittle output that is hard to e
 5. **Version control**: JSON spec is git-friendly, inspectable, and shareable independent of rendered output.
 
 ### Key Capabilities
-- **Multi-backend AI**: OpenRouter (GPT-4o, Claude) + local Ollama (llama3.2, qwen2.5, deepseek-r1) with backend selector
+- **Multi-backend AI**: OpenRouter (GPT-4o, Claude) + local Ollama (llama3.2, qwen2.5) with backend selector
 - **Deck compiler**: Spec → self-contained HTML with Reveal.js, inline Canvas 2D charts, KaTeX math, 8 themes
 - **20 slide kinds**: title, section, content, two-column, comparison, chart, kpi, dashboard, big-number, math, quote, image-full, logo-grid, team, timeline, flowchart, agenda, progress, contact, blank
 - **Chart rendering**: Bar, line, pie, donut — pure Canvas 2D, zero external chart library dependencies
 - **Math rendering**: KaTeX with CDN loading, LaTeX expressions embedded in spec
-- **Theme system**: 8 presets with 12 color variables each, custom theme builder, font selector (Google Fonts)
+- **Theme system**: 8 presets with 12 color variables each, custom theme builder with color pickers, font selector (Google Fonts)
 - **Validation**: 33 rules covering structure, content, layout, chart data, math, accessibility, color contrast
 - **Auto-repair**: Compile-time fixes for contrast, KPI overflow, missing alt text, empty slides
-- **Browser editor**: Per-slide editing with block-level controls, raw JSON mode, Unsplash image search, AI text rewrite
+- **Browser editor**: Per-slide editing with visual kind picker (20 kinds with icons), block-level controls, raw JSON mode, Unsplash image search, AI text rewrite (formal/concise/persuasive/grammar)
 - **Drag-and-drop**: Slide reorder in thumbnail strip
-- **Export**: Self-contained HTML, JSON spec, print-ready
+- **Undo/redo**: Cmd+Z / Cmd+Shift+Z with 50-state history
+- **Duplicate/delete slides**: One-click copy or remove with keyboard-safe selection
+- **Export**: Self-contained HTML, PPTX (PowerPoint/Google Slides import), JSON spec
 - **Vision QA**: CLI pipeline that screenshots each slide and checks for rendering issues via Ollama vision
+- **AI Design Critique**: In-app analysis of slide content for text density, readability, contrast, and layout balance with one-click auto-fix
 - **MCP server**: Ollama integration for AI assistants — text generation, vision, demo video creation
 - **Live presentation mode**: Full-screen with keyboard navigation, progress bar, theme-aware rendering
+- **Image-to-deck**: Upload an image, AI describes it via Ollama vision and generates a deck from the description
 
 ### Depth Areas
 1. **DSL design**: Typed schema with 20 slide kinds, 6 block types, 4 chart types, styling primitives, transitions
